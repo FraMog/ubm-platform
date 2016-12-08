@@ -32,7 +32,7 @@ public class RicercaProfiloServlet extends HttpServlet {
 	 * @param cognome L'eventuale cognome da ricercare
 	 * @param email L'eventuale email da ricercare
 	 * @return Il/i profilo/i dell'utente ricercato, null altrimenti
-	 * @pre nome != null || cognome != null || email != null
+	 * @pre nome != null OR cognome != null OR email != null
 	 */
 	private ArrayList<Profilo> ricercaProfilo(String nome, String cognome, String email){
 		return null;

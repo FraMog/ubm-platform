@@ -32,6 +32,7 @@ public class RimuoviAnnuncioNonInerenteServlet extends HttpServlet {
 	 * @pre VisualizzaDettagliAnnuncioServlet.visualizzaDettagliAnnuncio(idAnnuncio) != null
 	 * @post VisualizzaDettagliAnnuncioServlet.visualizzaDettagliAnnuncio(idAnnuncio) == null
 	 */
+	
 	private boolean rimuoviAnnuncioNonInerente(int idAnnuncio){
 		return false;
 	}

@@ -1,41 +1,19 @@
 package it.ubmplatform.registrazione;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import it.ubmplatform.account.Account;
 
 /**
- * Servlet implementation class RegistrazioneManager
+ * Il model che gestisce la query per la registrazione di un account
  */
-@WebServlet("/RegistrazioneManager")
-public class RegistrazioneManager extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistrazioneManager() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+public class RegistrazioneManager {
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Si occupa dell'interrogazione al database per la registrazione di un account
+	 * @param toInsert L'account da registrare
+	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	boolean queryRegistraAccount(Account toInsert){
+		return false;
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }
