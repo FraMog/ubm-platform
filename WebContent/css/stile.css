@@ -1,0 +1,99 @@
+/*Istruzioni per la presentazione della lista delle facoltà*/
+#lista li:hover{
+  background-color: #aaa;
+  cursor: pointer;
+}
+
+#collapse_link{
+  display: block;
+}
+
+#collapse_link:active,
+#collapse_link:visited,
+#collapse_link:link,
+#collapse_link:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
+#lista a,
+#lista a:link,
+#lista a:hover,
+#lista a:visited,
+#lista a:active {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+
+/*Istruzioni per il corretto posizionamento del footer e per la sua presentazione*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.footer {
+  font-size: 80%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #ddd;
+  margin: -50px auto 0 auto;
+  padding-top: 5px;
+}
+
+#clearfooter {
+height: 100px;
+}
+
+#contact{
+  display: inline-block;
+  margin-left: 20px;
+}
+
+#disclaimer{
+  margin-right: 20px;
+}
+
+
+#cont_ordine{
+  margin-bottom: 5px;
+}
+
+
+.risultato img{
+  max-width: 100px;
+}
+
+
+#logo_ubm{
+  min-width: 155px;
+}
+
+
+/*Istruzioni per l'adattamento della pagina a schermi più piccoli*/
+@media screen and (max-width: 800px) {
+    #disclaimer{
+      display: none;
+    }
+
+    #footer_cont{
+      text-align: center;
+    }
+
+    .risultato{
+      text-align: center;
+    }
+
+    #collapse_link:hover{
+      text-decoration: underline;
+      cursor: pointer;
+    }
+}
