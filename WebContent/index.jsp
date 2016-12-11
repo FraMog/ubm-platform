@@ -21,13 +21,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-left" href="#"><img src="img/logo.PNG" alt="UBM Platform" style="max-width:60px"/></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class=""><a href="#">Home</a></li>
+            <li><a id="ubm" href="index.jsp" style="font-size:110%">UBM Platform</a></li>
           </ul>
-          <form class="navbar-form navbar-left">
+          <form class="navbar-form navbar-left" action="#">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Search">
             </div>
@@ -43,7 +42,7 @@
             </div>
             <div class="input-group" style="margin-left:10px">
               <div class="radio" style="margin-right:10px">
-                <label style="color:white"><input type="radio" name="ordine" value="prezzo">Prezzo migliore</label>
+                <label style="color:white"><input type="radio" name="ordine" value="prezzo" checked="true">Prezzo migliore</label>
               </div>
               <div class="radio">
                 <label style="color:white"><input type="radio" name="ordine" value="data">Più recenti</label>
@@ -55,7 +54,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
-                <form class="form">
+                <form class="form" action="#">
                   <div class="form-group">
                     <input name="username" type="text" class="form-control" placeholder="e-mail">
                   </div>
