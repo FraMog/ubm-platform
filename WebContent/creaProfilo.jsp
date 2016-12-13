@@ -45,7 +45,7 @@
        			<form id="profilo" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
        				<div class="form-group">
        					<label class="control-label col-sm-2" for="img">Foto profilo</label>
-	    				<div class="col-sm-10"><input class="form-control" type="file" name="img" id="img" style="display: inline-block; width: 50%"/> </div>
+	    				<div class="col-sm-10"><input class="form-control" type="file" name="img" id="img"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="nome">Nome: *</label>
@@ -53,7 +53,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="cognome">Cognome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="email">E-mail: </label>
