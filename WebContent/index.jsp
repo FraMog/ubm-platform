@@ -121,7 +121,7 @@
         </div>
       </div>
     </aside>
-    <section class="col-sm-10">
+    <section class="col-sm-10" id="section">
       <div class="row">
         <img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG" alt="UBM Platform"/>
         <div class="col-sm-10">
@@ -130,15 +130,14 @@
         </div>
       </div>
       <div id="cont_ordine" class="container-fluid">
-        <form class="pull-right" action="#" method="get">
+      	<a href="#" class="btn btn-info pull-right col-sm-4">Pubblica ora il tuo annuncio</a>
+        <form class="col-sm-8 form-inline" action="#" method="get">
           <div class="form-group">
-            <label class="col-sm-3" for="ordine">Ordine</label>
-            <div class="col-sm-9">
-              <select id="ordine" class="form-control" name="ordine">
-                <option value="prezzo">Prezzo migliore</option>
-                <option value="data">Più recenti</option>
-              </select>
-            </div>
+            <label class="control-label" for="ordine">Ordina per </label>
+            <select id="ordine" class="form-control" name="ordine">
+            	<option value="data">Più recenti</option>
+              <option value="prezzo">Prezzo migliore</option>
+            </select>
           </div>
         </form>
       </div>

@@ -69,7 +69,7 @@
         </div>
       </div>
     </nav>
-    <section class="col-sm-12" style="margin-bottom: 100px">
+    <section class="col-sm-12" id="section">
       <div class="col-sm-3">
         <img id="logo_ubm" class="img-responsive" src="img/logo.PNG" alt="UBM Platform"/>
         <div>
@@ -86,7 +86,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Categoria: *</label>
-		    			<div class="input-group col-sm-10">
+		    			<div class="input-group col-sm-10" style="padding-left:15px">
 		    				<div class="radio">
 	                			<label><input type="radio" name="categoria" value="libro" checked="true">Libro</label>
 	              			</div>

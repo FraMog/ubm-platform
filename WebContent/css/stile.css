@@ -78,6 +78,10 @@ body {
 }
 
 
+#section{
+	margin-bottom: 100px;
+}
+
 /*Istruzioni per l'adattamento della pagina a schermi più piccoli*/
 @media screen and (max-width: 800px) {
     #disclaimer{
