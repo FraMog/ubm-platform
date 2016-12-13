@@ -128,7 +128,15 @@
         <div class="col-sm-3">
           <h3>Feedback</h3>
           <img id="feedback-stars" class="img-responsive" src="img/feedback-stars.png" alt="valutazione feedback" title="feedback average"/>
-          <p><b>7 valutazioni totali <br> <a href="#">vedi</a></b></p>
+          <p>
+          	<b>7 valutazioni totali <br> 
+          		<!-- bottone per aprire il modal vedi feedback -->
+				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#vediFeedbackModal">Vedi tutti</button><!-- bottone per aprire il modal vedi feedback -->
+				<!-- bottone per il modal inserisci feedback -->
+				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#inserisciFeedbackModal">Inserisci nuovo</button>
+			
+			</b>
+		  </p>
         </div>
         
         <div class="col-sm-12">
@@ -176,5 +184,27 @@
         </div>
       </div>
     </footer>
+    
+    <!-- MODAL -->
+ 	<div class="modal fade" id="vediFeedbackModal" role="dialog">
+    	<div class="modal-dialog">
+    
+   		    <!-- Modal content-->
+     		<div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+          			<h4 class="modal-title">Modal Header</h4>
+        		</div>
+        		<div class="modal-body">
+          			<p>Some text in the modal.</p>
+        		</div>
+       	 		<div class="modal-footer">
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        		</div>
+      	</div>
+      
+    </div>
+  </div>
+    
   </body>
 </html>
