@@ -144,7 +144,6 @@
 			</div>
 		</div>
 	</section>
-	<div id="clearfooter"></div>
 	<footer class="footer">
 		<div id="footer_cont" class="container-fluid">
 			<div id="contact">

@@ -49,9 +49,6 @@ body {
   padding-top: 5px;
 }
 
-#clearfooter{
-	height: 100px;
-}
 
 #contact{
   display: inline-block;
@@ -100,5 +97,5 @@ body {
       text-decoration: underline;
       cursor: pointer;
     }
-    
+        
 }
