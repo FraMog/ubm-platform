@@ -32,7 +32,7 @@
         </div>
       </div>
     </nav>
-    <section class="col-sm-12">
+    <section class="col-sm-12" id="section">
       <div class="col-sm-3">
         <img id="logo_ubm" class="img-responsive" src="img/logo.PNG" alt="UBM Platform"/>
         <div>

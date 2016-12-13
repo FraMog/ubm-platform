@@ -117,7 +117,7 @@
         </div>
       </div>
     </aside>
-    <section class="col-sm-10">
+    <section class="col-sm-10" id="section">
       <div class="col-sm-9">
         <div class="container-fluid">
           <h3 style="margin-bottom: 20px">Titolo annuncio</h3>

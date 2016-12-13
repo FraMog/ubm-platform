@@ -114,7 +114,7 @@
         </div>
       </div>
     </aside>
-    <section class="col-sm-10">
+    <section class="col-sm-10" id="section">
       <div class="row">
         <img id="profile_picture" class="img-responsive col-sm-2" src="img/default_profile.PNG" alt="Foto del profilo" title="Giovanni Ciampi"/>
         <div class="col-sm-7">
