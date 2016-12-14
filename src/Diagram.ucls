@@ -161,7 +161,7 @@
   </class>  
   <class id="19" language="java" name="it.ubmplatform.autenticazione.LogoutServlet" project="UBM-Platform" 
     file="/UBM-Platform/src/it/ubmplatform/autenticazione/LogoutServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="187" y="639"/>    
+    <position height="-1" width="-1" x="179" y="633"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
