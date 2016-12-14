@@ -14,54 +14,7 @@
   </head>
   <body>
     <%@ include file="includes/navbarNonLoggato.jsp" %>
-    <aside class="col-sm-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a id="collapse_link" data-toggle="collapse" href="#lista">Facoltà</a>
-          </h4>
-        </div>
-        <script type="text/javascript">
-          $(window).on('resize', function(){
-            var win = $(this);
-            if (win.width() < 768) {
-              $('#lista').removeClass('in');
-              $('#collapse_link').attr("href", "#lista");
-            }
-            else
-            {
-              $('#lista').addClass('in');
-              $('#collapse_link').attr("href", "#");
-            }
-          });
-
-          $(document).ready(function() {
-            var win = $(this);
-            if (win.width() < 768) {
-              $('#lista').removeClass('in');
-              $('#collapse_link').attr("href", "#lista");
-            }
-            else
-            {
-              $('#lista').addClass('in');
-              $('#collapse_link').attr("href", "#");
-            }
-          });
-        </script>
-        <div id="lista" class="panel-collapse collapse">
-          <ul class="list-group">
-            <li class="list-group-item"><a href="#">Informatica</a></li>
-            <li class="list-group-item"><a href="#">Matematica</a></li>
-            <li class="list-group-item"><a href="#">Biologia</a></li>
-            <li class="list-group-item"><a href="#">...</a></li>
-            <li class="list-group-item"><a href="#">...</a></li>
-            <li class="list-group-item"><a href="#">...</a></li>
-            <li class="list-group-item"><a href="#">...</a></li>
-            <li class="list-group-item"><a href="#">...</a></li>
-          </ul>
-        </div>
-      </div>
-    </aside>
+    <%@ include file="includes/sideBar.jsp" %>
     <section class="col-sm-10" id="section">
       <div class="row">
         <img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG" alt="UBM Platform"/>

@@ -61,7 +61,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="tel">Telefono: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="tel" id="tel"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="tel" id="tel" pattern="[0-9]{10}" title="Questo campo deve contenere 10 numeri"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="data">Data di nascita: </label>
