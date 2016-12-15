@@ -27,10 +27,10 @@
             </div>
             <div class="input-group" style="margin-left:10px">
               <div class="radio" style="margin-right:10px">
-                <label style="color:white"><input type="radio" name="ordine" value="prezzo" checked="true">Prezzo migliore</label>
+                <label style="color:white"><input type="radio" name="ordine" value="prezzo" checked="true"> Prezzo migliore</label>
               </div>
               <div class="radio">
-                <label style="color:white"><input type="radio" name="ordine" value="data">Più recenti</label>
+                <label style="color:white"><input type="radio" name="ordine" value="data"> Più recenti</label>
               </div>
             </div>
             <input type="submit" class="btn btn-default" value="Cerca" style="margin-left:20px"/>
