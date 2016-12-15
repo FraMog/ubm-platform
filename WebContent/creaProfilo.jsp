@@ -44,8 +44,25 @@
        		<div class="panel-body">
        			<form id="profilo" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
        				<div class="form-group">
-       					<label class="control-label col-sm-2" for="img">Foto profilo</label>
-	    				<div class="col-sm-10"><input class="form-control" type="file" name="img" id="img"/></div>
+       					<img id="foto" class="img-responsive col-sm-2" src="img/default_profile.PNG" style="width:150px"/>
+	    				<div class="col-sm-10"><input class="btn btn-primary" type="file" name="img" id="img" accept=".jpg,.png,.jpg,.jpeg"/></div>
+	    				<script type="text/javascript">
+		    				function readURL(input) {
+		    				    if (input.files && input.files[0]) {
+		    				        var reader = new FileReader();
+	
+		    				        reader.onload = function (e) {
+		    				            $('#foto').attr('src', e.target.result);
+		    				        }
+	
+		    				        reader.readAsDataURL(input.files[0]);
+		    				    }
+		    				}
+	
+		    				$("#img").change(function(){
+		    				    readURL(this);
+		    				});
+	    				</script>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="nome">Nome: *</label>
