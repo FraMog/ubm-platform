@@ -50,14 +50,12 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benvenuto Giovanni<span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
-                <form class="form" action="#">
-                  <div class="form-group" style="text-align:center;">
-                    <input type="button" class="btn btn-primary" value="Il mio Profilo" />
-                  </div>
-                  <div class="form-group" style="text-align:center;">
-                    <input type="button" class="btn btn-primary" value="Inserisci annuncio" />
-                  </div>
-                </form>
+                 <div class="form-group" style="text-align:center;">
+                   <a class="btn btn-primary" href="#">Il mio profilo</a>
+                 </div>
+                 <div class="form-group" style="text-align:center;">
+                   <a class="btn btn-primary" href="inserisciAnnuncio.jsp">Inserisci annuncio</a>
+                 </div>
               </div>
             </li>
             <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

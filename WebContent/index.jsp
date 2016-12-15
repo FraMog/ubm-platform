@@ -33,7 +33,7 @@
             </select>
           </div>
         </form>
-        <a href="#" class="btn btn-info col-sm-4">Pubblica ora il tuo annuncio</a>
+        <a href="inserisciAnnuncio.jsp" class="btn btn-info col-sm-4">Pubblica ora il tuo annuncio</a>
       </div>
       <div id="content" class="panel panel-default">
         <div class="panel-body risultato">
