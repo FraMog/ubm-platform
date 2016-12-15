@@ -32,10 +32,6 @@
 		<div id="tabella" class="panel panel-default">
 			<table>
 				<tr>
-					<td class="td">username</td>
-					<td><input type="text" name="username" /></td>
-				<tr>
-				<tr>
 					<td class="td">e-mail</td>
 					<td><input type="text" name="email" /></td>
 				<tr>
