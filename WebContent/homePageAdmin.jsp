@@ -15,7 +15,6 @@
   <body>
    <%@ include file="includes/navbarAdmin.jsp"%>
    <%@ include file="includes/sideBar.jsp" %>
-    
     <section class="col-sm-10" id="section">
      <div class="row">
         <img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG" alt="UBM Platform"/>
