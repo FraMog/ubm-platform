@@ -26,7 +26,7 @@
        		<div class="panel-body">
        			<form id="profilo" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="titolo">Titolo annuncio: *</label>
+	    				<label class="control-label col-sm-2" for="titolo">Titolo: *</label>
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required"/></div>
 	    			</div>
 	    			<div class="form-group">
@@ -41,12 +41,18 @@
 		    			</div>
 	    			</div>
 	    			<div class="form-group">
-       					<label class="control-label col-sm-2" for="img">Immagine prodotto *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="file" name="img" id="img"/></div>
-	    			</div>
+	    				<label class="control-label col-sm-2">Facoltà: *</label>
+		    			<div class="form-group col-sm-3" style="padding-left:30px">
+              			 	<select class="form-control" name="facolta">
+               			 		<option value="informatica">Informatica</option>
+               					<option value="biologia">Biologia</option>
+               			 		<option value="matematica">Matematica</option>
+              				</select>
+              			</div>
+            		</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="nome">Nome prodotto: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome"/></div>
+       					<label class="control-label col-sm-2" for="img">Immagine prodotto *</label>
+	    				<div class="col-sm-4"><input class="form-control" type="file" name="img" id="img"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
