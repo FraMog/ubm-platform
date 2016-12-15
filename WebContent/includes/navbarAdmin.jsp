@@ -48,7 +48,7 @@
               </div>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benvenuto Giovanni<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benvenuto UBM-ADMIN<span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px; text-align: center">
               	<a href="#" class="btn btn-primary">Lista utenti</a>
               </div>
