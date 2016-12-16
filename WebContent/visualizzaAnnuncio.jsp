@@ -16,7 +16,7 @@
     <%@ include file="includes/navbarLoggato.jsp" %>
     <%@ include file="includes/sideBar.jsp" %>
     <section class="col-sm-10" id="section">
-      <div class="col-sm-9 panel panel-default">
+      <div class="col-sm-8 panel panel-default">
       	<div class="panel-body">
 			<h3 style="margin-bottom: 20px">Titolo annuncio</h3>
 			<div class="row"><h4 class="col-xs-4">Nome prodotto:</h4><h4 class="col-xs-3">Ingegneria</h4></div>
@@ -32,8 +32,10 @@
 			<div class="row"><h4 class="col-xs-4">Prezzo:</h4><h4 class="col-xs-3">15€</h4></div>
 		</div>
       </div>
-      <img id="logo_ubm" class="img-responsive col-sm-3" src="img/annunci/libro.jpg" alt="UBM Platform"/>
-      <h3 class="pull-right">Pubblicato da: <a href="#" class="btn btn-info">Nome Utente</a></h3>
+      <div class="col-sm-4">
+	      <img id="logo_ubm" class="img-responsive" src="img/annunci/libro.jpg" alt="UBM Platform" style="max-width:300px"/>
+	      <h3 class="">Pubblicato da: <a href="#" class="btn btn-info">Nome Utente</a></h3>
+      </div>
     </section>
     <%@ include file="includes/footer.jsp" %>
   </body>
