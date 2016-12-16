@@ -27,17 +27,37 @@
           <h3>Interessi: Informatica, Programmazione, Musica.</h3>
         </div>
         <div class="col-sm-3">
-          <h3>Feedback</h3>
-          <img id="feedback-stars" class="img-responsive" src="img/feedback-stars.png" alt="valutazione feedback" title="feedback average"/>
-          <p>
-          	<b>7 valutazioni totali <br> 
-          		<!-- bottone per aprire il modal vedi feedback -->
-				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#vediFeedbackModal">Vedi tutti</button><!-- bottone per aprire il modal vedi feedback -->
-				<!-- bottone per il modal inserisci feedback -->
-				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#inserisciFeedbackModal">Inserisci nuovo</button>
-			
-			</b>
-		  </p>
+          <div>
+            <h2>Feedback</h2>
+            <img id="feedback-stars" class="img-responsive col-sm-10" style="padding-left:0px; padding-bottom: 0px" src="img/feedback-stars.png" alt="valutazione feedback" title="feedback average"/> 
+          </div>
+          <div class="col-sm-12" style="padding-left: 0px; padding-top: 0px">
+            <h4>Giovanni ha 7 valutazioni:</h4>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <h4><a href="#" style="color:black" title="Vai al profilo di questo utente" style="padding-left:0px; padding-bottom: 0px" >Marco: <small>Giudizio:5/5</small></a></h4>
+            </div>
+            
+            <div class="col-sm-12">
+              <p>Utente serio e preciso.</p>
+            </div>  
+             <div class="col-sm-12">
+              <h4><a href="#" style="color:black" title="Vai al profilo di questo utente" style="padding-left:0px; padding-bottom: 0px" >Antonio: <small>Giudizio:4/5</small></a></h4>
+            </div>
+            
+            <div class="col-sm-12">
+              <p>Libro perfetto.</p>
+            </div>
+            
+            <div class="col-sm-12">
+              <h5><a href="#">Visualizza tutti i Feedback</a></h5>
+            </div>
+            <div class="col-sm-12">
+              <h5>Hai fatto affari con Giovanni?<a href="#">Inserisci un Feedback!</a></h5>
+            </div> 
+          </div>
+          
         </div>
         
         <div class="col-sm-12">
