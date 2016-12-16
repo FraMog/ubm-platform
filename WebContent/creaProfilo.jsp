@@ -44,8 +44,8 @@
        		<div class="panel-body">
        			<form id="profilo" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
        				<div class="form-group">
-       					<img id="foto" class="img-responsive col-sm-2" src="img/default_profile.PNG" style="width:150px"/>
-	    				<div class="col-sm-10"><input class="btn btn-primary" type="file" name="img" id="img" accept=".jpg,.png,.jpg,.jpeg"/></div>
+       					<img id="foto" class="img-responsive" src="img/default_profile.PNG" style="width:150px"/>
+	    				<label class="btn btn-info btn-file" style="margin-top:5px;margin-left:20px">Foto profilo<input class="btn btn-primary" type="file" name="img" id="img" accept=".jpg,.png,.jpg,.jpeg" style="display:none"/></label>
 	    				<script type="text/javascript">
 		    				function readURL(input) {
 		    				    if (input.files && input.files[0]) {
