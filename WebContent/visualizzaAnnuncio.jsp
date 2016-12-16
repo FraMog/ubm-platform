@@ -18,9 +18,9 @@
     <section class="col-sm-10" id="section">
       <div class="col-sm-9 panel panel-default">
       	<div class="panel-body">
-			<h3 style="margin-bottom: 20px">Titolo annuncio</h3>
-			<div class="row"><h4 class="col-xs-4">Nome prodotto:</h4><h4 class="col-xs-3">Ingegneria</h4></div>
+			<h3 style="margin-bottom: 20px">Titolo</h3>
 			<div class="row"><h4 class="col-xs-4">Categoria:</h4><h4 class="col-xs-3">Libro</h4></div>
+			<div class="row"><h4 class="col-xs-4">Facoltà:</h4><h4 class="col-xs-3">Ingegneria</h4></div>
 			<!--Solo libro -->
 			<div class="row"><h4 class="col-xs-4">ISBN:</h4><h4 class="col-xs-3">1345344</h4></div>
 			<div class="row"><h4 class="col-xs-4">Autore:</h4><h4 class="col-xs-3">Brugge</h4></div>
@@ -28,7 +28,6 @@
 			<!--  -->
 			<div class="row"><h4 class="col-xs-4">Materia:</h4><h4 class="col-xs-3">Ingegneria</h4></div>
 			<div class="row"><h4 class="col-xs-4">Condizioni prodotto:</h4><h4 class="col-xs-3">Sottolineato</h4></div>
-			<div class="row"><h4 class="col-xs-4">Data:</h4><h4 class="col-xs-3">13/12/2016</h4></div>
 			<div class="row"><h4 class="col-xs-4">Prezzo:</h4><h4 class="col-xs-3">15€</h4></div>
 		</div>
       </div>
