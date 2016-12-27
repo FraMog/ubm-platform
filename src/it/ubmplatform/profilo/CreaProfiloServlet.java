@@ -20,20 +20,17 @@ import it.ubmplatform.factory.*;
 @MultipartConfig
 public class CreaProfiloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String path, fileName;
 
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+		throw new ServletException("GET request not accepted");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String img;
-		try{
-			img=saveFile(request,response);
-		} catch(FileNotFoundException e){
-			img=null;
-		}
+		img=verificaFile(request);
 		String name=request.getParameter("nome");
 		String surname=request.getParameter("cognome");
 		String email=request.getParameter("email");
@@ -47,6 +44,7 @@ public class CreaProfiloServlet extends HttpServlet {
 		String interest=request.getParameter("interessi");
 		String residence=request.getParameter("residenza");
 		if(creaProfilo(new Profilo(email,name,surname,residence, phone,interest, img, date))){
+			saveFile(request);
 			request.getSession().setAttribute("email", email);
 			request.getSession().setAttribute("name", name);
 			response.sendRedirect("index.jsp");
@@ -56,19 +54,24 @@ public class CreaProfiloServlet extends HttpServlet {
 		}
 
 	}
-
-	protected String saveFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, FileNotFoundException {
-		// Create path components to save the file
+	
+	private String verificaFile(HttpServletRequest request) throws IOException, ServletException{
 		final Part filePart = request.getPart("img");
 		if(filePart==null || "".equals(filePart.getSubmittedFileName().trim()))
 			return null;
 		String ext=filePart.getContentType();
-		if(!(ext.equals("image/jpeg")||ext.equals("image/png")||ext.equals("image/gif")))
+		if(!(ext.equals("image/jpeg")||ext.equals("image/png")||ext.equals("image/gif")||ext.equals("image/jpg")))
 			throw new FileUploadException("L'estensione del file non è riconosciuta dal server");
 		if(filePart.getSize()>10*1024*1024)
 			throw new FileUploadException("Le dimensioni del file superano i 10MB");
-		final String path = this.getServletContext().getRealPath("")+"img"+File.separator+"profilo";
-		final String fileName = request.getParameter("email")+"_"+filePart.getSubmittedFileName();
+		path = this.getServletContext().getRealPath("")+"img"+File.separator+"profilo";
+		fileName = request.getParameter("email")+"_"+filePart.getSubmittedFileName();
+		return fileName;
+	}
+
+	private void saveFile(HttpServletRequest request) throws ServletException, IOException, FileNotFoundException {
+		// Create path components to save the file
+		final Part filePart = request.getPart("img");
 		OutputStream out = null;
 		InputStream filecontent = null;
 
@@ -89,7 +92,6 @@ public class CreaProfiloServlet extends HttpServlet {
 				filecontent.close();
 			}
 		}
-		return path + File.separator + fileName;
 	}
 
 	/**
