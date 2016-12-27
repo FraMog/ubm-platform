@@ -1,5 +1,7 @@
 package it.ubmplatform.profilo;
 
+import java.util.Date;
+
 /**
  * Bean Profilo che rappresenta il profilo all'interno del sistema
  * Esso contiene tutte le informazioni relative al profilo
@@ -16,8 +18,9 @@ public class Profilo {
 	 * @param phone Il telefono dell'utente a cui è associato il profilo
 	 * @param interest I vari interessi dell'utente a cui è associato il profilo
 	 * @param photo La foto dell'utente a cui è associato il profilo
+	 * @param dataNascita La data di nascita dell'utente
 	 */
-	public Profilo(String newEmail, String name, String surname, String residence, String phone, String interest, String photo){
+	public Profilo(String newEmail, String name, String surname, String residence, String phone, String interest, String photo, Date dataNascita){
 		email = newEmail;
 		nome = name;
 		cognome = surname;
@@ -25,6 +28,7 @@ public class Profilo {
 		telefono = phone;
 		interessi = interest;
 		foto = photo;
+		this.dataNascita=dataNascita;
 	}
 	
 	
@@ -76,11 +80,28 @@ public class Profilo {
 	}
 
 
-
 	void setInteressi(String interessi) {
 		this.interessi = interessi;
 	}
+	
+	
+	public Date getDataNascita() {
+		return dataNascita;
+	}
 
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Profilo [foto=" + foto + ", email=" + email + ", nome=" + nome + ", cognome=" + cognome + ", residenza="
+				+ residenza + ", telefono=" + telefono + ", interessi=" + interessi + ", dataNascita=" + dataNascita
+				+ "]";
+	}
 
 
 	/**
@@ -88,5 +109,6 @@ public class Profilo {
 	 */
 	private String foto;
 	private String email, nome, cognome, residenza, telefono, interessi;
+	private Date dataNascita;
 
 }

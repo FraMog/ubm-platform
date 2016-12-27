@@ -42,7 +42,7 @@
       <div class="col-sm-9">
        	<div class="panel panel-default">
        		<div class="panel-body">
-       			<form id="profilo" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+       			<form id="profilo" class="form-horizontal" action="CreaProfilo" method="post" enctype="multipart/form-data">
        				<div class="form-group">
        					<img id="foto" class="img-responsive" src="img/default_profile.PNG" style="width:150px"/>
 	    				<label class="btn btn-info btn-file" style="margin-top:5px;margin-left:20px">Foto profilo<input class="btn btn-primary" type="file" name="img" id="img" accept=".jpg,.png,.jpg,.jpeg" style="display:none"/></label>
@@ -63,15 +63,15 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="nome">Nome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome" required="required"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome" required="required" pattern="[A-Z a-z] {1-20}" title="Il nome deve contenere al più 20 lettere"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="cognome">Cognome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required" pattern="[A-Z a-z] {1-20}" title="Il cognome deve contenere al più 20 lettere"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="email">E-mail: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email" readonly="readonly"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email" readonly="readonly" value="v"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="tel">Telefono: </label>
@@ -83,11 +83,11 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="interessi">Interessi: </label>
-	    				<div class="col-sm-10"><textarea class="form-control" name="interessi" id="interessi" form="profilo" rows="3" cols="50" maxlength="200"></textarea></div>
+	    				<div class="col-sm-10"><textarea class="form-control" name="interessi" id="interessi" form="profilo" rows="3" cols="50" maxlength="100" title="Massimo 100 caratteri"></textarea></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="residenza">Residenza: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="residenza" id="residenza"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="residenza" id="residenza" pattern="{0-40}" title="Massimo 40 caratteri"/></div>
 	    			</div>
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>

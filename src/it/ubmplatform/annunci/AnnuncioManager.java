@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Il model che contiene le query inerenti alla sezione Annunci
  */
 
-public class AnnuncioManager {
+public class AnnuncioManager implements AnnuncioInterface {
 	
 	/**
 	 * Si occupa dell'interrogazione al database per la cancellazione dell'annuncio
@@ -14,7 +14,7 @@ public class AnnuncioManager {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	
-	boolean queryCancellaAnnuncio(int idAnnuncio){
+	public boolean queryCancellaAnnuncio(int idAnnuncio){
 		return false;
 	}
 	
@@ -24,7 +24,7 @@ public class AnnuncioManager {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	
-	boolean queryInserisciAnnuncio(Annuncio toInsert){
+	public boolean queryInserisciAnnuncio(Annuncio toInsert){
 		return false;
 	}
 	
@@ -34,7 +34,7 @@ public class AnnuncioManager {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	
-	boolean queryModificaAnnuncio(Annuncio changed){
+	public boolean queryModificaAnnuncio(Annuncio changed){
 		return false;
 	}
 	
@@ -46,7 +46,7 @@ public class AnnuncioManager {
 	 * @return La lista degli annunci con i filtri inseriti, null se non presenti
 	 */
 	
-	ArrayList<Annuncio> queryRicercaAnnuncio(String nomeAnnuncio, String facolta, String orderBy){
+	public ArrayList<Annuncio> queryRicercaAnnuncio(String nomeAnnuncio, String facolta, String orderBy){
 		return null;
 	}
 	
@@ -55,7 +55,7 @@ public class AnnuncioManager {
 	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
 	 * @return L'annuncio relativo all'id passato, null in caso di errore
 	 */
-	Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio){
+	public Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio){
 		return null;
 	}
 }

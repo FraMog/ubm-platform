@@ -1,7 +1,7 @@
 package it.ubmplatform.autenticazione;
 
 import it.ubmplatform.account.Account;
-public class AutenticazioneManager {
+public class AutenticazioneManager implements AutenticazioneInterface {
 
 
 	/**
@@ -10,7 +10,7 @@ public class AutenticazioneManager {
 	 * @return 1 se l'account è stato trovato, 0 se non è stato trovato, un numero negativo in caso di errore
 	 */
 	
-	int queryLogin(Account toSearch){
+	public int queryLogin(Account toSearch){
 		return -1;
 	}
 	
@@ -20,7 +20,7 @@ public class AutenticazioneManager {
 	 * @return La password dell'account in caso di successo, null altrimenti (account non trovato)
 	 */
 	
-	String queryRecuperaPassword(String email){
+	public String queryRecuperaPassword(String email){
 		return null;
 	}
 }

@@ -7,14 +7,14 @@ import it.ubmplatform.profilo.Profilo;
  * Il model che contiene le query inerenti alla sezione Amministrazione
  *
  */
-public class AmministrazioneManager {
+public class AmministrazioneManager implements AmministrazioneInterface {
 
 	/**
 	 * Si occupa dell'interrogazione al database per la cancellazione di un account dal sistema
 	 * @param email L'email dell'account da cancellare
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
-	boolean queryCancellaAccount(String email){
+	public boolean queryCancellaAccount(String email){
 		return false;
 	}
 	
@@ -24,7 +24,7 @@ public class AmministrazioneManager {
 	 * @param email L'email dell'account da invalidare
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
-	boolean queryInvalidaAccount(String email){
+	public boolean queryInvalidaAccount(String email){
 		return false;
 	}
 	
@@ -34,7 +34,7 @@ public class AmministrazioneManager {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	
-	boolean queryRimuoviAnnuncioNonInerente(int idAnnuncio){
+	public boolean queryRimuoviAnnuncioNonInerente(int idAnnuncio){
 		return false;
 	}
 	
@@ -43,7 +43,7 @@ public class AmministrazioneManager {
 	 * @return La lista dei profili degli utenti registrati
 	 */
 	
-	ArrayList<Profilo> queryVisualizzaListaUtenti(){
+	public ArrayList<Profilo> queryVisualizzaListaUtenti(){
 		return null;
 	}
 }

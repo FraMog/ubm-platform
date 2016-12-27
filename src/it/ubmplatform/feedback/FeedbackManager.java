@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Il model che contiene le query inerenti alla sezione Feedback
  */
 
-public class FeedbackManager {
+public class FeedbackManager implements FeedbackInterface {
 
 	/**
 	 * Si occupa dell'interrogazione al database per l'inserimento di un feedback
@@ -14,7 +14,7 @@ public class FeedbackManager {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	
-	boolean queryInserisciFeedback(Feedback toInsert){
+	public boolean queryInserisciFeedback(Feedback toInsert){
 		return false;
 	}
 	
@@ -24,7 +24,7 @@ public class FeedbackManager {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	
-	boolean queryModificaFeedback(Feedback changed){
+	public boolean queryModificaFeedback(Feedback changed){
 		return false;
 	}
 	
@@ -34,7 +34,7 @@ public class FeedbackManager {
 	 * @return La lista dei feedback dell'account associato all'email, null se non presenti
 	 */
 	
-	ArrayList<Feedback> queryVisualizzaFeedbacks(String emailR){
+	public ArrayList<Feedback> queryVisualizzaFeedbacks(String emailR){
 		return null;
 	}
 }

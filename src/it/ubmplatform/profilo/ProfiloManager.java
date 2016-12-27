@@ -1,20 +1,59 @@
 package it.ubmplatform.profilo;
 
+import java.sql.*;
 import java.util.ArrayList;
+
+import it.ubmplatform.database.DBManager;
 
 /**
  * Il model che contiene le query inerenti alla sezione Profilo
  */
 
-public class ProfiloManager {
+public class ProfiloManager implements ProfiloInterface {
 	
 	/**
 	 * Si occupa dell'interrogazione al database per l'aggiunta di un profilo
 	 * @param toInsert Il profilo da inserire
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
-	boolean queryCreaProfilo(Profilo toInsert){
-		return false;
+	public boolean queryCreaProfilo(Profilo toInsert){
+		Connection conn=null;
+		PreparedStatement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			String query="INSERT INTO profilo (Email, Nome,Cognome,Foto,Residenza,Telefono,Interessi, DNascita) VALUES (?,?,?,?,?,?,?,?)";
+			s=conn.prepareStatement(query);
+			s.setString(1, toInsert.getEmail());
+			s.setString(2, toInsert.getNome());
+			s.setString(3, toInsert.getCognome());
+			s.setString(4, toInsert.getFoto());
+			s.setString(5, toInsert.getResidenza());
+			s.setString(6, toInsert.getEmail());
+			s.setString(7, toInsert.getInteressi());
+			java.sql.Date date=null;
+			if(toInsert.getDataNascita()!=null)
+				date=new java.sql.Date(toInsert.getDataNascita().getTime());
+			s.setDate(8, date);
+			s.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 	}
 	
 	/**
@@ -22,7 +61,7 @@ public class ProfiloManager {
 	 * @param changed Il nuovo profilo modificato da inserire
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
-	boolean queryModificaProfilo(Profilo changed){
+	public boolean queryModificaProfilo(Profilo changed){
 		return false;
 	}
 	
@@ -31,7 +70,7 @@ public class ProfiloManager {
 	 * @param email L'email del profilo da disattivare
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
-	boolean queryDisattivaProfilo(String email){
+	public boolean queryDisattivaProfilo(String email){
 		return false;
 	}
 	
@@ -42,7 +81,7 @@ public class ProfiloManager {
 	 * @param email L'email dell'account associato al profilo da ricercare
 	 * @return I profili trovati con i filtri inseriti, null se non trovati
 	 */
-	ArrayList<Profilo> queryRicercaProfilo(String nome, String cognome, String email){
+	public ArrayList<Profilo> queryRicercaProfilo(String nome, String cognome, String email){
 		return null;
 	}
 	
@@ -51,7 +90,7 @@ public class ProfiloManager {
 	 * @param email L'email dell'account associato al profilo da ricercare
 	 * @return Il profilo se l'operazione è andata a buon fine, null in caso di errore
 	 */
-	Profilo queryVisualizzaProfilo(String email){
+	public Profilo queryVisualizzaProfilo(String email){
 		return null;
 	}
 }

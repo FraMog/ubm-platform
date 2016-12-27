@@ -13,14 +13,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <%@ include file="includes/navbarNonLoggato.jsp" %>
+  	<%if(session.getAttribute("email")==null) {%>
+    	<%@ include file="includes/navbarNonLoggato.jsp" %>
+    <%} else {%>
+    	<%@ include file="includes/navbarLoggato.jsp" %>
+    <%} %>
     <%@ include file="includes/sideBar.jsp" %>
     <section class="col-sm-10" id="section">
       <div class="row">
         <img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG" alt="UBM Platform"/>
         <div class="col-sm-10">
-          <h1>Benvenuto!</h1>
-          <h3>Iscriviti subito per poter acquistare e vendere materiale universitario</h3>
+          <h1>Benvenuto <%if (session.getAttribute("name")!=null)%><%=session.getAttribute("name")%></h1>
+          <%if (session.getAttribute("email")==null)%><h3>Iscriviti subito per poter acquistare e vendere materiale universitario</h3>
         </div>
       </div>
       <div id="cont_ordine" class="container-fluid">
