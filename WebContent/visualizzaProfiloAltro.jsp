@@ -51,10 +51,10 @@
             </div>
             
             <div class="col-sm-12">
-              <h5><a href="#">Visualizza tutti i Feedback</a></h5>
+              <h5><a data-toggle="modal" data-target="#vediFeedbackModal">Visualizza tutti i Feedback</a></h5>
             </div>
             <div class="col-sm-12">
-              <h5>Hai fatto affari con Giovanni?<a href="#">Inserisci un Feedback!</a></h5>
+              <h5>Hai fatto affari con Giovanni? <a data-toggle="modal" data-target="#inserisciFeedbackModal">Inserisci un Feedback!</a></h5>
             </div> 
           </div>
           
@@ -105,7 +105,7 @@
       </div>
     </footer>
     
-    <!-- MODAL -->
+    <!-- MODAL VISUALIZZA FEEDBACK-->
  	<div class="modal fade" id="vediFeedbackModal" role="dialog">
     	<div class="modal-dialog">
     
@@ -121,10 +121,72 @@
        	 		<div class="modal-footer">
           			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         		</div>
-      	</div>
+      		</div>
       
-    </div>
-  </div>
+    	</div>
+  	</div>
+  	
+  	<!-- MODAL INSERISCI FEEDBACK-->
+  	<div class="modal fade" id="inserisciFeedbackModal" role="dialog">
+    	<div class="modal-dialog">
+    
+   		    <!-- Modal content-->
+     		<div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+          			<h4 class="modal-title">Inserisci feedback</h4>
+        		</div>
+        		
+        		<form action="InserisciFeedbackServlet" method="POST">
+        		
+        		<div class="modal-body">
+        			<div class="form-group">
+          				<label for="valutazioneFeedback">Valutazione:</label>
+          				<select class="form-control" id="valutazioneFeedback" name="valutazioneFeedback">
+          					<option value="1">1</option>
+          					<option value="2">2</option>
+          					<option value="3">3</option>
+          					<option value="4">4</option>
+          					<option value="5">5</option>
+          				</select>
+          			
+          				<label for="descrizioneFeedback">Descrizione:</label>
+          				<textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="descrizioneFeedback" name="descrizioneFeedback">
+          				</textarea>
+          			
+          			</div>
+        		</div>
+       	 		<div class="modal-footer">
+       	 			<input type="submit" class="btn btn-default">
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        		</div>
+        		
+        		</form>
+      		</div>
+      
+    	</div>
+  	</div>
+  	
+  	<!-- MODAL MODIFICA FEEDBACK-->
+  	<div class="modal fade" id="modificaFeedbackModal" role="dialog">
+    	<div class="modal-dialog">
+    
+   		    <!-- Modal content-->
+     		<div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+          			<h4 class="modal-title">Modal Header</h4>
+        		</div>
+        		<div class="modal-body">
+          			<p>Some text in the modal.</p>
+        		</div>
+       	 		<div class="modal-footer">
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        		</div>
+      		</div>
+      
+    	</div>
+  	</div>
     
   </body>
 </html>
