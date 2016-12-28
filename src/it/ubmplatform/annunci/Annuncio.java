@@ -1,5 +1,7 @@
 package it.ubmplatform.annunci;
 
+import java.util.GregorianCalendar;
+
 /**
  * Bean Annuncio che rappresenta l'annuncio nel sistema
  * @author Marco
@@ -22,7 +24,7 @@ public class Annuncio {
 	 */
 	public Annuncio(String foto, int edizione, String email, String nomeProdotto, String descrizioneProdotto,
 			String statoProdotto, String titoloAnnuncio, String autoreLibro, String isbn, String materia,
-			float prezzo) {
+			float prezzo, GregorianCalendar dataPubblicazione) {
 		this.foto = foto;
 		this.edizione = edizione;
 		this.email = email;
@@ -34,12 +36,19 @@ public class Annuncio {
 		this.isbn = isbn;
 		this.materia = materia;
 		this.prezzo = prezzo;
+		this.dataPubblicazione= dataPubblicazione;
 		
 		//DATA DA SETTARE ---------
 	}
 	
-	
-	
+
+	/**
+	 * Crea un annuncio
+	 */
+	public Annuncio() {
+	}
+
+
 	String getFoto() {
 		return foto;
 	}
@@ -67,8 +76,8 @@ public class Annuncio {
 	String getAutoreLibro() {
 		return autoreLibro;
 	}
-	String getData() {
-		return data;
+	GregorianCalendar getDataPubblicazione() {
+		return dataPubblicazione;
 	}
 	String getIsbn() {
 		return isbn;
@@ -77,7 +86,7 @@ public class Annuncio {
 		return materia;
 	}
 	
-	float getPrezzo() {
+	double getPrezzo() {
 		return prezzo;
 	}
 	
@@ -108,19 +117,24 @@ public class Annuncio {
 	void setMateria(String materia) {
 		this.materia = materia;
 	}
-	void setPrezzo(float prezzo) {
+	void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
 
+	void setId(int id){
+		this.id=id;
+	}
+
+	void setDataPubblicazione(GregorianCalendar dataPubblicazione) {
+		this.dataPubblicazione = dataPubblicazione;
+	}
+
+	
 
 
-	/**
-	 * Foto dell'annuncio
-	 */
 	private String foto;
-	
 	private int id, edizione;
-	private String email, nomeProdotto, descrizioneProdotto, statoProdotto, titoloAnnuncio, autoreLibro, data, isbn, materia;
-	private float prezzo;
-	
+	private String email, nomeProdotto, descrizioneProdotto, statoProdotto, titoloAnnuncio, autoreLibro, isbn, materia;
+	private double prezzo;
+	private GregorianCalendar dataPubblicazione;
 }
