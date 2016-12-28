@@ -15,7 +15,7 @@ import it.ubmplatform.factory.ManagerFactory;
 /**
  * Servlet che gestisce l'inserimento di un feedback da parte di un utente
  */
-@WebServlet("/InserisciFeedbackServlet")
+@WebServlet(name = "InserisciFeedbackServlet", urlPatterns={"/InserisciFeedbackServlet"})
 public class InserisciFeedbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,6 @@ public class InserisciFeedbackServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ciao");
 		//inizialmente la valutazione sarà uguale a 0 per effettuarne controlli 
 		//in caso di mancata modifica
 		int valutazione = 0;
@@ -55,11 +54,11 @@ public class InserisciFeedbackServlet extends HttpServlet {
 				System.out.println("OK");
 			}else{
 				//il metodo mi ritorna false.. perché
-				System.out.println("NO");
+				
 			}
 		}else{
 			//è successo qualcosa, riporto alla pagina del profilo?
-			System.out.println("ecco");
+			
 		}
 		
 		//response.getWriter().write(valutazione + " " + descrizione);
