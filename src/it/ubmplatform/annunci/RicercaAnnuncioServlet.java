@@ -45,7 +45,8 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		
 		
 		try {
-			ricercaAnnunci(titolo, facolta, categoria, ordine);
+			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(titolo, facolta, categoria, ordine);
+			request.setAttribute("annunciPerinenti", annunciPertinenti);
 		} catch (BadResearchException e) {
 			e.printStackTrace();
 		}
@@ -66,11 +67,8 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		
 		AbstractFactory factory= new ManagerFactory();
 		AnnuncioInterface annuncioManager= factory.createAnnuncioManager();
-		annuncioManager.queryRicercaAnnuncio(titolo, facolta, categoria, orderBy);
+		ArrayList <Annuncio> annunciPertinenti= annuncioManager.queryRicercaAnnuncio(titolo, facolta, categoria, orderBy);
+		return annunciPertinenti;
 		
-		
-		
-		
-		return null;//da cambiare
 	}
 }
