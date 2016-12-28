@@ -1,5 +1,7 @@
 package it.ubmplatform.feedback;
 
+import java.util.Date;
+
 /**
  * Bean che rappresenta un Feedback all'interno del sistema
  * @author Marco
@@ -22,6 +24,7 @@ public class Feedback {
 		emailR = emailReceiver;
 		
 		//SETTARE LA DATA-----
+		data = new Date();
 	}
 	
 	
@@ -43,7 +46,7 @@ public class Feedback {
 		return emailR;
 	}
 
-	String getData() {
+	Date getData() {
 		return data;
 	}
 
@@ -57,5 +60,6 @@ public class Feedback {
 
 
 	private int valutazione;
-	private String descrizione, emailP, emailR, data;
+	private String descrizione, emailP, emailR;
+	private Date data;
 }
