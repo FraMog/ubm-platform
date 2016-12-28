@@ -6,23 +6,7 @@ package it.ubmplatform.feedback;
  *
  */
 public class Feedback {
-	/**
-	 * Crea un feedback con solo la valutazione (int da 1 a 5), senza descrizione
-	 * @param val La valutazione assegnata
-	 * @param emailPublisher L'email di chi ha pubblicato il feedback
-	 * @param emailReceiver L'email di chi ha ricevuto il feedback
-	 * @pre 0 &lt; val &lt; 6
-	 */
-	Feedback(int val, String emailPublisher, String emailReceiver){
-		valutazione = val;
-		descrizione = null;
-		emailP = emailPublisher;
-		emailR = emailReceiver;
-		
-		//SETTARE LA DATA------
-	}
-	
-	/**
+		/**
 	 * Crea un feedback con valutazione (int da 1 a 5) e descrizione
 	 * @param val La valutazione assegnata
 	 * @param desc La descrizione assegnata
