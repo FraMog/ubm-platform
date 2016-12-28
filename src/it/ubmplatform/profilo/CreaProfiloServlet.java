@@ -30,21 +30,23 @@ public class CreaProfiloServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String img;
-		img=verificaFile(request);
+		img=verificaFile(request); //controlli sull'immagine
+		//recupero tutti i parametri
 		String name=request.getParameter("nome");
 		String surname=request.getParameter("cognome");
 		String email=request.getParameter("email");
 		String phone=request.getParameter("tel");
 		Date date;
 		try {
-			date=new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
+			date=new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data")); //recupero e cast data
 		} catch (ParseException e) {
 			date=null;
 		}
 		String interest=request.getParameter("interessi");
 		String residence=request.getParameter("residenza");
-		if(creaProfilo(new Profilo(email,name,surname,residence, phone,interest, img, date))){
-			saveFile(request);
+		if(creaProfilo(new Profilo(email,name,surname,residence, phone,interest, img, date))){ //controllo se l'operazione è riuscita
+			if(img!=null)
+				saveFile(request); //se il file è stato inserito lo carico
 			request.getSession().setAttribute("email", email);
 			request.getSession().setAttribute("name", name);
 			response.sendRedirect("index.jsp");
@@ -57,30 +59,29 @@ public class CreaProfiloServlet extends HttpServlet {
 	
 	private String verificaFile(HttpServletRequest request) throws IOException, ServletException{
 		final Part filePart = request.getPart("img");
-		if(filePart==null || "".equals(filePart.getSubmittedFileName().trim()))
-			return null;
+		if(filePart==null || "".equals(filePart.getSubmittedFileName().trim())) //verifica se l'immagine è stata inserita
+			return null; //se non è stata inserita restituisco null
 		String ext=filePart.getContentType();
-		if(!(ext.equals("image/jpeg")||ext.equals("image/png")||ext.equals("image/gif")||ext.equals("image/jpg")))
+		if(!(ext.equals("image/jpeg")||ext.equals("image/png")||ext.equals("image/gif")||ext.equals("image/jpg"))) //verifica sull'estensione del file
 			throw new FileUploadException("L'estensione del file non è riconosciuta dal server");
-		if(filePart.getSize()>10*1024*1024)
+		if(filePart.getSize()>10*1024*1024) //verifica dimensione
 			throw new FileUploadException("Le dimensioni del file superano i 10MB");
-		path = this.getServletContext().getRealPath("")+"img"+File.separator+"profilo";
-		fileName = request.getParameter("email")+"_"+filePart.getSubmittedFileName();
-		return fileName;
+		path = this.getServletContext().getRealPath("")+"img"+File.separator+"profilo"; //path in cui salvare l'immagine
+		fileName = request.getParameter("email")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
+		return fileName; //restituisco il nome del file
 	}
 
 	private void saveFile(HttpServletRequest request) throws ServletException, IOException, FileNotFoundException {
-		// Create path components to save the file
 		final Part filePart = request.getPart("img");
 		OutputStream out = null;
 		InputStream filecontent = null;
 
 		try {
-			out = new FileOutputStream(new File(path + File.separator + fileName));
+			out = new FileOutputStream(new File(path + File.separator + fileName)); //apro lo stream sul file al percorso stabilito
 			filecontent = filePart.getInputStream();
 			int read = 0;
 			final byte[] bytes = new byte[1024];
-			while ((read = filecontent.read(bytes)) != -1) {
+			while ((read = filecontent.read(bytes)) != -1) { //copio il file inserito nel file creato
 				out.write(bytes, 0, read);
 			}
 		} 

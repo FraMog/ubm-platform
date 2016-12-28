@@ -20,7 +20,8 @@ public class ProfiloManager implements ProfiloInterface {
 		Connection conn=null;
 		PreparedStatement s=null;
 		try {
-			conn=DBManager.getInstance().getConnection();
+			conn=DBManager.getInstance().getConnection(); //recupero una connessione
+			//creo la query
 			String query="INSERT INTO profilo (Email, Nome,Cognome,Foto,Residenza,Telefono,Interessi, DNascita) VALUES (?,?,?,?,?,?,?,?)";
 			s=conn.prepareStatement(query);
 			s.setString(1, toInsert.getEmail());
@@ -34,7 +35,7 @@ public class ProfiloManager implements ProfiloInterface {
 			if(toInsert.getDataNascita()!=null)
 				date=new java.sql.Date(toInsert.getDataNascita().getTime());
 			s.setDate(8, date);
-			s.execute();
+			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -71,7 +72,36 @@ public class ProfiloManager implements ProfiloInterface {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	public boolean queryDisattivaProfilo(String email){
-		return false;
+		Connection conn=null;
+		Statement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			String query="UPDATE account SET tipo='d' WHERE Email='"+email+"'";
+			s=conn.createStatement();
+			s.executeUpdate(query);
+			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			
+		}
+		
 	}
 	
 	/**
