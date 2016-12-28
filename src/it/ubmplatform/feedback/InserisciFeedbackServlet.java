@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.istack.internal.logging.Logger;
 
+import it.ubmplatform.factory.AbstractFactory;
+import it.ubmplatform.factory.ManagerFactory;
+
 /**
  * Servlet che gestisce l'inserimento di un feedback da parte di un utente
  */
@@ -24,6 +27,7 @@ public class InserisciFeedbackServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ciao");
 		//inizialmente la valutazione sarà uguale a 0 per effettuarne controlli 
 		//in caso di mancata modifica
 		int valutazione = 0;
@@ -34,6 +38,7 @@ public class InserisciFeedbackServlet extends HttpServlet {
 		}catch(Exception e){
 			//la valutazione era a null (valori erano condizionati)
 			//porto alla pagina del profilo?
+			
 		}
 		
 		String descrizione = request.getParameter("descrizioneFeedback");
@@ -47,15 +52,17 @@ public class InserisciFeedbackServlet extends HttpServlet {
 			Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
 			
 			if(inserisciFeedback(newFeedback)){
-				//dispatcher per l'ok
+				System.out.println("OK");
 			}else{
-				//il metodo mi ritorna false.. perché?
+				//il metodo mi ritorna false.. perché
+				System.out.println("NO");
 			}
 		}else{
 			//è successo qualcosa, riporto alla pagina del profilo?
+			System.out.println("ecco");
 		}
 		
-		response.getWriter().write(valutazione + " " + descrizione);
+		//response.getWriter().write(valutazione + " " + descrizione);
 	}
 	
 	/**
@@ -67,9 +74,8 @@ public class InserisciFeedbackServlet extends HttpServlet {
 	 */
 	
 	private boolean inserisciFeedback(Feedback toInsert){
-		FeedbackInterface model = new FeedbackManager();
-		model.queryInserisciFeedback(toInsert);
-		
-		return false;
+		AbstractFactory factory = new ManagerFactory();
+		FeedbackInterface model = factory.createFeedbackManager();
+		return model.queryInserisciFeedback(toInsert);
 	}
 }

@@ -151,8 +151,7 @@
           				</select>
           			
           				<label for="descrizioneFeedback">Descrizione:</label>
-          				<textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="descrizioneFeedback" name="descrizioneFeedback">
-          				</textarea>
+          				<textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="descrizioneFeedback" name="descrizioneFeedback"></textarea>
           			
           			</div>
         		</div>
