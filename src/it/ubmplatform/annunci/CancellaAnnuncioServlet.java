@@ -22,7 +22,7 @@ public class CancellaAnnuncioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session=request.getSession();
     	if(cancellaAnnuncio((int)session.getAttribute("id"))){ //verifico se la disattivazione è riuscita
-    		//rimuovo l'accesso e effettuo redirect alla home
+    		//rimuovo l'annuncio e effettuo redirect alla home
     		session.removeAttribute("id");
     		response.sendRedirect("index.jsp");
     	}

@@ -1,6 +1,7 @@
 package it.ubmplatform.annunci;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
@@ -25,7 +26,31 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 */
 
 	public boolean queryCancellaAnnuncio(int idAnnuncio){
-		return false;
+		Connection conn=null;
+		Statement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			String query="DELETE annuncio WHERE ID='"+idAnnuncio+"'";
+			s=conn.createStatement();
+			s.executeQuery(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			
+		}
 	}
 
 	/**
@@ -35,6 +60,64 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 */
 
 	public boolean queryInserisciAnnuncio(Annuncio toInsert){
+		Connection conn=null;
+		PreparedStatement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection(); //recupero una connessione
+			//creo la query
+			String query="INSERT INTO annuncio (id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			s=conn.prepareStatement(query);
+			s.setInt(1, toInsert.getId());
+			s.setString(2, toInsert.getTitolo());
+			s.setString(3, toInsert.getCategoria());
+			s.setString(4, toInsert.getFacolta());
+			s.setString(5, toInsert.getFoto());
+			if (toInsert.getCategoria().equals("Libro")) { //controllo se è un libro
+				s.setString(6, toInsert.getIsbn());
+				s.setString(7, toInsert.getAutoreLibro());
+				s.setInt(8, toInsert.getEdizione());
+				s.setString(9, toInsert.getMateria());
+				s.setString(10, toInsert.getCondizioni());
+				s.setString(11, toInsert.getDescrizione());
+				s.setDouble(12, toInsert.getPrezzo());
+				s.setString(13, toInsert.getEmail());
+				java.sql.Date date=null;
+				if(toInsert.getDataPubblicazione()!=null)
+					date=new java.sql.Date(toInsert.getDataPubblicazione().getTime());
+				s.setDate(14, date);
+			}
+			else if (toInsert.getCategoria().equals("Appunti")) { //controllo se sono appunti
+				//Non riesco a settare gli altri 3 campi relativi al libro a NULL
+				s.setString(9, toInsert.getMateria());
+				s.setString(10, toInsert.getCondizioni());
+				s.setString(11, toInsert.getDescrizione());
+				s.setDouble(12, toInsert.getPrezzo());
+				s.setString(13, toInsert.getEmail());
+				java.sql.Date date=null;
+				if(toInsert.getDataPubblicazione()!=null)
+					date=new java.sql.Date(toInsert.getDataPubblicazione().getTime());
+				s.setDate(14, date);
+			}
+			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 		return false;
 	}
 
@@ -45,6 +128,63 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 */
 
 	public boolean queryModificaAnnuncio(Annuncio changed){
+		Connection conn=null;
+		PreparedStatement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection(); //recupero una connessione
+			//creo la query
+			String query="INSERT into annuncio (id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			s=conn.prepareStatement(query);
+			s.setInt(1, changed.getId());
+			s.setString(2, changed.getTitolo());
+			s.setString(3, changed.getCategoria());
+			s.setString(4, changed.getFacolta());
+			s.setString(5, changed.getFoto());
+			if (changed.getCategoria().equals("Libro")) { //controllo se è un libro
+				s.setString(6, changed.getIsbn());
+				s.setString(7, changed.getAutoreLibro());
+				s.setInt(8, changed.getEdizione());
+				s.setString(9, changed.getMateria());
+				s.setString(10, changed.getCondizioni());
+				s.setString(11, changed.getDescrizione());
+				s.setDouble(12, changed.getPrezzo());
+				s.setString(13, changed.getEmail());
+				java.sql.Date date=null;
+				if(changed.getDataPubblicazione()!=null)
+					date=new java.sql.Date(changed.getDataPubblicazione().getTime());
+				s.setDate(14, date);
+			}
+			else if (changed.getCategoria().equals("Appunti")) { //controllo se sono appunti
+				s.setString(9, changed.getMateria());
+				s.setString(10, changed.getCondizioni());
+				s.setString(11, changed.getDescrizione());
+				s.setDouble(12, changed.getPrezzo());
+				s.setString(13, changed.getEmail());
+				java.sql.Date date=null;
+				if(changed.getDataPubblicazione()!=null)
+					date=new java.sql.Date(changed.getDataPubblicazione().getTime());
+				s.setDate(14, date);
+			}
+			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 		return false;
 	}
 

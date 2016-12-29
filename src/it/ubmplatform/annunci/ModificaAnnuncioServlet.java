@@ -18,12 +18,8 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
-    public ModificaAnnuncioServlet() {
-        super();
-
-    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	throw new ServletException("GET request not accepted");
+    	
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
