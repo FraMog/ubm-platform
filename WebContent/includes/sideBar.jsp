@@ -34,9 +34,9 @@
         </script>
         <div id="lista" class="panel-collapse collapse">
           <ul class="list-group">
-            <li class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Informatica")%>">Informatica</a></li>
-            <li class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Matematica")%>">Matematica</a></li>
-            <li class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Biologia")%>">Biologia</a></li>
+            <li id="InformaticaListItem" class="list-group-item"><a  href="<%=appendUrl("RicercaAnnuncio", "Informatica")%>">Informatica</a></li>
+            <li id="MatematicaListItem" class="list-group-item"><a  href="<%=appendUrl("RicercaAnnuncio", "Matematica")%>">Matematica</a></li>
+            <li id="BiologiaListItem" class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Biologia")%>">Biologia</a></li>
             <li class="list-group-item"><a href="#">...</a></li>
             <li class="list-group-item"><a href="#">...</a></li>
             <li class="list-group-item"><a href="#">...</a></li>

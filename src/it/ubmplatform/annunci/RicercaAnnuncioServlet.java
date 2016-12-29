@@ -42,6 +42,7 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		try {
 			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, null);
 			request.setAttribute("annunciPerinenti", annunciPertinenti);
+			request.setAttribute("facolta", facolta);
 			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
 			rd.forward(request, response);
 		} catch (BadResearchException e) {
@@ -74,6 +75,10 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		try {
 			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, ordine);
 			request.setAttribute("annunciPerinenti", annunciPertinenti);
+			request.setAttribute("titolo", titolo);
+			request.setAttribute("facolta", facolta);
+			request.setAttribute("categoria", categoria);
+			request.setAttribute("ordine", ordine);
 			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
 			rd.forward(request, response);
 		} catch (BadResearchException e) {
