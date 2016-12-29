@@ -26,10 +26,25 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		super();
 
 	}
+	
+	/**
+	 * Metodo che si riferisce alle requests provenienti dalla sideBar
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		throw new ServletException("Metodo GET non supportato");
+		String facolta= request.getParameter("facolta");
+		
+		try {
+			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(null, facolta, null, null);
+			request.setAttribute("annunciPerinenti", annunciPertinenti);
+		} catch (BadResearchException e) {
+			e.printStackTrace();
+		}
 	}
 
+	
+	/**
+	 * Metodo che si riferisce alle requests provenienti dal navbar
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Logger logger= Logger.getLogger("Logger");
 		logger.setLevel(Level.INFO);
