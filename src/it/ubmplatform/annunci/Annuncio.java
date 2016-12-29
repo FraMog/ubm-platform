@@ -89,6 +89,10 @@ public class Annuncio {
 		return prezzo;
 	}
 	
+	String getCategoria(){
+		return categoria;
+	}
+	
 	void setFoto(String foto) {
 		this.foto = foto;
 	}
@@ -129,7 +133,7 @@ public class Annuncio {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
-	
+
 
 
 	private String foto;

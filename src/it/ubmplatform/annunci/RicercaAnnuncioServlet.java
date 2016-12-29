@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,9 +34,16 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String facolta= request.getParameter("facolta");
 		
+		Annuncio daCercare= new Annuncio();
+		daCercare.setTitolo(null);
+		daCercare.setFacolta(facolta);
+		daCercare.setCategoria(null);
+		
 		try {
-			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(null, facolta, null, null);
+			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, null);
 			request.setAttribute("annunciPerinenti", annunciPertinenti);
+			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
+			rd.forward(request, response);
 		} catch (BadResearchException e) {
 			e.printStackTrace();
 		}
@@ -58,10 +66,16 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		String ordine= request.getParameter("ordine");
 		logger.info("ordine=" + ordine);
 		
+		Annuncio daCercare= new Annuncio();
+		daCercare.setTitolo(titolo);
+		daCercare.setFacolta(facolta);
+		daCercare.setCategoria(categoria);
 		
 		try {
-			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(titolo, facolta, categoria, ordine);
+			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, ordine);
 			request.setAttribute("annunciPerinenti", annunciPertinenti);
+			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
+			rd.forward(request, response);
 		} catch (BadResearchException e) {
 			e.printStackTrace();
 		}
@@ -78,11 +92,11 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 	 * @throws BadResearchException 
 	 * @pre (nome != null OR facolta != null) AND orderBy != null
 	 */
-	private ArrayList<Annuncio> ricercaAnnunci(String titolo, String facolta, String categoria, String orderBy) throws BadResearchException{
+	private ArrayList<Annuncio> ricercaAnnunci(Annuncio daCercare, String orderBy) throws BadResearchException{
 		
 		AbstractFactory factory= new ManagerFactory();
 		AnnuncioInterface annuncioManager= factory.createAnnuncioManager();
-		ArrayList <Annuncio> annunciPertinenti= annuncioManager.queryRicercaAnnuncio(titolo, facolta, categoria, orderBy);
+		ArrayList <Annuncio> annunciPertinenti= annuncioManager.queryRicercaAnnuncio(daCercare, orderBy);
 		return annunciPertinenti;
 		
 	}

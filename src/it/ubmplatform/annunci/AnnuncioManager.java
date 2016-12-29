@@ -57,7 +57,11 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @throws BadResearchException Se vi è un errore nel parametri della ricerca.
 	 */
 
-	public ArrayList<Annuncio> queryRicercaAnnuncio(String titolo, String facolta, String categoria, String orderBy) throws BadResearchException{
+	public ArrayList<Annuncio> queryRicercaAnnuncio(Annuncio daCercare, String orderBy) throws BadResearchException{
+		String titolo= daCercare.getTitolo();
+		String facolta=daCercare.getFacolta();
+		String categoria= daCercare.getCategoria();
+		
 		ArrayList<Annuncio> annunciPertinenti = new ArrayList<Annuncio>();
 		Logger logger= Logger.getLogger("Logger");
 		Connection connection=null;
@@ -113,18 +117,14 @@ public class AnnuncioManager implements AnnuncioInterface {
 			ResultSet resultSet= statement.executeQuery(query);
 
 			while(resultSet.next()){
-				Annuncio annuncio = new Annuncio();
-				annuncio.setId(resultSet.getInt(1));
-				annuncio.setTitoloAnnuncio(resultSet.getString(2));
-				annuncio.setFoto(resultSet.getString(3));
-
-				GregorianCalendar dataPubblicazione= new GregorianCalendar();
-				dataPubblicazione.setTime(resultSet.getDate(4));
-				annuncio.setDataPubblicazione(dataPubblicazione);
-
-				annuncio.setPrezzo(resultSet.getDouble(5));
-				annuncio.setDescrizioneProdotto(resultSet.getString(6));
-				annunciPertinenti.add(annuncio);
+				Annuncio annuncioPertinente = new Annuncio();
+				annuncioPertinente.setId(resultSet.getInt(1));
+				annuncioPertinente.setTitolo(resultSet.getString(2));
+				annuncioPertinente.setFoto(resultSet.getString(3));
+				annuncioPertinente.setDataPubblicazione(resultSet.getDate(4));
+				annuncioPertinente.setPrezzo(resultSet.getDouble(5));
+				annuncioPertinente.setDescrizione(resultSet.getString(6));
+				annunciPertinenti.add(annuncioPertinente);
 			}
 
 			logger.info("size degli array degli annunci pertinenti = " + annunciPertinenti.size());

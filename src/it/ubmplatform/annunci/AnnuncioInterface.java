@@ -9,7 +9,7 @@ public interface AnnuncioInterface {
 	boolean queryCancellaAnnuncio(int idAnnuncio);
 	boolean queryInserisciAnnuncio(Annuncio toInsert);
 	boolean queryModificaAnnuncio(Annuncio changed);
-	ArrayList<Annuncio> queryRicercaAnnuncio(String nomeAnnuncio, String facolta, String categoria, String orderBy) throws BadResearchException;
+	ArrayList<Annuncio> queryRicercaAnnuncio(Annuncio daCercare, String orderBy) throws BadResearchException;
 	Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio);
 
 }
