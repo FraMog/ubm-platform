@@ -34,9 +34,9 @@
         </script>
         <div id="lista" class="panel-collapse collapse">
           <ul class="list-group">
-            <li class="list-group-item"><a href="#">Informatica</a></li>
-            <li class="list-group-item"><a href="#">Matematica</a></li>
-            <li class="list-group-item"><a href="#">Biologia</a></li>
+            <li class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Informatica")%>">Informatica</a></li>
+            <li class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Matematica")%>">Matematica</a></li>
+            <li class="list-group-item"><a href="<%=appendUrl("RicercaAnnuncio", "Biologia")%>">Biologia</a></li>
             <li class="list-group-item"><a href="#">...</a></li>
             <li class="list-group-item"><a href="#">...</a></li>
             <li class="list-group-item"><a href="#">...</a></li>
@@ -46,3 +46,15 @@
         </div>
       </div>
     </aside>
+    
+
+   
+    
+ <%!
+ 
+ private String appendUrl(String servlet, String appendFacolta){
+     
+     return servlet + "?facolta=" + appendFacolta;
+ }
+ 
+ %>   

@@ -1,45 +1,53 @@
 package it.ubmplatform.annunci;
 
+import java.sql.Date;
+
 /**
  * Bean Annuncio che rappresenta l'annuncio nel sistema
  * @author Marco
  *
  */
 public class Annuncio {
+	
 	/**
 	 * Crea un annuncio con le relative informazioni
 	 * @param foto La foto dell'annuncio
 	 * @param edizione L'edizione del prodotto (libro) a cui è riferito l'annuncio
 	 * @param email L'email di chi ha pubblicato l'annuncio
-	 * @param nomeProdotto Il nome del prodotto a cui è riferito l'annuncio
-	 * @param descrizioneProdotto La descrizione del prodotto a cui è riferito l'annuncio
-	 * @param statoProdotto Lo stato del prodotto a cui è riferito l'annuncio
-	 * @param titoloAnnuncio Il titolo dell'annuncio
+	 * @param titolo Il titolo dell'annuncio
+	 * @param descrizione La descrizione del prodotto a cui è riferito l'annuncio
+	 * @param condizioni Lo stato del prodotto a cui è riferito l'annuncio
+	 * @param facolta La facoltà alla quale fa riferimento l'annuncio
+	 * @param categoria La categoria dell'annuncio (libro o appunti)
 	 * @param autoreLibro Eventualmente, l'autore del libro a cui è riferito l'annuncio, null se non è presente/conosciuto
 	 * @param isbn Eventualmente, l'isbn del libro a cui è riferito l'annuncio, null se non è presente/conosciuto
 	 * @param materia La materia a cui è riferito il prodotto dell'annuncio
 	 * @param prezzo Il prezzo del prodotto a cui è riferito l'annuncio
 	 */
-	public Annuncio(String foto, int edizione, String email, String nomeProdotto, String descrizioneProdotto,
-			String statoProdotto, String titoloAnnuncio, String autoreLibro, String isbn, String materia,
-			float prezzo) {
+	public Annuncio(int id, String titolo, String categoria, String facolta, String foto, String isbn, String autoreLibro, int edizione, String materia, String condizioni, String descrizione, double prezzo, String email, Date dataPubblicazione) {
 		this.foto = foto;
 		this.edizione = edizione;
 		this.email = email;
-		this.nomeProdotto = nomeProdotto;
-		this.descrizioneProdotto = descrizioneProdotto;
-		this.statoProdotto = statoProdotto;
-		this.titoloAnnuncio = titoloAnnuncio;
+		this.titolo = titolo;
+		this.descrizione = descrizione;
+		this.facolta = facolta;
+		this.condizioni = condizioni;
+		this.categoria = categoria;
 		this.autoreLibro = autoreLibro;
 		this.isbn = isbn;
 		this.materia = materia;
 		this.prezzo = prezzo;
+		this.dataPubblicazione= dataPubblicazione;
 		
 		//DATA DA SETTARE ---------
 	}
 	
-	
-	
+
+	/**
+	 * Crea un annuncio
+	 */
+	public Annuncio() {
+	}
 	String getFoto() {
 		return foto;
 	}
@@ -52,23 +60,23 @@ public class Annuncio {
 	String getEmail() {
 		return email;
 	}
-	String getNomeProdotto() {
-		return nomeProdotto;
+	String getTitolo() {
+		return titolo;
 	}
-	String getDescrizioneProdotto() {
-		return descrizioneProdotto;
+	String getDescrizione() {
+		return descrizione;
 	}
-	String getStatoProdotto() {
-		return statoProdotto;
+	String getCondizioni() {
+		return condizioni;
 	}
-	String getTitoloAnnuncio() {
-		return titoloAnnuncio;
+	String getFacolta() {
+		return facolta;
 	}
 	String getAutoreLibro() {
 		return autoreLibro;
 	}
-	String getData() {
-		return data;
+	Date getDataPubblicazione() {
+		return dataPubblicazione;
 	}
 	String getIsbn() {
 		return isbn;
@@ -77,8 +85,12 @@ public class Annuncio {
 		return materia;
 	}
 	
-	float getPrezzo() {
+	double getPrezzo() {
 		return prezzo;
+	}
+	
+	String getCategoria(){
+		return categoria;
 	}
 	
 	void setFoto(String foto) {
@@ -87,17 +99,20 @@ public class Annuncio {
 	void setEdizione(int edizione) {
 		this.edizione = edizione;
 	}
-	void setNomeProdotto(String nomeProdotto) {
-		this.nomeProdotto = nomeProdotto;
+	void setTitolo(String titolo) {
+		this.titolo = titolo;
 	}
-	void setDescrizioneProdotto(String descrizioneProdotto) {
-		this.descrizioneProdotto = descrizioneProdotto;
+	void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
-	void setStatoProdotto(String statoProdotto) {
-		this.statoProdotto = statoProdotto;
+	void setCondizioni(String condizioni) {
+		this.condizioni = condizioni;
 	}
-	void setTitoloAnnuncio(String titoloAnnuncio) {
-		this.titoloAnnuncio = titoloAnnuncio;
+	void setFacolta(String facolta) {
+		this.facolta = facolta;
+	}
+	void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 	void setAutoreLibro(String autoreLibro) {
 		this.autoreLibro = autoreLibro;
@@ -108,19 +123,22 @@ public class Annuncio {
 	void setMateria(String materia) {
 		this.materia = materia;
 	}
-	void setPrezzo(float prezzo) {
+	void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+	void setId(int id){
+		this.id=id;
+	}
+	void setDataPubblicazione(Date dataPubblicazione) {
+		this.dataPubblicazione = dataPubblicazione;
 	}
 
 
 
-	/**
-	 * Foto dell'annuncio
-	 */
+
 	private String foto;
-	
 	private int id, edizione;
-	private String email, nomeProdotto, descrizioneProdotto, statoProdotto, titoloAnnuncio, autoreLibro, data, isbn, materia;
-	private float prezzo;
-	
+	private String email, titolo, descrizione, condizioni, facolta, categoria, autoreLibro, isbn, materia;
+	private double prezzo;
+	private Date dataPubblicazione;
 }

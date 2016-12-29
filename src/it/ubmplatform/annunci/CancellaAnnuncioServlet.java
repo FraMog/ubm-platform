@@ -6,6 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import it.ubmplatform.eccezioni.OperationFailedException;
+import it.ubmplatform.factory.AbstractFactory;
+import it.ubmplatform.factory.ManagerFactory;
 
 /**
  * Servlet che si occupa di gestire la cancellazione di un annuncio dal sistema
@@ -13,16 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/CancellaAnnuncioServlet")
 public class CancellaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
-    public CancellaAnnuncioServlet() {
-        super();
-
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session=request.getSession();
+    	if(cancellaAnnuncio((int)session.getAttribute("id"))){ //verifico se la disattivazione è riuscita
+    		//rimuovo l'annuncio e effettuo redirect alla home
+    		session.removeAttribute("id");
+    		response.sendRedirect("index.jsp");
+    	}
+    	else{
+    		throw new OperationFailedException("La cancellazione dell'annuncio non ha avuto successo, riprova più tardi");
+    	}
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+  
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//--
+		doGet(request, response);
 	}
 
 	/**
@@ -34,6 +45,8 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 	 * @post VisualizzaDettagliAnnuncioServlet.visualizzaDettagliAnnuncio(idAnnuncio) == null
 	 */
 	private boolean cancellaAnnuncio(int idAnnuncio){
-		return false;
+		AbstractFactory factory = new ManagerFactory();
+		AnnuncioInterface managerAnnuncio = factory.createAnnuncioManager();
+		return managerAnnuncio.queryCancellaAnnuncio(idAnnuncio);
 	}
 }

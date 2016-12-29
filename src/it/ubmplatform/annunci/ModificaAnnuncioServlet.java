@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.ubmplatform.factory.AbstractFactory;
+import it.ubmplatform.factory.ManagerFactory;
+
 /**
  * Servlet che si occupa della gestione della modifica di un annuncio
  */
@@ -15,14 +18,12 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
-    public ModificaAnnuncioServlet() {
-        super();
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//--
+		
 	}
 
 	/**
@@ -32,7 +33,9 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	 * @pre changed != null
 	 * @invariant VisualizzaDettagliAnnuncioServlet.visualizzaDettagliAnnuncio(changed.getId()) != null
 	 */
-	private int modificaAnnuncio(Annuncio changed){
-		return 0;
+	private boolean modificaAnnuncio(Annuncio changed){
+		AbstractFactory factory = new ManagerFactory();
+		AnnuncioInterface managerAnnuncio = factory.createAnnuncioManager();
+		return managerAnnuncio.queryModificaAnnuncio(changed);
 	}
 }
