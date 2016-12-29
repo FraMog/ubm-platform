@@ -20,7 +20,7 @@
         <img id="profile_picture" class="img-responsive col-sm-2" src="img/default_profile.PNG" alt="Foto del profilo" title="Giovanni Ciampi"/>
         <div class="col-sm-7">
           <h1>Giovanni Ciampi</h1>
-          <h3>E-mail: <a href="mailto:g.ciampi5@studenti.unisa.it">g.ciampi5@studenti.unisa.it</a></h3>
+          <h3>E-mail: <a href="mailto:g.ciampi5@studenti.unisa.it" id="email">g.ciampi5@studenti.unisa.it</a></h3>
           <h3>Telefono: 390 1341704</h3>
           <h3>Nato il 16/12/1995</h3>
           <h3>Residente a Mercato S. Severino</h3>
@@ -51,7 +51,8 @@
             </div>
             
             <div class="col-sm-12">
-              <h5><a data-toggle="modal" data-target="#vediFeedbackModal">Visualizza tutti i Feedback</a></h5>
+            	<!-- data-remote = false non mi fa caricare direttamente il modal al click (deprecato) -->
+              <h5><a href="modalVisualizzaFeedback.html" data-remote="false" data-toggle="modal" data-target="#vediFeedbackModal">Visualizza tutti i Feedback</a></h5>
             </div>
             <div class="col-sm-12">
               <h5>Hai fatto affari con Giovanni? <a data-toggle="modal" data-target="#inserisciFeedbackModal">Inserisci un Feedback!</a></h5>
@@ -112,18 +113,20 @@
    		    <!-- Modal content-->
      		<div class="modal-content">
         		<div class="modal-header">
-          			<button type="button" class="close" data-dismiss="modal">&times;</button>
-          			<h4 class="modal-title">Modal Header</h4>
-        		</div>
-        		<div class="modal-body">
-          			<p>Some text in the modal.</p>
-        		</div>
-       	 		<div class="modal-footer">
-          			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        		</div>
+    				<button type="button" class="close" data-dismiss="modal">&times;</button>
+    				<h4 class="modal-title">Visualizza feedbacks</h4>
+    			</div>
+    			<!-- body caricato dinamicamente con jquery -->
+    			<div class="modal-body" id="modalBody">
+    				<p>No remote</p>
+    			</div>
+
+				<div class="modal-footer">
+    				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
       		</div>
       
-    	</div>
+  		</div>
   	</div>
   	
   	<!-- MODAL INSERISCI FEEDBACK-->
@@ -187,5 +190,6 @@
     	</div>
   	</div>
     
+    <script src="javascript/feedback/caricaModal.js"></script>
   </body>
 </html>

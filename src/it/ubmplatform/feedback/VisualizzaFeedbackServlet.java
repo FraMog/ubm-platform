@@ -9,11 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import it.ubmplatform.factory.AbstractFactory;
+import it.ubmplatform.factory.ManagerFactory;
+
 /**
  * Servlet che gestisce la visualizzazione dei feedback di un utente
  */
 
-@WebServlet("/VisualizzaFeedbackServlet")
+@WebServlet(name = "VisualizzaFeedbackServlet", urlPatterns={"/VisualizzaFeedbackServlet"})
 public class VisualizzaFeedbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -22,10 +27,32 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
         super();
 
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String emailR = request.getParameter("emailR");
+    	ArrayList<Feedback> feedbacks = null;
+    	String responseJson = "{\"state\":\"error\"}";
+    	System.out.println("..");
+    	if(emailR != null){
+    		feedbacks = visualizzaFeedbacks(emailR);
+    		
+    		if(feedbacks != null){
+    			//converto in json e invio
+    			Gson gson = new Gson();
+    			responseJson = gson.toJson(feedbacks);
+    			
+    			
+    		}else{
+    			//il metodo ritorna null. perché?
+    		}
+    	}else{
+    		
+    	}
+    	
+    	response.getWriter().write(responseJson);
+    }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//--
+		doGet(request, response);
 	}
 	
 	/**
@@ -35,7 +62,10 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
 	 * @pre emailR != null
 	 */
 	private ArrayList<Feedback> visualizzaFeedbacks(String emailR){
-		return null;
+		//istanzio un manager factory, che mi fornirà il metodo per la creazione del feedback manager
+		AbstractFactory factory = new ManagerFactory();
+		FeedbackInterface model = factory.createFeedbackManager();
+		return model.queryVisualizzaFeedbacks("example@studenti.unisa.it");
 	}
 
 }

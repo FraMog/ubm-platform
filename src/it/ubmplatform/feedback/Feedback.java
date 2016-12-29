@@ -22,11 +22,24 @@ public class Feedback {
 		descrizione = desc;
 		emailP = emailPublisher;
 		emailR = emailReceiver;
-		
-		//SETTARE LA DATA-----
 		data = new Date();
 	}
 	
+	/**
+	 * Crea un feedback con valutazione (int da 1 a 5) e descrizione
+	 * SENZA EMAIL DI CHI RICEVE IL FEEDBACK (in caso di visualizza feedback)
+	 * @param val La valutazione assegnata
+	 * @param desc La descrizione assegnata
+	 * @param emailPublisher L'email di chi ha pubblicato il feedback
+	 * @pre 0 &lt; val &lt; 6
+	 */
+	
+	Feedback(int val, String desc, String emailPublisher, Date dataPublished){
+		valutazione = val;
+		descrizione = desc;
+		emailP = emailPublisher;
+		data = dataPublished;
+	}
 	
 	int getValutazione() {
 		return valutazione;
@@ -50,6 +63,10 @@ public class Feedback {
 		return data;
 	}
 
+	void setData(Date data) {
+		this.data = data;
+	}
+	
 	void setValutazione(int valutazione) {
 		this.valutazione = valutazione;
 	}

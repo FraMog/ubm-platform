@@ -1,10 +1,12 @@
 package it.ubmplatform.feedback;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
 
 import it.ubmplatform.database.DBManager;
 
@@ -42,31 +44,34 @@ public class FeedbackManager implements FeedbackInterface {
 			ps.setString(4, toInsert.getDescrizione());
 			
 			//la data in sql (java.sql.Date)
-			ps.setDate(5, new Date(toInsert.getData().getTime()));
+			ps.setDate(5, new java.sql.Date(toInsert.getData().getTime()));
 			
 			ps.execute();
 			
+
 			//ritorno true se il metodo execute è andato a buon fine
-			return true;
+			//dopo aver provato la chiusura
+			try{
+				close(conn);
+				close(ps);
+				return true;
+			}catch(Exception e){
+				return true;
+			}
+			
+		
 		}catch(SQLException e){
 			e.printStackTrace();
-			if(conn != null){
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					return false;
-				}
+			
+			try{
+				close(conn);
+				close(ps);
+				return false;
+			}catch(Exception e1){
+				return false;
 			}
 			
-			if(ps != null){
-				try{
-					ps.close();
-				}catch(SQLException e1) {
-					return false;
-				}
-			}
 			
-			return false;
 		}
 		
 	}
@@ -88,6 +93,54 @@ public class FeedbackManager implements FeedbackInterface {
 	 */
 	
 	public ArrayList<Feedback> queryVisualizzaFeedbacks(String emailR){
-		return null;
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		String queryVisualizzaFeedback = "SELECT EmailP, Valutazione, Descrizione, DataPubblicazione "
+				+ "FROM Feedback "
+				+ "WHERE EmailR = \"" + emailR + "\"";
+		try{
+			conn = DBManager.getInstance().getConnection();
+			st = conn.createStatement();
+			
+			//eseguo la query e memorizzo i risultati nel result set
+			rs = st.executeQuery(queryVisualizzaFeedback);
+			
+			ArrayList<Feedback> feedbacks = new ArrayList<Feedback>();
+			
+			//valuto i risultati.. se c'è qualcosa.. 
+			if(rs.next()){
+				do{
+					String email = rs.getString(1);
+					int val = rs.getInt(2);
+					String desc = rs.getString(3);
+					java.util.Date data = new java.util.Date(rs.getDate(4).getTime()); 
+					
+					feedbacks.add(new Feedback(val, desc, email, data));
+				}while(rs.next());
+				
+				return feedbacks;
+			}else{
+				//non ci sono risultati (no feedback)
+				return null;
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			try {
+				close(conn);
+				close(st);
+				close(rs);
+				return null;
+			} catch (Exception e1) {
+				return null;
+			}
+		}
+	}
+	
+	private void close(AutoCloseable closing) throws Exception{
+		if(closing != null){
+			closing.close();
+		}
 	}
 }
