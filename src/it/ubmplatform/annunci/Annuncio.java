@@ -39,7 +39,6 @@ public class Annuncio {
 		this.prezzo = prezzo;
 		this.dataPubblicazione= dataPubblicazione;
 		
-		//DATA DA SETTARE ---------
 	}
 	
 
@@ -48,90 +47,97 @@ public class Annuncio {
 	 */
 	public Annuncio() {
 	}
-	String getFoto() {
+	public String getFoto() {
 		return foto;
 	}
-	int getId() {
+	public int getId() {
 		return id;
 	}
-	int getEdizione() {
+	public int getEdizione() {
 		return edizione;
 	}
-	String getEmail() {
+	public String getEmail() {
 		return email;
 	}
-	String getTitolo() {
+	public String getTitolo() {
 		return titolo;
 	}
-	String getDescrizione() {
+	public String getDescrizione() {
 		return descrizione;
 	}
-	String getCondizioni() {
+	public String getCondizioni() {
 		return condizioni;
 	}
-	String getFacolta() {
+	public String getFacolta() {
 		return facolta;
 	}
-	String getAutoreLibro() {
+	public String getAutoreLibro() {
 		return autoreLibro;
 	}
-	Date getDataPubblicazione() {
+	public Date getDataPubblicazione() {
 		return dataPubblicazione;
 	}
-	String getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
-	String getMateria() {
+	public String getMateria() {
 		return materia;
 	}
 	
-	double getPrezzo() {
+	public double getPrezzo() {
 		return prezzo;
 	}
 	
-	String getCategoria(){
+	public String getCategoria(){
 		return categoria;
 	}
 	
-	void setFoto(String foto) {
+	public void setFoto(String foto) {
 		this.foto = foto;
 	}
 	void setEdizione(int edizione) {
 		this.edizione = edizione;
 	}
-	void setTitolo(String titolo) {
+	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
-	void setDescrizione(String descrizione) {
+	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	void setCondizioni(String condizioni) {
+	public void setCondizioni(String condizioni) {
 		this.condizioni = condizioni;
 	}
-	void setFacolta(String facolta) {
+	public void setFacolta(String facolta) {
 		this.facolta = facolta;
 	}
-	void setCategoria(String categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	void setAutoreLibro(String autoreLibro) {
+	public void setAutoreLibro(String autoreLibro) {
 		this.autoreLibro = autoreLibro;
 	}
-	void setIsbn(String isbn) {
+	public  void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	void setMateria(String materia) {
+	public void setMateria(String materia) {
 		this.materia = materia;
 	}
-	void setPrezzo(double prezzo) {
+	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
-	void setId(int id){
+	public void setId(int id){
 		this.id=id;
 	}
-	void setDataPubblicazione(Date dataPubblicazione) {
+	public void setDataPubblicazione(Date dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
 	}
+
+	
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 
 
 

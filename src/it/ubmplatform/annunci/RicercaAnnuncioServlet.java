@@ -41,7 +41,7 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		
 		try {
 			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, null);
-			request.setAttribute("annunciPerinenti", annunciPertinenti);
+			request.setAttribute("annunciPertinenti", annunciPertinenti);
 			request.setAttribute("facolta", facolta);
 			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
 			rd.forward(request, response);
@@ -74,7 +74,7 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		
 		try {
 			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, ordine);
-			request.setAttribute("annunciPerinenti", annunciPertinenti);
+			request.setAttribute("annunciPertinenti", annunciPertinenti);
 			request.setAttribute("titolo", titolo);
 			request.setAttribute("facolta", facolta);
 			request.setAttribute("categoria", categoria);

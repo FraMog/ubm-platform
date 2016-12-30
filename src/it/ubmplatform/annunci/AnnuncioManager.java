@@ -33,6 +33,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 			String query="DELETE annuncio WHERE ID='"+idAnnuncio+"'";
 			s=conn.createStatement();
 			s.executeQuery(query);
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -118,7 +119,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 					e.printStackTrace();
 				}
 		}
-		return false;
+
 	}
 
 	/**
@@ -185,7 +186,6 @@ public class AnnuncioManager implements AnnuncioInterface {
 					e.printStackTrace();
 				}
 		}
-		return false;
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		Connection connection=null;
 		try {
 			connection = DBManager.getInstance().getConnection();
-			String query= "SELECT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione FROM annuncio ";
+			String query= "SELECT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, Email FROM annuncio ";
 
 			//Se cioè sto cercando usando il form di ricerca nel navbar
 			if (titolo!=null && categoria!=null && orderBy!=null){
@@ -264,6 +264,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				annuncioPertinente.setDataPubblicazione(resultSet.getDate(4));
 				annuncioPertinente.setPrezzo(resultSet.getDouble(5));
 				annuncioPertinente.setDescrizione(resultSet.getString(6));
+				annuncioPertinente.setEmail(resultSet.getString(7));
 				annunciPertinenti.add(annuncioPertinente);
 			}
 
