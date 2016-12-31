@@ -20,6 +20,12 @@
 <body>
 	<%@ include file="includes/navbarNonLoggato.jsp" %>
 	<%@ include file="includes/sideBar.jsp" %>
+	<%@ page import ="java.sql.*" %>
+<%@ page import ="javax.sql.*" %>
+ 
+
+
+
 	<section class="col-sm-10" id="section">
 		<div class="row">
 			<img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG"
@@ -52,7 +58,15 @@
 					
 				<tr>
 			</table>
-			<center><button onclick="#">Invia</button></center>
+			<center><button onclick="callJSP()">Invia</button></center>
+			<script language="JavaScript">
+			function callJSP(){
+				var emai=document.getElementById("email");
+				var pass=document.getElementById("password");
+				var jspcall="prova_Db.jsp?email="+emai.value+"&password="+pass.value;
+				window.location.href=jspcall;
+			}
+			</script>
 		</div>
 	</section>
 	<%@ include file="includes/footer.jsp" %>

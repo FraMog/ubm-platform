@@ -25,8 +25,11 @@
       <div id="confermareg" class="panel panel-default">
         <h4>Abbiamo inviato una e-mail al tuo indirizzo.</h4>
         <h4>Inserisci il codice di verifica</h4>
-        <input>
-        <button>Invia</button>
+	<input type="text" name="cod" id="cod" />  
+	
+      <button onclick="prova()">Invia</button>
+           <script type="text/javascript" src="javascript/email/check.js"></script>
+        
       </div>
     </section>
     <%@ include file="includes/footer.jsp" %>
