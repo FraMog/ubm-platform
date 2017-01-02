@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%
+	String session_account = (String)session.getAttribute("accountNonTrovato"); 
+	String session_data = (String)session.getAttribute("dataInvalidazioneNonTrovata");
+ 	String session_bannato = (String)session.getAttribute("accountBannato"); 
+ 	String session_logout = (String)session.getAttribute("logoutErrato"); 
+%>
 <!DOCTYPE html>
 <html lang="it">
   <head>
@@ -11,11 +16,46 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    onload = function()
+    {
+    	var session_account_obj= '<%=session_account%>';
+    	var session_data_obj= '<%=session_data%>';
+    	var session_bannato_obj= '<%=session_bannato%>';
+    	var session_logout_obj= '<%=session_logout%>';
+    	
+    	if (session_account_obj.equals("true"))
+    	{
+    		alert ("Account non trovato. E-mail e/o password errate.");
+    		session.setAttribute("accountNonTrovato", null);
+    	}
+    	
+    	if (session_data_obj).equals("true"))
+    	{
+    		alert ("Il tuo account è stato invalidato, ma c'è un problema nel recupero della data di invalidazione. Riprova per verfiicare se è possibile l'accesso alla piattaforma.");
+    		session.setAttribute("dataInvalidazioneNonTrovata", null);
+    	}
+    	
+    	if (session_bannato_obj.equals("true"))
+    	{
+    		alert ("Il tuo account è stato bannato dall'ammministratore: non puoi accedere alla piattaforma.");
+    		session.setAttribute("accountBannato", null);
+    	}
+    	
+    	if (session_logout_obj.equals("true"))
+    	{
+    		alert ("Impossibile effettuare il logout. Riprovare tra qualche minuto.");
+    		session.setAttribute("logoutErrato", null);
+    	}
+    }
+    </script>
   </head>
   <body>
-  	<%if(session.getAttribute("email")==null) {%>
+  	<%if(session.getAttribute("user")==null) {%>
     	<%@ include file="includes/navbarNonLoggato.jsp" %>
-    <%} else {%>
+    <%} else if (session.getAttribute("user").equals("admin")) {%>
+	<%@ include file="includes/navbarAdmin.jsp" %>
+	<%} else {%>
     	<%@ include file="includes/navbarLoggato.jsp" %>
     <%} %>
     <%@ include file="includes/sideBar.jsp" %>
@@ -24,7 +64,7 @@
         <img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG" alt="UBM Platform"/>
         <div class="col-sm-10">
           <h1>Benvenuto <%if (session.getAttribute("name")!=null)%><%=session.getAttribute("name")%></h1>
-          <%if (session.getAttribute("email")==null)%><h3>Iscriviti subito per poter acquistare e vendere materiale universitario</h3>
+          <%if (session.getAttribute("user")==null)%><h3>Iscriviti subito per poter acquistare e vendere materiale universitario</h3>
         </div>
       </div>
       <div id="cont_ordine" class="container-fluid">
