@@ -35,7 +35,7 @@
                  </div>
               </div>
             </li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="http://localhost:8080/UBM-Platform/LogoutServlet"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
       </div>
