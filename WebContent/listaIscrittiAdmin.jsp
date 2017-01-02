@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="java.util.*,it.ubmplatform.account.Account"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -38,9 +39,14 @@
 					</tr>
 				</thead>
 				<tbody>
+					<%ArrayList<Account> lista = (ArrayList) request.getAttribute("lista");
+					int i=1;%>
+					<%System.out.println(lista.size());%>
+		//if
+					<%for (Account p : lista) {%>
 					<tr>
-						<th scope="row">1</th>
-						<td>m.memoli39@studenti.unisa.it</td>
+						<th scope="row"><%=i++ %></th>
+						<td><%=p.getEmail()%></td>
 						<td><button type="button" class="btn btn-default">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button></td>
@@ -49,28 +55,9 @@
 							</button>
 							</button></td>
 					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob@studenti.unisa.it</td>
-						<td><button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button></td>
-						<td><button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-							</button>
-							</button></td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>Larry@studenti.unisa.it</td>
-						<td><button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button></td>
-						<td><button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-							</button>
-							</button></td>
-					</tr>
+					<%
+						}
+					%>
 				</tbody>
 			</table>
 			</table>
