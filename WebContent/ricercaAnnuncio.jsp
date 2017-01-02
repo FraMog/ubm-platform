@@ -15,10 +15,10 @@
   	<link rel="stylesheet" href="css/stile.css">
   </head>
   <body>
-  	<%if(session.getAttribute("user")==null) {%>
-    	<%@ include file="includes/navbarNonLoggato.jsp" %>
-    <%} else if(session.getAttribute("admin")!=null){%>
+  	<%if(session.getAttribute("user")!=null) {%>
     	<%@ include file="includes/navbarLoggato.jsp" %>
+    <%} else if(session.getAttribute("admin")!=null){%>
+    	<%@ include file="includes/navbarAdmin.jsp" %>
     <%} else {%>
     	<%@ include file="includes/navbarNonLoggato.jsp" %>
     <%} %>
