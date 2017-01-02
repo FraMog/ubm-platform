@@ -1,5 +1,7 @@
 package it.ubmplatform.account;
 
+import java.util.GregorianCalendar;
+
 /**
  * Bean Account che rappresenta l'account all'interno del sistema. Contiene le informazioni relative all'account (email, password, tipo)
  * @author Marco
@@ -15,9 +17,11 @@ public final class Account {
 	public Account(String newEmail, String pw){
 		email = newEmail;
 		password = pw;
-		tipo = 'R';
+		tipo = "R";
+		dataInvalidazione = null;
 	}
 	
+
 	public String getEmail() {
 		return email;
 	}
@@ -26,15 +30,28 @@ public final class Account {
 		return password;
 	}
 
-	public char getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 
+	public GregorianCalendar getDataInvalidazione() {
+		return dataInvalidazione;
+	}
+
+	public void setDataInvalidazione(GregorianCalendar dataInvalidazione) {
+		this.dataInvalidazione = dataInvalidazione;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
-	
+
+	private GregorianCalendar dataInvalidazione;
 	/**
 	 * Il tipo dell'account (Bannato, Invalidato, Regolare)
 	 */
-	private char tipo;
+	private String tipo;
 	private String email, password;
+
 }
