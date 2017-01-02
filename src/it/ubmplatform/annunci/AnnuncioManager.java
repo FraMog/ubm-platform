@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 
 import it.ubmplatform.database.DBManager;
+import it.ubmplatform.eccezioni.BadAnnuncioIdException;
 import it.ubmplatform.eccezioni.BadResearchException;
 
 /**
@@ -292,7 +293,55 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
 	 * @return L'annuncio relativo all'id passato, null in caso di errore
 	 */
-	public Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio){
-		return null;
+	/**
+	 * Si occupa dell'interrogazione al database per la visualizzazione dei dettagli di un annuncio
+	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
+	 * @return L'annuncio relativo all'id passato, null in caso di errore
+	 * @throws BadAnnuncioIdException Se all'id passato in input non corrisponde nessun annuncio nel database
+	 */
+	public Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio) throws BadAnnuncioIdException{
+		//annuncio 
+		
+		Logger logger= Logger.getLogger("Logger");
+		Connection connection=null;
+		try {
+			connection = DBManager.getInstance().getConnection();
+			String query= "SELECT ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione FROM annuncio WHERE ID="+idAnnuncio;
+			logger.info(query);
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			if (!resultSet.next() ) {
+			    throw new BadAnnuncioIdException("Non è stato trovato un annuncio con id = " + idAnnuncio + "!");
+			} else {
+			   Annuncio annuncioDettagliato= new Annuncio();
+			   annuncioDettagliato.setId(resultSet.getInt(1));
+			   annuncioDettagliato.setTitolo(resultSet.getString(2));
+			   annuncioDettagliato.setCategoria(resultSet.getString(3));
+			   annuncioDettagliato.setFacolta(resultSet.getString(4));
+			   annuncioDettagliato.setFoto(resultSet.getString(5));
+			   annuncioDettagliato.setIsbn(resultSet.getString(6));
+			   annuncioDettagliato.setAutoreLibro(resultSet.getString(7));
+			   annuncioDettagliato.setEdizione(resultSet.getInt(8));
+			   annuncioDettagliato.setMateria(resultSet.getString(9));
+			   annuncioDettagliato.setCondizioni(resultSet.getString(10));
+			   annuncioDettagliato.setDescrizione(resultSet.getString(11));
+			   annuncioDettagliato.setPrezzo(resultSet.getDouble(12));
+			   annuncioDettagliato.setEmail(resultSet.getString(13));
+			   annuncioDettagliato.setDataPubblicazione(resultSet.getDate(14));
+			   return annuncioDettagliato;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 }

@@ -11,17 +11,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
+  	<script type="text/javascript" src="javascript/annunci/loadlightboxImmagini.js"></script>
   	<link rel="stylesheet" href="css/stile.css">
   </head>
   <body>
-  	<%if(session.getAttribute("email")==null) {%>
+  	<%if(session.getAttribute("user")==null) {%>
     	<%@ include file="includes/navbarNonLoggato.jsp" %>
-    <%} else {%>
+    <%} else if(session.getAttribute("admin")!=null){%>
     	<%@ include file="includes/navbarLoggato.jsp" %>
+    <%} else {%>
+    	<%@ include file="includes/navbarNonLoggato.jsp" %>
     <%} %>
-    
-    
     <%@ include file="includes/sideBar.jsp" %>
+    <%ArrayList <Annuncio> annunciPertinenti= (ArrayList<Annuncio>) request.getAttribute("annunciPertinenti"); %>
+    
     <%-- Se sto cercando mostrando gli annunci di una facoltà allora seleziono nel sideBar la facoltà scelta --%>
     <%if (request.getAttribute("titolo")==null && request.getAttribute("facolta")!=null && request.getAttribute("categoria")==null && request.getAttribute("ordine")==null){%>
     <script type="text/javascript"> 
@@ -36,38 +39,114 @@
         <div class="col-sm-10">
           <%if (request.getAttribute("titolo")!=null && request.getAttribute("facolta")!=null && request.getAttribute("categoria")!=null && request.getAttribute("ordine")!=null){%><h1>Hai cercato <b><%=request.getAttribute("titolo")%></b></h1>
          <h5 style="opacity:0.7;">Categoria: <b><%=request.getAttribute("categoria")%></b>  Facolta: <b><%=request.getAttribute("facolta")%></b></h5>
-         <%}  else if (request.getAttribute("facolta")!=null){%><h3 style="opacity:0.7;">Stai visualizzando gli annunci pubblicati in: <b><%=request.getAttribute("facolta")%></b></h3><%} %>
+         <%}  else if (request.getAttribute("facolta")!=null){%><h3 style="opacity:0.7;">Ultimi annunci pubblicati nella facoltà di: <b><%=request.getAttribute("facolta")%></b></h3><h5 style="opacity:0.7;">Cerca annunci in questa facolta</h5><%} %>
         </div>
       </div>
       
       
-      <div class="row">
-      <div id="cont_ordine" class="container-fluid">
 
-      
-        <form class="pull-left form-inline" action="#" method="get">
+      <div id="cont_ordine" class="container-fluid" style="padding-left:0px;">
+
+        <%if (request.getAttribute("titolo")!=null && request.getAttribute("facolta")!=null && request.getAttribute("categoria")!=null && request.getAttribute("ordine")!=null){%>
+        <form id="riordinaRisultati" class="form-inline col-xs-12" action="RicercaAnnuncio" method="post">
           <div class="form-group">
             <label class="control-label" for="ordine">Ordina per </label>
-            <select id="ordine" class="form-control" name="ordine">
-            	<option value="data">Più recenti</option>
-              <option value="prezzo">Prezzo migliore</option>
+            <select id="ordine" class="form-control" name="ordine" onchange="riordina()">
+               <% if (request.getAttribute("ordine").equals("DataPubblicazione")){ %>
+            	<option value="DataPubblicazione" selected="selected">Più recenti</option>
+              <option value="Prezzo">Prezzo migliore</option>
+              <%} else { %>
+              <option value="DataPubblicazione">Più recenti</option>
+              <option value="Prezzo"  selected="selected">Prezzo migliore</option>
+              <%} %>
             </select>
           </div>
         </form>
-
-	<%--L'indice paginator --%>
-	<div id="show_paginator" class="pull-right"></div>
-
+        <%} else if (request.getAttribute("facolta")!=null){%> <%--Se sono giunto a questa pagina basandomi su mostra annunci facoltà, devo poter ricercare annunci in questa sottosezione --%>
+           <form class="navbar-form col-xs-12" action="RicercaAnnuncio" method="post">
+            <div class="form-group">
+              <input name="titolo" type="text" class="form-control" placeholder="Search" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
+            </div>
+           
+            <div class="form-group">
+              <select class="form-control" name="categoria">
+              	<option value="tutto" selected="selected">Tutto</option>
+                <option value="libro">Libro</option>
+                <option value="appunti">Appunti</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-left:10px">
+              <div class="radio" style="margin-right:10px">
+                <label><input type="radio" name="ordine" value="Prezzo" checked="true"> Prezzo migliore</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="ordine" value="DataPubblicazione"> Più recenti</label>
+              </div>
+            </div>
+            <input type="hidden" name="facolta" value="<%=request.getAttribute("facolta")%>">
+            <input type="submit" class="btn btn-default" value="Cerca" style="margin-left:20px"/>
+</form>
+        <%} %>
+	
+	<div class="col-xs-12 pull-right" id="divMostraSizeRisultatiRiserca" style="text-align:right;"><h4>Annunci trovati: <b><%=annunciPertinenti.size()%></b></h4></div>
  
    </div>
-</div>
+   
+<%--ENDROW --%>
 
-<%ArrayList <Annuncio> annunciPertinenti= (ArrayList<Annuncio>) request.getAttribute("annunciPertinenti"); %>
+
 
 
 
 <%-- Il contenuto dei paginator che cambia dinamicamente --%>
 <div id="dynamic_content"></div>
+<%--L'indice paginator --%>
+	<div id="show_paginator" class="pull-right"></div>
+
+
+  <%for(int i=0; i<annunciPertinenti.size();i++){%>
+      
+      <%if (i%5==0){ %> <%--ogni 5 elementi devo creare un nuovo div da mostrare in paginazione --%>
+   <div style="display:none;" class= "containerResearchResults" id='<%="containerResearchResults" + (i/5 + 1)%>' >
+      <%} %>
+      <div id="content" class="panel panel-default">
+        <div class="panel-body risultato">
+     
+        <%if (request.getAttribute("user")!=null && request.getAttribute("user").equals(annunciPertinenti.get(i).getEmail())){ %>
+          <div class="row">
+          <div class="col-xs-4 col-md-8"></div>
+          <a class="btn btn-secondary col-xs-4 col-md-2" href='<%="ModificaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>'>Modifica</a>
+           <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>      
+        </div>
+        <%} else if (request.getAttribute("admin")!=null){ %>
+         <div class="row">
+         <div class="col-xs-8 col-md-10"></div>
+           <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>      
+         </div>
+        <%} %>
+        <div class="row">
+          <div class="col-xs-12 col-sm-2"><img src="<%=annunciPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
+          <div class="col-xs-12 col-sm-8">
+          
+            <h4><a href='<%="VisualizzaDettagliAnnuncio?annuncioID=" + annunciPertinenti.get(i).getId()%>'><%= annunciPertinenti.get(i).getTitolo()%></a></h4>
+            <p><%= annunciPertinenti.get(i).getDescrizione()%></p>
+          </div>
+          <div class="col-xs-12 col-sm-2 pull-right">
+            <h4>Prezzo: <%= annunciPertinenti.get(i).getPrezzo()%></h4>
+            <% java.sql.Date data= annunciPertinenti.get(i).getDataPubblicazione(); %>
+            <p>Data pubblicazione: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0,10)%></p>
+          </div>
+        </div>
+        </div>
+      </div>
+      
+      <%if (i%5==4 || i==(annunciPertinenti.size()-1)){ %> <%--ogni 5 elementi devo creare un nuovo div da mostrare in paginazione, oppure devo farlo quando sono arrivato all'ultimo elemento --%>
+  </div>    
+      <%} %>
+      
+    <%} %><%-- ENDFOR --%>
+    
+    
 <script>
 function loadBootpagAfterLoadingPage(){
   $('#show_paginator').bootpag({
@@ -76,31 +155,61 @@ function loadBootpagAfterLoadingPage(){
       maxVisible: 5
   }).on('page', function(event, num)
   {
-     $("#dynamic_content").html("Page " + num); // or some ajax content loading...
+     $("#dynamic_content").html($("#containerResearchResults" + num).html()); 
+     loadModal();
   });
+  
+  $("#dynamic_content").html($("#containerResearchResults1").html()); 
 }
-  window.onload(loadBootpagAfterLoadingPage());
-  </script> 
 
-  <%for(int i=0; i<annunciPertinenti.size();i++){%>
-      <div id="content" class="panel panel-default">
-        <div class="panel-body risultato">
-          <img src="img/annunci/libro.jpg" alt="Foto" class="img-responsive col-sm-2">
-          <div class="col-sm-8">
-            <h4><a href="#"><%= annunciPertinenti.get(i).getTitolo()%></a></h4>
-            <p><%= annunciPertinenti.get(i).getDescrizione()%></p>
-          </div>
-          <div class="col-sm-2 pull-right">
-            <h4>Prezzo: <%= annunciPertinenti.get(i).getPrezzo()%></h4>
-            <% java.sql.Date data= annunciPertinenti.get(i).getDataPubblicazione(); %>
-            <p>Data pubblicazione: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0,10)%></p>
-          </div>
-        </div>
+  window.onload(loadBootpagAfterLoadingPage());
+
+	  
+  </script> 
+    
+  
+  
+<%@include file="includes/lightboxImmagini.jsp" %>
+          
+          
+
+
+<script type="text/javascript">
+window.onload(loadModal());
+</script>        
+          
         
-      </div>
-      <%} %>
-      
-    </section>
+        
+<script>
+
+function riordina(){
+	var inputTitolo = $("<input>")
+           .attr("type", "hidden")
+           .attr("name", "titolo").val('<%=request.getAttribute("titolo")%>');
+           $('#riordinaRisultati').append($(inputTitolo));
+    var inputFacolta = $("<input>")
+           .attr("type", "hidden")
+           .attr("name", "facolta").val('<%=request.getAttribute("facolta")%>');
+           $('#riordinaRisultati').append($(inputFacolta));              
+    var inputCategoria = $("<input>")
+        .attr("type", "hidden")
+        .attr("name", "categoria").val('<%=request.getAttribute("categoria")%>');
+        $('#riordinaRisultati').append($(inputCategoria));
+     
+        
+    $('#riordinaRisultati').submit();
+           
+}
+
+
+</script>          
+          
+          
+</section>
+    
+ 
+    
+    
     <%@ include file="includes/footer.jsp" %>
   </body>
 </html>
