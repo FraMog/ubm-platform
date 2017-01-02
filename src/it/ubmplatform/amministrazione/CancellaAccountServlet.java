@@ -1,11 +1,16 @@
 package it.ubmplatform.amministrazione;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import it.ubmplatform.eccezioni.OperationFailedException;
+import it.ubmplatform.factory.AbstractFactory;
+import it.ubmplatform.factory.ManagerFactory;
 
 /**
  * Servlet che gestisce la cancellazione di utente da parte di un amministratore
@@ -13,17 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/CancellaAccountServlet")
 public class CancellaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-    public CancellaAccountServlet() {
-        super();
-     
-    }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   	if(cancellaAccount(request.getParameter("email"))){ 
+    		//rimuovo l'account e effettuo redirect alla home
+    		request.removeAttribute("email");
+    		response.sendRedirect("index.jsp");
+		} 
+		else{
+			throw new OperationFailedException("La cancellazione dell'account non ha avuto successo, riprova più tardi");
+		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//--
+		doGet(request, response);
 	}
-	
+
 	/**
 	 * Il metodo che si occupa di effettuare la cancellazione dell'utente, smistandolo all'{@link AmministrazioneManager}
 	 * @param email L'email dell'utente da cancellare
@@ -31,7 +41,9 @@ public class CancellaAccountServlet extends HttpServlet {
 	 * @pre email != null
 	 */
 	private boolean cancellaAccount(String email){
-		return false;
+		AbstractFactory factory = new ManagerFactory();
+		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
+		return managerAmministrazione.queryCancellaAccount(email);
 	}
 
 }
