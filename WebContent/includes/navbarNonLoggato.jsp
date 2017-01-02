@@ -16,14 +16,14 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
-                <form class="form" action="#">
+                <form class="form" action="http://localhost:8080/UBM-Platform/LoginServlet" method="POST">
                   <div class="form-group">
                     <input name="username" type="text" class="form-control" placeholder="e-mail">
                   </div>
                   <div class="form-group">
-                    <input name="password" type="password" class="form-control" placeholder="Password"><br>
+                    <input name="password" type="password" class="form-control" placeholder="password"><br>
                   </div>
-                  <a href="recuperaPassword.jsp">recupera password</a>
+                  <a href="recuperaPassword.jsp">Password dimenticata?</a>
                   <div class="checkbox">
                     <label><input type="checkbox">Remember me</label>
                   </div>
