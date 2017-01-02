@@ -1,11 +1,12 @@
 function prova(){
+				var txt1=document.getElementById("cod");
+				$.ajax({
+					  type: "POST",
+					  url: 'codiceVerifica.jsp',
+					  data: { 'codice_locale': txt1.value },
 
-				var cod=document.getElementById("cod");
-				var cod2='<%= session.getAttribute("codice") %>';
-					
-        		if(cod.value==cod2.value)
-        			alert("CODICE OK");
-        		else
-        			alert("CODICE ERRATO");
+					});
+				document.location.href ="codiceVerifica.jsp?codice_locale="+txt1.value; 
+				console.log(txt1.value);
 }
         		

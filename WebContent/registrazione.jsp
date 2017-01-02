@@ -67,6 +67,15 @@
 				window.location.href=jspcall;
 			}
 			</script>
+			<center><button onclick="resendPIN()">Reinvia PIN</button></center>
+			<script languare="Javascript">
+				function resendPIN(){
+					var txt1=document.getElementById("email");
+					
+					var jspcall="saveSession.jsp?dest="+txt1.value;
+					window.location.href=jspcall;
+				}
+			</script>
 		</div>
 	</section>
 	<%@ include file="includes/footer.jsp" %>

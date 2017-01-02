@@ -25,13 +25,49 @@
       <div id="confermareg" class="panel panel-default">
         <h4>Abbiamo inviato una e-mail al tuo indirizzo.</h4>
         <h4>Inserisci il codice di verifica</h4>
-	<input type="text" name="cod" id="cod" />  
+	<input type="text" name="cod" id="cod" onblur="empty_pin()" />  
 	
       <button onclick="prova()">Invia</button>
            <script type="text/javascript" src="javascript/email/check.js"></script>
-        
+                      <script type="text/javascript" src="javascript/email/empty_pin.js"></script>
+           
+       	<%@ page import ="java.sql.*" %>
+<%@ page import ="javax.sql.*" %>	
+        <%	int codice_locale;
+        	int cod_sessione;
+        	//if(codice_locale==cod_sessione)
+        		//	out.print("CODICE RICEVUTO");
+        	//else
+        		//out.print("CODICE NON RICEVUTO");
+        	try{
+        	codice_locale=Integer.parseInt(request.getParameter("codice_locale")); 
+        	cod_sessione=(int)session.getAttribute("codice");
+        //DEBUG	out.print("codice-->"+codice_locale+"\t cod sess= "+cod_sessione); 
+    		String email=(String) session.getAttribute("indirizzo");
+         	//DEBUG out.print("EMAIL = "+email);
+
+        	 if (codice_locale==cod_sessione){
+             	// DEBUG out.print("CODICE OK");
+             	//Query per cambiare stato
+             	Class.forName("com.mysql.jdbc.Driver"); 
+             	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ubmplatform",
+             	"root",""); 
+             	Statement st= con.createStatement(); 
+             	ResultSet rs; 
+             	int i=st.executeUpdate("UPDATE account SET Tipo='v' WHERE Email='"+email+"'");
+				
+             	//Redirect alla pagina di completamento	
+             	response.sendRedirect("registrazioneEffettuata.jsp");
+        	 }
+        	}
+        	finally{
+        		
+        	}
+       
+        %>
       </div>
     </section>
     <%@ include file="includes/footer.jsp" %>
+
   </body>
 </html>
