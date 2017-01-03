@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.logging.Logger;
 
+import javax.management.InvalidAttributeValueException;
 
 import it.ubmplatform.database.DBManager;
 import it.ubmplatform.eccezioni.BadAnnuncioIdException;
@@ -61,13 +62,13 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 
-	public boolean queryInserisciAnnuncio(Annuncio toInsert){
+	public boolean queryInserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException{
 		Connection conn=null;
 		PreparedStatement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection(); //recupero una connessione
 			//creo la query
-			String query="INSERT INTO annuncio (id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query="INSERT INTO annuncio (ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			s=conn.prepareStatement(query);
 			s.setInt(1, toInsert.getId());
 			s.setString(2, toInsert.getTitolo());
@@ -89,7 +90,6 @@ public class AnnuncioManager implements AnnuncioInterface {
 				s.setDate(14, date);
 			}
 			else if (toInsert.getCategoria().equals("Appunti")) { //controllo se sono appunti
-				//Non riesco a settare gli altri 3 campi relativi al libro a NULL
 				s.setString(9, toInsert.getMateria());
 				s.setString(10, toInsert.getCondizioni());
 				s.setString(11, toInsert.getDescrizione());
@@ -101,6 +101,11 @@ public class AnnuncioManager implements AnnuncioInterface {
 				s.setDate(14, date);
 			}
 			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
+			//controllo se i campi obbligatori sono stati compilati
+			if ((toInsert.getTitolo()==null)||(toInsert.getCategoria()==null)||
+				(toInsert.getFacolta()==null)||(toInsert.getFoto()==null)|| (toInsert.getDescrizione()==null) || (toInsert.getPrezzo()==0)) {
+				throw new InvalidAttributeValueException("Compilare tutti i campi obbligatori e riprovare");
+			}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,71 +127,123 @@ public class AnnuncioManager implements AnnuncioInterface {
 		}
 
 	}
+	
+	/** 
+	 * Metodo che permette di ricavare l'annuncio esistente da modificare
+	 * @param idAnnuncio Id dell'annuncio già esistente da modificare
+	 * @return oldAnnuncio Annuncio da modificare 
+	 */
+	public Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try{
+			conn = DBManager.getInstance().getConnection();
+			
+			String query = "SELECT ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizioni, Descrizione, Prezzo FROM Annuncio Where ID = ?";
+			
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, idAnnuncio);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				int id = rs.getInt(1);
+				String titolo = rs.getString(2);
+				String categoria = rs.getString(3);
+				String facolta = rs.getString(4);
+				String foto = rs.getString(5);
+				String isbn = rs.getString(6);
+				String autoreLibro = rs.getString(7);
+				int edizione = rs.getInt(8);
+				String materia = rs.getString(9);
+				String condizioni = rs.getString(10);
+				String descrizione = rs.getString(11);
+				double prezzo = rs.getDouble(12);
+				String email = rs.getString(13);
+				Date dataPubblicazione = rs.getDate(14);
+				
+				Annuncio oldAnnuncio = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, (java.sql.Date) dataPubblicazione);
+				
+				conn.close();
+				ps.close();
+				rs.close();
+				
+				return oldAnnuncio;
+			}else{
+				conn.close();
+				ps.close();
+				rs.close();
+				
+				return null;
+			}
+		}catch(SQLException e){
+			
+			
+			return null;
+		}
+	}
 
 	/**
 	 * Si occupa dell'interrogazione al database per la modifica dell'annuncio
 	 * @param changed L'annuncio modificato da inserire
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
+	 * @throws SQLException 
+	 * @throws InvalidAttributeValueException 
 	 */
 
-	public boolean queryModificaAnnuncio(Annuncio changed){
-		Connection conn=null;
-		PreparedStatement s=null;
-		try {
-			conn=DBManager.getInstance().getConnection(); //recupero una connessione
-			//creo la query
-			String query="INSERT into annuncio (id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			s=conn.prepareStatement(query);
-			s.setInt(1, changed.getId());
-			s.setString(2, changed.getTitolo());
-			s.setString(3, changed.getCategoria());
-			s.setString(4, changed.getFacolta());
-			s.setString(5, changed.getFoto());
-			if (changed.getCategoria().equals("Libro")) { //controllo se è un libro
-				s.setString(6, changed.getIsbn());
-				s.setString(7, changed.getAutoreLibro());
-				s.setInt(8, changed.getEdizione());
-				s.setString(9, changed.getMateria());
-				s.setString(10, changed.getCondizioni());
-				s.setString(11, changed.getDescrizione());
-				s.setDouble(12, changed.getPrezzo());
-				s.setString(13, changed.getEmail());
-				java.sql.Date date=null;
-				if(changed.getDataPubblicazione()!=null)
-					date=new java.sql.Date(changed.getDataPubblicazione().getTime());
-				s.setDate(14, date);
-			}
-			else if (changed.getCategoria().equals("Appunti")) { //controllo se sono appunti
-				s.setString(9, changed.getMateria());
-				s.setString(10, changed.getCondizioni());
-				s.setString(11, changed.getDescrizione());
-				s.setDouble(12, changed.getPrezzo());
-				s.setString(13, changed.getEmail());
-				java.sql.Date date=null;
-				if(changed.getDataPubblicazione()!=null)
-					date=new java.sql.Date(changed.getDataPubblicazione().getTime());
-				s.setDate(14, date);
-			}
-			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally{
-			if(s!=null)
-				try {
-					s.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			if(conn!=null)
-				try {
+	public boolean queryModificaAnnuncio(Annuncio toUpdate) throws SQLException, InvalidAttributeValueException{
+		//connessione e statement a null per la chiusura in caso di eccezione
+				//ed eventuale controllo
+				Connection conn = null;
+				PreparedStatement ps = null;
+						
+				try{
+					//prendo la connessione dalla classe statica DBManager
+					conn = DBManager.getInstance().getConnection();
+							
+					//formo la stringa contenente la query da effettuare
+					String queryInserisci = "UPDATE ANNUNCIO "
+							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizioni = ?, Descrizione = ?, Prezzo = ?"
+							+ "WHERE ID = ?";
+							
+					//preparo lo statement per formare la query
+					ps = conn.prepareStatement(queryInserisci);
+							
+					ps.setString(1, toUpdate.getTitolo());
+					ps.setString(2, toUpdate.getCategoria());
+					ps.setString(3, toUpdate.getFacolta());
+					ps.setString(4, toUpdate.getFoto());
+					ps.setString(5, toUpdate.getIsbn());
+					ps.setString(6, toUpdate.getAutoreLibro());
+					ps.setInt(7, toUpdate.getEdizione());
+					ps.setString(8, toUpdate.getMateria());
+					ps.setString(9, toUpdate.getCondizioni());
+					ps.setString(10, toUpdate.getDescrizione());
+					ps.setDouble(11, toUpdate.getPrezzo());
+							
+					ps.execute();
+					//controllo se i campi obbligatori sono stati compilati
+					if ((toUpdate.getTitolo()==null)||(toUpdate.getCategoria()==null)||
+						(toUpdate.getFacolta()==null)||(toUpdate.getFoto()==null)|| (toUpdate.getDescrizione()==null) || (toUpdate.getPrezzo()==0)) {
+						throw new InvalidAttributeValueException("Compilare tutti i campi obbligatori e riprovare");
+					}		
+
+					//ritorno true se il metodo execute è andato a buon fine
+					//dopo aver provato la chiusura
 					conn.close();
-				} catch (SQLException e) {
+					ps.close();
+					return true;
+							
+						
+				}catch(SQLException e){
 					e.printStackTrace();
+					conn.close();
+					ps.close();
+							
+					return false;
 				}
-		}
 	}
 
 	/**

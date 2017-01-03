@@ -20,10 +20,9 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session=request.getSession();
-    	if(cancellaAnnuncio((int)session.getAttribute("id"))){ //verifico se la disattivazione è riuscita
+    	if(cancellaAnnuncio(Integer.parseInt(request.getParameter("annuncioID")))) { 
     		//rimuovo l'annuncio e effettuo redirect alla home
-    		session.removeAttribute("id");
+    		request.removeAttribute("annuncioID");
     		response.sendRedirect("index.jsp");
     	}
     	else{
@@ -50,3 +49,4 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 		return managerAnnuncio.queryCancellaAnnuncio(idAnnuncio);
 	}
 }
+
