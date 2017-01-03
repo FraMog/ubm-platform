@@ -368,7 +368,17 @@ public class AnnuncioManager implements AnnuncioInterface {
 			   Annuncio annuncioDettagliato= new Annuncio();
 			   annuncioDettagliato.setId(resultSet.getInt(1));
 			   annuncioDettagliato.setTitolo(resultSet.getString(2));
-			   annuncioDettagliato.setCategoria(resultSet.getString(3));
+			 
+			   String categoriaDatabase= resultSet.getString(3);
+			   if(categoriaDatabase.equalsIgnoreCase("L")){//È un libro
+				   annuncioDettagliato.setCategoria("libro");
+			   }
+			   else if (categoriaDatabase.equalsIgnoreCase("A")){//Sono degli appunti
+				   annuncioDettagliato.setCategoria("appunti");
+			   }
+			   else {
+				   annuncioDettagliato.setCategoria(categoriaDatabase); //Non dovrebbe mai accadere ma non lancio eccezioni perché i controlli sulla categoria sono fatti al momento dell'inserimento
+			   }
 			   annuncioDettagliato.setFacolta(resultSet.getString(4));
 			   annuncioDettagliato.setFoto(resultSet.getString(5));
 			   annuncioDettagliato.setIsbn(resultSet.getString(6));
