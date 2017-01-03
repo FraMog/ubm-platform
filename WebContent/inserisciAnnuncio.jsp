@@ -24,7 +24,7 @@
       <div class="col-sm-9">
        	<div class="panel panel-default">
        		<div class="panel-body">
-       			<form id="profilo" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+       			<form id="annuncio" class="form-horizontal" action="InserisciAnnuncioServlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="titolo">Titolo: *</label>
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required"/></div>
@@ -51,8 +51,8 @@
               			</div>
             		</div>
 	    			<div class="form-group">
-       					<label class="control-label col-sm-2" for="img">Immagine prodotto *</label>
-	    				<div class="col-sm-4"><input class="form-control" type="file" name="img" id="img"/></div>
+       					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
+	    				<div class="col-sm-4"><input class="form-control" type="file" name="foto" id="foto"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
@@ -60,7 +60,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="autore">Autore: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="autore" id="autore"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="edizione">Edizione: </label>
@@ -75,6 +75,7 @@
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni"/></div>
 	    			</div>
 	    			<div class="form-group">
+	    				<input name="descrizione" id="descrizione" type="text" class="validate">
 	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: </label>
 	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="profilo" rows="3" cols="50" maxlength="200"></textarea></div>
 	    			</div>
@@ -82,8 +83,40 @@
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo: *</label>
 	    				<div class="col-sm-10"><input class="form-control" type="number" name="prezzo" id="prezzo"/></div>
 	    			</div>
+	    			<div class="form-group">
+	    				<label class="control-label col-sm-2" for="email">Email: <% request.getAttribute("email");%> *</label>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email"/></div>
+	    			</div>
+	    			<div class="form-group">
+	    				<label class="control-label col-sm-2" for="dataPubblicazione">DataPubblicazione: <% request.getAttribute("dataPubblicazione");%>*</label>
+	    				<div class="col-sm-10"><input class="form-control" type="date" name="dataPubblicazione" id="dataPubblicazione"/></div>
+	    			</div>
+	    			
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>
+				
+	<script type="text/javascript">
+    function validateForm()
+    {
+    var a=document.forms["Form"]["titolo"].value;
+    var b=document.forms["Form"]["categoria"].value;
+    var c=document.forms["Form"]["facolta"].value;
+    var d=document.forms["Form"]["foto"].value;
+    var h=document.forms["Form"]["descrizione"].value;
+    var e=document.forms["Form"]["prezzo"].value;
+    var f=document.forms["Form"]["data"].value;
+    var g=document.forms["Form"]["email"].value;
+    if (a==null || a=="",b==null || b=="",c==null || c=="",d==null || d=="",h==null || d=="",e==null || e=="",f==null || f=="",g==null || g=="")
+      {
+    	alert("Completa tutti i campi");
+        return false;
+      }
+    else{
+    	alert("Request complete");
+    	return true;
+    }
+    }
+    </script>
        		</div>
        	</div>
       </div>

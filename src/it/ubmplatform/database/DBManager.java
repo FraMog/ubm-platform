@@ -1,6 +1,6 @@
 package it.ubmplatform.database;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 public class DBManager extends BasicDataSource{
 

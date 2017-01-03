@@ -35,9 +35,7 @@ public class InserisciFeedbackServlet extends HttpServlet {
 		try{
 			valutazione = Integer.parseInt(request.getParameter("valutazioneFeedback"));
 		}catch(Exception e){
-			//la valutazione era a null (valori erano condizionati)
-			//porto alla pagina del profilo?
-			
+			//NON E' STATO POSSIBILE EFFETTUARE LA RICHIESTA
 		}
 		
 		String descrizione = request.getParameter("descrizioneFeedback");
@@ -51,17 +49,16 @@ public class InserisciFeedbackServlet extends HttpServlet {
 			Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
 			
 			if(inserisciFeedback(newFeedback)){
-				System.out.println("OK");
+				request.getRequestDispatcher("visualizzaProfiloAltro.jsp").forward(request, response);
 			}else{
-				//il metodo mi ritorna false.. perché
+				//NON E' STATO POSSIBILE COMPLETARE LA RICHIESTA
 				
 			}
 		}else{
-			//è successo qualcosa, riporto alla pagina del profilo?
+			//NON E' STATO POSSIBILE ACCEDERE ALLA RICHIESTA
 			
 		}
 		
-		//response.getWriter().write(valutazione + " " + descrizione);
 	}
 	
 	/**

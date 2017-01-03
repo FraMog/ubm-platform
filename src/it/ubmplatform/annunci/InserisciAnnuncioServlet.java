@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+
+import javax.management.InvalidAttributeValueException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,6 @@ import it.ubmplatform.eccezioni.FileUploadException;
 import it.ubmplatform.eccezioni.InsertFailedException;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
-import it.ubmplatform.profilo.Profilo;
 
 
 /**
@@ -36,19 +36,15 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	throw new ServletException("GET request not accepted");
+    	
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int edizione = 1, id = 0;
+		int edizione = 1, id = 1;
 		double prezzo = 0;
 		String foto;
 		Date dataPubblicazione;
-		try{
-			id = Integer.parseInt(request.getParameter("id"));
-		}catch(Exception e){
-			
-		}
+		
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
 		String facolta = request.getParameter("facolta");
@@ -68,20 +64,28 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		}catch(Exception e){
 			prezzo = 0;
 		}
-		String email = request.getParameter("email");
 		try {
 			dataPubblicazione=(Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataPubblicazione")); //recupero e cast data
 		} catch (ParseException e) {
 			dataPubblicazione=null;
 		}
-		if(inserisciAnnuncio(new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione))){ //controllo se l'operazione è riuscita
-			if(foto != null)
-				saveFile(request); //se il file è stato inserito lo carico
-			request.getSession().setAttribute("id", id);
-			response.sendRedirect("visualizzaAnnuncio.jsp");
-		}
-		else{
-			throw new InsertFailedException("L'inserimento dell'annuncio ha riscontrato dei problemi, riprova più tardi");
+		String email = request.getParameter("email");
+		try {
+			if(inserisciAnnuncio(new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione))){ //controllo se l'operazione è riuscita
+				if(foto != null)
+					saveFile(request); //se il file è stato inserito lo carico
+				request.getSession().setAttribute("ID", id);
+				response.sendRedirect("visualizzaAnnuncio.jsp");
+			}
+			else{
+				throw new InsertFailedException("L'inserimento dell'annuncio ha riscontrato dei problemi, riprova più tardi");
+			}
+		} catch (InvalidAttributeValueException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -140,11 +144,14 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 	 * Metodo che si occupa di inoltrare la richiesta all'{@link AnnuncioManager} per l'inserimento dell'annuncio al database
 	 * @param toInsert L'annuncio da inserire
 	 * @return 1 se l'operazione di inserimento è andata a buon fine, un numero negativo che indica la tipologia di errore altrimenti
+	 * @throws InvalidAttributeValueException 
+	 * @throws SQLException 
 	 * @pre toInsert != null
 	 */
-	private boolean inserisciAnnuncio(Annuncio toInsert){
+	private boolean inserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException, SQLException{
 		AbstractFactory factory = new ManagerFactory();
 		AnnuncioInterface managerAnnuncio = factory.createAnnuncioManager();
 		return managerAnnuncio.queryInserisciAnnuncio(toInsert);
 	}
 }
+
