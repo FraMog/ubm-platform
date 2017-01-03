@@ -1,6 +1,6 @@
 package it.ubmplatform.feedback;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Bean che rappresenta un Feedback all'interno del sistema
@@ -22,7 +22,7 @@ public class Feedback {
 		descrizione = desc;
 		emailP = emailPublisher;
 		emailR = emailReceiver;
-		data = new Date();
+		data = new Date(System.currentTimeMillis());
 	}
 	
 	/**

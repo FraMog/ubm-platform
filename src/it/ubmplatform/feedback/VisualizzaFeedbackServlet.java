@@ -31,7 +31,8 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
     	String emailR = request.getParameter("emailR");
     	ArrayList<Feedback> feedbacks = null;
     	String responseJson = "{\"state\":\"error\"}";
-    	System.out.println("..");
+
+
     	if(emailR != null){
     		feedbacks = visualizzaFeedbacks(emailR);
     		
@@ -45,7 +46,7 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
     			//il metodo ritorna null. perché?
     		}
     	}else{
-    		
+    		//non sono riuscito ad ottenere l'email da parametro
     	}
     	
     	response.getWriter().write(responseJson);

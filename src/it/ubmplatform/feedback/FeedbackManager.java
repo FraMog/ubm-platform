@@ -44,38 +44,69 @@ public class FeedbackManager implements FeedbackInterface {
 			ps.setString(4, toInsert.getDescrizione());
 			
 			//la data in sql (java.sql.Date)
-			ps.setDate(5, new java.sql.Date(toInsert.getData().getTime()));
+			ps.setDate(5, toInsert.getData());
 			
 			ps.execute();
 			
 
 			//ritorno true se il metodo execute è andato a buon fine
-			//dopo aver provato la chiusura
-			try{
-				close(conn);
-				close(ps);
-				return true;
-			}catch(Exception e){
-				return true;
-			}
+			return true;
 			
 		
 		}catch(SQLException e){
-			e.printStackTrace();
-			
-			try{
-				close(conn);
-				close(ps);
-				return false;
-			}catch(Exception e1){
-				return false;
-			}
-			
-			
+			e.printStackTrace();		
+			return false;
+		}finally{
+			//provo la chiusura
+			close(conn);
+			close(ps);
 		}
 		
 	}
 	
+	/**
+	 * Metodo di servizio per richiedere al database il feedback che si vuole modificare
+	 * per la stampa asincrona all'avvio del modal
+	 * @param emailP L'email di chi ha pubblicato il feedback
+	 * @param emailR L'email di chi ha ricevuto il feedback
+	 * @return il feedback richiesto, null se inesistente (non possibile)
+	 */
+	public Feedback queryOttieniFeedbackDaModificare(String emailP, String emailR){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try{
+			conn = DBManager.getInstance().getConnection();
+			String query = "SELECT Valutazione, Descrizione FROM Feedback Where emailP = ? AND emailR = ?";
+			
+			ps = conn.prepareStatement(query);
+			ps.setString(1, emailP);
+			ps.setString(2, emailR);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				int valutazione = rs.getInt(1);
+				String descrizione = rs.getString(2);
+				
+				Feedback oldFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+				
+				return oldFeedback;
+			}else{
+				return null;
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}finally{
+			//provo la chiusura
+			close(conn);
+			close(ps);
+			close(rs);
+			
+		}
+	}
 	/**
 	 * Si occupa dell'interrogazione al database per la modifica di un feedback
 	 * @param changed Il nuovo feedback modificato da inserire
@@ -83,7 +114,45 @@ public class FeedbackManager implements FeedbackInterface {
 	 */
 	
 	public boolean queryModificaFeedback(Feedback changed){
-		return false;
+		//connessione e statement a null per la chiusura in caso di eccezione
+		//ed eventuale controllo
+		Connection conn = null;
+		PreparedStatement ps = null;
+				
+		try{
+			//prendo la connessione dalla classe statica DBManager
+			conn = DBManager.getInstance().getConnection();
+					
+			//formo la stringa contenente la query da effettuare
+			String queryInserisci = "UPDATE FEEDBACK "
+					+ "SET Valutazione = ?, Descrizione = ? "
+					+ "WHERE emailP = ? AND emailR = ?";
+					
+			//preparo lo statement per formare la query
+			ps = conn.prepareStatement(queryInserisci);
+					
+			ps.setInt(1, changed.getValutazione());
+			ps.setString(2, changed.getDescrizione());
+			ps.setString(3, changed.getEmailP());
+			ps.setString(4, changed.getEmailR());
+					
+			ps.execute();
+					
+
+			//ritorno true se il metodo execute è andato a buon fine
+			
+			return true;
+					
+				
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			//provo la chiusura
+			close(conn);
+			close(ps);
+			
+		}
 	}
 	
 	/**
@@ -99,7 +168,7 @@ public class FeedbackManager implements FeedbackInterface {
 		
 		String queryVisualizzaFeedback = "SELECT EmailP, Valutazione, Descrizione, DataPubblicazione "
 				+ "FROM Feedback "
-				+ "WHERE EmailR = \"" + emailR + "\"";
+				+ "WHERE EmailR = '" + emailR + "'";
 		try{
 			conn = DBManager.getInstance().getConnection();
 			st = conn.createStatement();
@@ -115,32 +184,38 @@ public class FeedbackManager implements FeedbackInterface {
 					String email = rs.getString(1);
 					int val = rs.getInt(2);
 					String desc = rs.getString(3);
-					java.util.Date data = new java.util.Date(rs.getDate(4).getTime()); 
+					java.sql.Date data = rs.getDate(4);
 					
+					//aggiungo gli n feedback all'arraylist
 					feedbacks.add(new Feedback(val, desc, email, data));
 				}while(rs.next());
 				
 				return feedbacks;
 			}else{
 				//non ci sono risultati (no feedback)
-				return null;
+				//per capirlo, aggiungo un feedback "vuoto"
+				feedbacks.add(new Feedback(0,"","",""));
+				return feedbacks;
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
-			try {
-				close(conn);
-				close(st);
-				close(rs);
-				return null;
-			} catch (Exception e1) {
-				return null;
-			}
+
+			return null;
+			
+		}finally{
+			close(conn);
+			close(st);
+			close(rs);
 		}
 	}
 	
-	private void close(AutoCloseable closing) throws Exception{
+	private void close(AutoCloseable closing){
 		if(closing != null){
-			closing.close();
+			try {
+				closing.close();
+			} catch (Exception e) {
+				//eventualmente non chiudo nulla
+			}
 		}
 	}
 }
