@@ -75,7 +75,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			return -1;
+			
 		} finally
 		{
 			if(statement!=null)
@@ -90,7 +90,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
+			return -1;
 		}
 	}
 	
@@ -243,6 +243,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+			return false;
 		}
 
 	}
