@@ -9,7 +9,7 @@
 <%	String dest=request.getParameter("dest");
 		session.setAttribute("indirizzo",dest);
 		
-		//out.print(dest); DEBUG
+		//out.print(dest) DEBUG
 		%>
 		
 		<script language="Javascript">

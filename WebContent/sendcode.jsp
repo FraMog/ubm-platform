@@ -16,12 +16,12 @@
 	session.setAttribute("codice",codice);
 	String host = "smtp.gmail.com";
 	String to =(String) session.getAttribute("indirizzo"); 
-	String from = request.getParameter("pasquale335@gmail.com");
+	String from = request.getParameter("pasqualedeluca335@gmail.com");
 	String subject = request.getParameter("subject"); 
 	String messageText = "CODICE DI VERIFICA "+codice+".";
 	final String username="pasquale335@gmail.com";
 	final String password="pasquale11";
-	// Create some properties and get the default Session.
+	// Create some properties and get the default Session
 		Properties props = new Properties();
 		
 		props.put("mail.smtp.auth", "true");

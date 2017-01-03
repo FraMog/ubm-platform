@@ -6,7 +6,7 @@
 	  var reg = /^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)/;
       if (reg.test(txt1.value) == false) 
       {
-    	  //DEBUG
+    	  //DEBU
           alert('Invalid Email Address\nEmail:'+txt1.value);
           return false;
       }

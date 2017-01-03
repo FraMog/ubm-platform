@@ -9,6 +9,7 @@
 		  	alert('password non valida \nPassword: '+txt1.value);
 		  	return false;
 		  }
+	  //
 	  return true;
   }
   

@@ -48,7 +48,7 @@
 
         	 if (codice_locale==cod_sessione){
              	// DEBUG out.print("CODICE OK");
-             	//Query per cambiare stato
+             	//Query per cambiare stat
              	Class.forName("com.mysql.jdbc.Driver"); 
              	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ubmplatform",
              	"root",""); 
