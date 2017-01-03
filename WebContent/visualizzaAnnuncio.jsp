@@ -71,7 +71,7 @@
       <h4>Pubblicato Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>    
        </div>
       <%} %>
-        <% if (session.getAttribute("admin")!=null || (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail()))) {%>
+        <%if (session.getAttribute("admin")!=null || (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail()))) {%>
 		<button class="btn btn-danger btn-lg" type="button"  data-toggle="modal" data-target="#rimuoviModal">Rimuovi</button>
 		<!-- Popup in caso di tentata rimozione -->
 		<div id="rimuoviModal" class="modal fade" role="dialog">

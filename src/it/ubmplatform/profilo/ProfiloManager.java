@@ -14,15 +14,15 @@ public class ProfiloManager implements ProfiloInterface {
 	/**
 	 * Si occupa dell'interrogazione al database per l'aggiunta di un profilo
 	 * @param toInsert Il profilo da inserire
-	 * @return Un booleano che indica se l'operazione è andata a buon fine
+	 * @throws SQLException 
 	 */
-	public boolean queryCreaProfilo(Profilo toInsert){
+	public void queryCreaProfilo(Profilo toInsert) throws SQLException{
 		Connection conn=null;
 		PreparedStatement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection(); //recupero una connessione
 			//creo la query
-			String query="INSERT INTO profilo (Email, Nome,Cognome,Foto,Residenza,Telefono,Interessi, DNascita) VALUES (?,?,?,?,?,?,?,?)";
+			String query="INSERT INTO profilo (Email, Nome,Cognome,Foto,Residenza,Telefono,Interessi, DataNascita) VALUES (?,?,?,?,?,?,?,?)";
 			s=conn.prepareStatement(query);
 			s.setString(1, toInsert.getEmail());
 			s.setString(2, toInsert.getNome());
@@ -36,10 +36,6 @@ public class ProfiloManager implements ProfiloInterface {
 				date=new java.sql.Date(toInsert.getDataNascita().getTime());
 			s.setDate(8, date);
 			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
 		} finally{
 			if(s!=null)
 				try {
@@ -70,8 +66,9 @@ public class ProfiloManager implements ProfiloInterface {
 	 * Si occupa dell'interrogazione al database per la disattivazione del profilo
 	 * @param email L'email del profilo da disattivare
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
+	 * @throws SQLException 
 	 */
-	public boolean queryDisattivaProfilo(String email){
+	public boolean queryDisattivaProfilo(String email) throws SQLException{
 		Connection conn=null;
 		Statement s=null;
 		try {
@@ -83,9 +80,6 @@ public class ProfiloManager implements ProfiloInterface {
 				return true;
 			else
 				return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
 		} finally{
 			if(s!=null)
 				try {

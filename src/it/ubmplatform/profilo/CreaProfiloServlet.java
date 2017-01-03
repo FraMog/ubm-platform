@@ -1,14 +1,13 @@
 package it.ubmplatform.profilo;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.text.*;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-
 import it.ubmplatform.eccezioni.FileUploadException;
-import it.ubmplatform.eccezioni.InsertFailedException;
 import it.ubmplatform.factory.*;
 
 
@@ -29,8 +28,12 @@ public class CreaProfiloServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String img;
-		img=verificaFile(request); //controlli sull'immagine
+		String img=null;
+		try{
+			img=verificaFile(request); //controlli sull'immagine
+		} catch(FileUploadException e){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+		}
 		//recupero tutti i parametri
 		String name=request.getParameter("nome");
 		String surname=request.getParameter("cognome");
@@ -44,15 +47,16 @@ public class CreaProfiloServlet extends HttpServlet {
 		}
 		String interest=request.getParameter("interessi");
 		String residence=request.getParameter("residenza");
-		if(creaProfilo(new Profilo(email,name,surname,residence, phone,interest, img, date))){ //controllo se l'operazione è riuscita
+		try{
+			creaProfilo(new Profilo(email,name,surname,residence, phone,interest, img, date)); //eseguo il salvataggio
 			if(img!=null)
 				saveFile(request); //se il file è stato inserito lo carico
-			request.getSession().setAttribute("email", email);
+			request.getSession().setAttribute("user", email);
 			request.getSession().setAttribute("name", name);
 			response.sendRedirect("index.jsp");
 		}
-		else{
-			throw new InsertFailedException("La creazione del profilo ha riscontrato dei problemi, riprova più tardi");
+		catch(Exception e){
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 
 	}
@@ -98,16 +102,16 @@ public class CreaProfiloServlet extends HttpServlet {
 	/**
 	 * Il metodo che si occupa di richiedere il salvataggio del nuovo profilo al {@link ProfiloManager}
 	 * @param toInsert Il profilo da registrare
-	 * @return Un booleano che indica se l'operazione è andata a buon fine
+	 * @throws SQLException 
 	 * @pre toInsert != null
 	 * @pre RicercaProfiloServlet.ricercaProfilo(toInsert.getEmail) == null
 	 * @post RicercaProfiloServlet.ricercaProfilo(toInsert.getEmail) != null
 	 */
-	private boolean creaProfilo(Profilo toInsert){
+	private void creaProfilo(Profilo toInsert) throws SQLException{
 		
 		AbstractFactory factory = new ManagerFactory();
 		ProfiloInterface managerProfilo = factory.createProfiloManager();
-		return managerProfilo.queryCreaProfilo(toInsert);
+		managerProfilo.queryCreaProfilo(toInsert);
 		
 	}
 
