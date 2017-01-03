@@ -1,7 +1,9 @@
 package it.ubmplatform.amministrazione;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,12 +20,20 @@ import it.ubmplatform.factory.ManagerFactory;
 @WebServlet("/CancellaAccountServlet")
 public class CancellaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger= Logger.getLogger("global");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	   	if(cancellaAccount(request.getParameter("email"))){ 
-    		//rimuovo l'account e effettuo redirect alla home
+		System.out.println("trovata"+ request.getParameter("email"));
+		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
+		if(request.getParameter("eliminaFeedback").equals("true")){
+			//AGGIUNGERE RIMOZIONE FEEDBACK
+		}
+		boolean valore=cancellaAccount(request.getParameter("email"));
+	   	if(valore){ 
+    		//rimuovo l'account 
     		request.removeAttribute("email");
-    		response.sendRedirect("index.jsp");
+    		response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("Success Data");  
 		} 
 		else{
 			throw new OperationFailedException("La cancellazione dell'account non ha avuto successo, riprova più tardi");
@@ -41,9 +51,14 @@ public class CancellaAccountServlet extends HttpServlet {
 	 * @pre email != null
 	 */
 	private boolean cancellaAccount(String email){
-		AbstractFactory factory = new ManagerFactory();
-		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
+		try {
+			AbstractFactory factory = new ManagerFactory();
+			AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
 		return managerAmministrazione.queryCancellaAccount(email);
+		} catch (Exception e) {
+			logger.info(" service error " + e);
+			return true;
+		}
 	}
 
 }
