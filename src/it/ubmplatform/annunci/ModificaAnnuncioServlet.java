@@ -73,7 +73,41 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		
 		Annuncio toUpdate = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
 		try {
-			modificaAnnuncio(toUpdate);
+			Annuncio oldAnnuncio = OttieniAnnuncioDaModificare(toUpdate.getId());
+			   if(toUpdate.getTitolo().equals(null)|| toUpdate.getTitolo().equals("")){
+			    toUpdate.setTitolo(oldAnnuncio.getTitolo());
+			   }
+			   else if(toUpdate.getCategoria().equals(null)|| toUpdate.getCategoria().equals("")) {
+				   toUpdate.setCategoria(oldAnnuncio.getCategoria());
+			   }
+			   else if(toUpdate.getFacolta().equals(null)|| toUpdate.getFacolta().equals("")){
+				   toUpdate.setFacolta(oldAnnuncio.getFacolta());
+			   }
+			   else if(toUpdate.getFoto().equals(null)|| toUpdate.getFoto().equals("")){
+				   toUpdate.setFoto(oldAnnuncio.getFoto());
+			   }
+			   else if(toUpdate.getIsbn().equals(null)|| toUpdate.getIsbn().equals("")){
+				   toUpdate.setIsbn(oldAnnuncio.getIsbn());
+			   }
+			   else if(toUpdate.getAutoreLibro().equals(null)|| toUpdate.getAutoreLibro().equals("")) {
+				   toUpdate.setAutoreLibro(oldAnnuncio.getAutoreLibro());
+			   }
+			   else if(toUpdate.getEdizione()== 0) {
+				   toUpdate.setEdizione(oldAnnuncio.getEdizione());
+			   }
+			   else if(toUpdate.getMateria().equals(null)|| toUpdate.getMateria().equals("")) {
+				   toUpdate.setMateria(oldAnnuncio.getMateria());
+			   }
+			   else if(toUpdate.getCondizioni().equals(null)|| toUpdate.getCondizioni().equals("")) {
+				   toUpdate.setCondizioni(oldAnnuncio.getCondizioni());
+			   }
+			   else if(toUpdate.getDescrizione().equals(null)|| toUpdate.getDescrizione().equals("")){
+				   toUpdate.setDescrizione(oldAnnuncio.getDescrizione());
+			   }
+			   else if(toUpdate.getPrezzo() == 0) {
+				   toUpdate.setPrezzo(oldAnnuncio.getPrezzo());
+			   }
+			   modificaAnnuncio(toUpdate);
 		} catch (InvalidAttributeValueException | SQLException e) {
 			
 			e.printStackTrace();

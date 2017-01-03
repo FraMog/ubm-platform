@@ -34,7 +34,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 			conn=DBManager.getInstance().getConnection();
 			String query="DELETE annuncio WHERE ID='"+idAnnuncio+"'";
 			s=conn.createStatement();
-			s.executeQuery(query);
+			s.executeUpdate(query);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -224,11 +224,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 					ps.setDouble(11, toUpdate.getPrezzo());
 							
 					ps.execute();
-					//controllo se i campi obbligatori sono stati compilati
-					if ((toUpdate.getTitolo()==null)||(toUpdate.getCategoria()==null)||
-						(toUpdate.getFacolta()==null)||(toUpdate.getFoto()==null)|| (toUpdate.getDescrizione()==null) || (toUpdate.getPrezzo()==0)) {
-						throw new InvalidAttributeValueException("Compilare tutti i campi obbligatori e riprovare");
-					}		
+						
 
 					//ritorno true se il metodo execute è andato a buon fine
 					//dopo aver provato la chiusura
