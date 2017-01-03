@@ -27,7 +27,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 
-	public boolean queryCancellaAnnuncio(int idAnnuncio){
+	public boolean queryCancellaAnnuncio(int idAnnuncio)throws SQLException {
 		Connection conn=null;
 		Statement s=null;
 		try {
@@ -62,7 +62,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 
-	public boolean queryInserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException{
+	public boolean queryInserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException, SQLException{
 		Connection conn=null;
 		PreparedStatement s=null;
 		try {
@@ -162,9 +162,9 @@ public class AnnuncioManager implements AnnuncioInterface {
 				String descrizione = rs.getString(11);
 				double prezzo = rs.getDouble(12);
 				String email = rs.getString(13);
-				Date dataPubblicazione = rs.getDate(14);
+				java.sql.Date dataPubblicazione = rs.getDate(14);
 				
-				Annuncio oldAnnuncio = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, (java.sql.Date) dataPubblicazione);
+				Annuncio oldAnnuncio = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
 				
 				conn.close();
 				ps.close();
@@ -179,8 +179,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				return null;
 			}
 		}catch(SQLException e){
-			
-			
+			e.printStackTrace();
 			return null;
 		}
 	}
