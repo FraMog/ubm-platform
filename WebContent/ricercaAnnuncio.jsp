@@ -112,13 +112,13 @@
       <div id="content" class="panel panel-default">
         <div class="panel-body risultato">
      
-        <%if (request.getAttribute("user")!=null && request.getAttribute("user").equals(annunciPertinenti.get(i).getEmail())){ %>
+        <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annunciPertinenti.get(i).getEmail())){ %>
           <div class="row">
           <div class="col-xs-4 col-md-8"></div>
           <a class="btn btn-secondary col-xs-4 col-md-2" href='<%="ModificaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>'>Modifica</a>
            <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>      
         </div>
-        <%} else if (request.getAttribute("admin")!=null){ %>
+        <%} else if (session.getAttribute("admin")!=null){ %>
          <div class="row">
          <div class="col-xs-8 col-md-10"></div>
            <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>      
