@@ -29,10 +29,13 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 		Statement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection();
-			String query="UPDATE account SET tipo='c' WHERE Email='"+email+"'";
+			String query="UPDATE account SET account.tipo='B' WHERE account.Email='"+email+"'";
 			s=conn.createStatement();
-			s.executeQuery(query);
-			return true;
+			s.executeUpdate(query);
+			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -49,7 +52,6 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
 		}
 	}
 
@@ -64,10 +66,13 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 		Statement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection();
-			String query="UPDATE account SET tipo='i' WHERE Email='"+email+"'";
+			String query="UPDATE account SET account.tipo='I',account.DataInvalidazione= CURDATE() WHERE account.Email='"+email+"'";
 			s=conn.createStatement();
-			s.executeQuery(query);
-			return true;
+			s.executeUpdate(query);
+			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -137,7 +142,7 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 			conn=DBManager.getInstance().getConnection(); 
 			String query="SELECT account.* "+  						//prendo solo gli account validi
 					"FROM account JOIN profilo "+
-					"WHERE account.Email= profilo.Email AND account.Tipo='v' "+
+					"WHERE account.Email= profilo.Email AND account.Tipo='R' "+
 					"ORDER BY account.Email";
 			
 			s=conn.createStatement();
@@ -155,23 +160,22 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 			logger.info("queryVisualizzaListaIscritti"+e);
 			throw(e);
 		} 
-//			finally{
-//			logger.info("sono nel finally");
-//			if(s!=null)
-//				try {
-//					s.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			if(conn!=null)
-//				try {
-//					conn.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			logger.info("return lista"+lista);
-//			return lista;
-//		}
+			finally{
+			logger.info("sono nel finally");
+			if(s!=null)
+			try {
+					s.close();
+				} catch (SQLException e) {
+				e.printStackTrace();				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			logger.info("return lista"+lista);
+			return lista;
+		}
 		
 	}
 }
