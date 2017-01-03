@@ -7,14 +7,20 @@
     <title>UBM Platform</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1"/>
+    	<link rel="stylesheet" href="css/stile.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
   	<script type="text/javascript" src="javascript/annunci/loadlightboxImmagini.js"></script>
-  	<link rel="stylesheet" href="css/stile.css">
+    <script src="javascript/amministrazione/rimuoviAnnuncio.js"></script>
+    <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
+    <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
+    <script src="javascript/annunci/settaIdAnnuncioDaRimuovereAmministratore.js"></script>
+     <script src="javascript/annunci/settaIdAnnuncioDaRimuovereUtente.js"></script>
   </head>
   <body>
+  
   	<%if(session.getAttribute("user")!=null) {%>
     	<%@ include file="includes/navbarLoggato.jsp" %>
     <%} else if(session.getAttribute("admin")!=null){%>
@@ -115,13 +121,16 @@
         <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annunciPertinenti.get(i).getEmail())){ %>
           <div class="row">
           <div class="col-xs-4 col-md-8"></div>
-          <a class="btn btn-secondary col-xs-4 col-md-2" href='<%="ModificaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>'>Modifica</a>
-           <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>      
+          <%--<a class="btn btn-secondary col-xs-4 col-md-2" href='<%="ModificaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>'>Modifica</a> --%>
+           <button onmouseover="this.style.color='white';" onmouseleave="this.style.color='#5bc0de';" style="color: #5bc0de;" class="btn btn-info btn-outline col-md-2" type="button" onclick="window.location.href='ModificaAnnuncioServlet?annuncioID=<%=annunciPertinenti.get(i).getId()%>'">Modifica</button>
+           <%-- <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>   --%>     
+            <button class="btn btn-info col-md-2" type="button"  data-toggle="modal" data-target="#rimuoviModal" onclick="settaIdAnnuncioDaRimuovereUtente('<%=annunciPertinenti.get(i).getId()%>')">Elimina</button>
         </div>
         <%} else if (session.getAttribute("admin")!=null){ %>
          <div class="row">
          <div class="col-xs-8 col-md-10"></div>
-           <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>      
+           <%--   <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a> --%>      
+           <button class="btn btn-info col-md-2" type="button"  data-toggle="modal" data-target="#rimuoviModal" onclick="settaIdAnnuncioDaRimuovereAmministratore('<%=annunciPertinenti.get(i).getId()%>')">Rimuovi</button>
          </div>
         <%} %>
         <div class="row">
@@ -170,8 +179,45 @@ function loadBootpagAfterLoadingPage(){
   
   
 <%@include file="includes/lightboxImmagini.jsp" %>
+        
+ <!-- Modal per la cancellazione -->       
+        
+
+		<!-- Popup in caso di tentata rimozione -->
+		<div id="rimuoviModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">	
+		     	<!-- Modal content-->
+		     	<div class="modal-content">
+		       		<div class="modal-header">
+		         		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		         		<h4 class="modal-title">Sei sicuro?</h4>
+		      		</div>
+			       	<div class="modal-footer">
+			        	<button type="button" class="btn btn-success" data-dismiss="modal">Annulla</button>
+			         	<button id="rimuoviButton"  class="btn btn-danger">Rimuovi</button>
+			       	</div>
+		    	</div>	
+			</div>
+		</div>
+		<div id="esitoModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">	
+		     	<!-- Modal content-->
+		     	<div class="modal-content">
+		       		<div class="modal-header">
+		         		<h4 id="title" class="modal-title"></h4>
+		      		</div>
+		      		<div class="modal-body">
+	          			<p id="text"></p>
+        			</div>
+			       	<div class="modal-footer">
+			         	<button id="ok" class="btn btn-info">OK</button>
+			       	</div>
+		    	</div>	
+			</div>
+		</div>          
           
-          
+
+
 
 
 <script type="text/javascript">
@@ -203,12 +249,12 @@ function riordina(){
 
 
 </script>          
-          
+       
           
 </section>
     
  
-    
+  
     
     <%@ include file="includes/footer.jsp" %>
   </body>

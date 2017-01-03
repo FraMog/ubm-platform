@@ -16,7 +16,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
-                <form class="form" action="http://localhost:8080/UBM-Platform/LoginServlet" method="POST">
+                <form class="form" action="LoginServlet" method="POST">
                   <div class="form-group">
                     <input name="username" type="text" class="form-control" placeholder="e-mail">
                   </div>

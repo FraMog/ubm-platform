@@ -21,19 +21,22 @@ import it.ubmplatform.factory.ManagerFactory;
 public class CancellaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
+	
+	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	response.setContentType("text/plain;charset=UTF-8");
     	try {
 			if(cancellaAnnuncio(Integer.parseInt(request.getParameter("annuncioID")))) { 
 				//rimuovo l'annuncio e effettuo redirect alla home
-				request.removeAttribute("annuncioID");
-				response.sendRedirect("index.jsp");
+				response.setStatus(HttpServletResponse.SC_OK);
 			}
 			else{
-				throw new OperationFailedException("La cancellazione dell'annuncio non ha avuto successo, riprova più tardi");
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); //se sono state lanciate eccezioni imposto lo stato di errore
+				response.getWriter().write("Errore nella cancellazione dell'annuncio, riprovare più tardi");
 			}
 		} catch (NumberFormatException | SQLException e) {
-			
-			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST); //se sono state lanciate eccezioni imposto lo stato di errore
+			response.getWriter().write("Errore nella cancellazione dell'annuncio, riprovare più tardi");
 		}
     }
   

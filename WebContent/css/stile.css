@@ -98,6 +98,20 @@ body {
 }
 
 
+/* Bottoni modifica ed elimina annuncio */
+
+
+.btn-info.btn-outline {
+    
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-info.btn-outline:hover{
+	color: #fff;
+}
+
 /*Istruzioni in ricercaAnnuncio.jsp*/
 
 .pagination{
@@ -121,10 +135,17 @@ img.modalImageClasse{
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
+    
+      background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
+
+#imageModalDiv .modal{
+	  overflow: auto; /* Enable scroll if needed */
+}
+
+
+
 
 /* Modal Content (Image) */
 .modal-content {
@@ -154,7 +175,7 @@ img.modalImageClasse{
 }
 
 /* The Close Button */
-.close {
+#imageModalDiv .close {
     position: absolute;
     top: 15px;
     right: 35px;
@@ -164,8 +185,8 @@ img.modalImageClasse{
     transition: 0.3s;
 }
 
-.close:hover,
-.close:focus {
+#imageModalDiv .close:hover,
+#imageModalDiv .close:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
