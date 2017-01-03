@@ -20,10 +20,17 @@ public class InvalidaAccountServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(invalidaAccount(request.getParameter("email"))){ 
-			//invalido l'account e effettuo redirect alla home
-			request.removeAttribute("email");
-			response.sendRedirect("index.jsp");
+		System.out.println("trovata"+ request.getParameter("email"));
+		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
+		if(request.getParameter("eliminaFeedback").equals("true")){
+			//AGGIUNGERE RIMOZIONE FEEDBACK
+		}
+		boolean valore=invalidaAccount(request.getParameter("email"));
+	   	if(valore){ 
+    		//invalido l'account 
+    		request.removeAttribute("email");
+    		response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("Success Data");  
 		} 
 		else{
 			throw new OperationFailedException("L'invalidazione dell'account non ha avuto successo, riprova più tardi");
