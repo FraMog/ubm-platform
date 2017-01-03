@@ -35,10 +35,6 @@
 								<input type="submit" value="Lista utenti" class="btn btn-primary" />
 							</div>
 						</form>
-
-						<%--<a href="#" class="btn btn-primary">Lista utenti</a>--%>
-
-
 					</div></li>
 				<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
 						Logout</a></li>

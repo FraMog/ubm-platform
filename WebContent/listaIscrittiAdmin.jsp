@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="java.util.*,it.ubmplatform.account.Account"%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -16,6 +17,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/JavaScript" src="javascript/admin/gestioneAdmin.js"></script>
 </head>
 <body>
 	<%@ include file="includes/navbarAdmin.jsp"%>
@@ -39,20 +41,31 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%ArrayList<Account> lista = (ArrayList) request.getAttribute("lista");
-					int i=1;%>
-					<%System.out.println(lista.size());%>
-		//if
-					<%for (Account p : lista) {%>
+					<%
+						ArrayList<Account> lista = (ArrayList) request.getAttribute("lista");
+						int i = 1;
+					%>
+					<%
+						System.out.println(lista.size());
+					%>
+
+					<%
+						for (Account p : lista) {
+					%>
 					<tr>
-						<th scope="row"><%=i++ %></th>
+						<th scope="row"><%=i++%></th>
 						<td><%=p.getEmail()%></td>
-						<td><button type="button" class="btn btn-default">
+						<%
+							String email = p.getEmail();
+						%>
+						<%
+							System.out.println(email);
+						%>
+						<td><button type="button" class="btn btn-default" onclick="javascript:cancellaAccount('<%=email%>')">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button></td>
-						<td><button type="button" class="btn btn-default">
+						<td><button type="button" class="btn btn-default" onclick="javascript:invalidaAccount('<%=email%>')">
 								<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-							</button>
 							</button></td>
 					</tr>
 					<%

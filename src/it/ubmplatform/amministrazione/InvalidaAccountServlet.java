@@ -27,7 +27,7 @@ public class InvalidaAccountServlet extends HttpServlet {
 		}
 		boolean valore=invalidaAccount(request.getParameter("email"));
 	   	if(valore){ 
-    		//invalido l'account 
+    		//invalido l'account  
     		request.removeAttribute("email");
     		response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("Success Data");  
