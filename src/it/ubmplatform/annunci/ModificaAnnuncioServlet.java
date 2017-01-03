@@ -34,11 +34,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	throw new ServletException("GET request not accepted");
-    }
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int edizione = 1, id = 0;
+    	int edizione = 1, id = 0;
 		double prezzo = 0;
 		String foto;
 		Date dataPubblicazione = null;
@@ -113,7 +109,10 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
+    }
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
 	}
 	
 	
