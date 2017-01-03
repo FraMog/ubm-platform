@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -35,7 +36,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	throw new ServletException("GET request not accepted");
+    	
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,6 +81,9 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 				throw new InsertFailedException("L'inserimento dell'annuncio ha riscontrato dei problemi, riprova più tardi");
 			}
 		} catch (InvalidAttributeValueException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -141,9 +145,10 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 	 * @param toInsert L'annuncio da inserire
 	 * @return 1 se l'operazione di inserimento è andata a buon fine, un numero negativo che indica la tipologia di errore altrimenti
 	 * @throws InvalidAttributeValueException 
+	 * @throws SQLException 
 	 * @pre toInsert != null
 	 */
-	private boolean inserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException{
+	private boolean inserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException, SQLException{
 		AbstractFactory factory = new ManagerFactory();
 		AnnuncioInterface managerAnnuncio = factory.createAnnuncioManager();
 		return managerAnnuncio.queryInserisciAnnuncio(toInsert);
