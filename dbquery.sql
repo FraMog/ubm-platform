@@ -3,7 +3,8 @@ use ubmplatform;
 CREATE TABLE IF NOT EXISTS account (
   Email varchar(40) NOT NULL,
   Password varchar(20) NOT NULL,
-  Tipo char(1) NOT NULL,
+  Tipo varchar(1) NOT NULL,
+  DataInvalidazione date DEFAULT NULL,
   PRIMARY KEY (Email)
 );
 CREATE TABLE IF NOT EXISTS profilo (
@@ -55,11 +56,8 @@ CREATE TABLE IF NOT EXISTS amministratore (
 );
 
 
---INSERT INTO account
---VALUES ('mario1996','ciao','v');
 
---INSERT INTO profilo
---VALUES ('mario1996','mario','memoli','1996-01-24','cjfe','cava','383902','ddc');
+--INSERT INTO account VALUES ('francesco','ciao','R',NULL);
 
 
---SELECT account.* FROM account JOIN profilo WHERE account.Email= profilo.Email AND account.Tipo='v' ORDER BY account.Email;
+--INSERT INTO profilo VALUES ('francesco','mario','memoli','1996-01-24','cjfe','cava','383902','ddc');
