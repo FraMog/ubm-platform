@@ -6,7 +6,7 @@
 String user=request.getParameter("userid"); 
 session.putValue("userid",user); 
 String pwd=request.getParameter("pwd"); 
-String fname=request.getParameter("email"); //Prende valori tramite post nell'uri passati da registrazione.jsp
+String fname=request.getParameter("email"); //Prende valori tramite post   nell'uri passati da registrazione.jsp
 String lname=request.getParameter("password"); 
 String email=request.getParameter("email"); 
 Class.forName("com.mysql.jdbc.Driver"); 
