@@ -1,6 +1,11 @@
 package it.ubmplatform.autenticazione;
 
 import java.io.IOException;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,7 +37,6 @@ public class RecuperaPasswordServlet extends HttpServlet {
 		session = request.getSession();
 		
 		String email = request.getParameter("email");
-		
 		if (email.equals(""))
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
@@ -40,13 +44,55 @@ public class RecuperaPasswordServlet extends HttpServlet {
 		}
 		else
 		{
-			if (recuperaPassword(email))
+			if (recuperaPassword(email)!=null)
 			{
-				//invia mail (??) contenente pass + alert invio con successo
+				String passwordRecuperata = recuperaPassword(email);
+				String host = "smtp.gmail.com";
+				String to = email;
+				String from = "ubmplatform@gmail.com";
+				String subject = "Recupero password per UBM-Platform"; 
+				String messageText = "La password per accedere alla piattaforma di UBM-Platform è:\n"+ passwordRecuperata +"\n";
+				final String username="ubmplatform@gmail.com";
+				final String password="UbmPlatform2016";
+				// Create some properties and get the default Session
+					Properties props = new Properties();
+					
+					props.put("mail.smtp.auth", "true");
+					props.put("mail.smtp.starttls.enable", "true");
+					props.put("mail.smtp.host", "smtp.gmail.com");
+					props.put("mail.smtp.port", "587");
+					Session sessionMail = Session.getInstance(props, new javax.mail.Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(username, password);
+						}
+					  });
+			 
+					try {
+						Message message = new MimeMessage(sessionMail);
+						sessionMail.setDebug(true);
+						message.setFrom(new InternetAddress(username));
+						message.setRecipients(Message.RecipientType.TO,
+							InternetAddress.parse(to));
+						message.setSubject(subject);
+						message.setText(messageText);
+			 
+						Transport.send(message);
+						
+						session.setAttribute("emailInviata", "true");
+						RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+						rd.forward(request, response);
+
+			 
+			 
+					} catch (MessagingException e) {
+						throw new RuntimeException(e);
+					}
 			}
 			else
 			{
-				//errore nell'invio
+				session.setAttribute("emailInviata", "false");
+				RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
+				rd.forward(request, response);
 			}
 		}
 	}
@@ -54,17 +100,14 @@ public class RecuperaPasswordServlet extends HttpServlet {
 	/**
 	 * Il metodo che si occupa di inviare l'email all'utente
 	 * @param email L'email dell'utente a cui recuperare la password, passato come parametro dall'utente
-	 * @return Un booleano che indica se l'operazione di invio email è andata a buon fine
+	 * @return password La password recuperata dal database.
 	 * @pre email != null
 	 */
-	private boolean recuperaPassword(String email){
+	private String recuperaPassword(String email){
 		AbstractFactory factory = new ManagerFactory();
 		AutenticazioneInterface model = factory.createAutenticazioneManager();
 		String password = model.queryRecuperaPassword(email);
-		if (password==null)
-			return false;
-		else
-			return true;
+		return password;
 	}
 	
 
