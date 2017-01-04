@@ -32,7 +32,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 			String queryLoginAdmin = "SELECT * FROM amministratore WHERE Email='"+toSearch.getEmail()+"' && Password='"+toSearch.getPassword()+"'";
 			statement=connection.createStatement();
 			resultSet = statement.executeQuery(queryLoginAdmin);
-
+			
 			while (resultSet.next())
 			{
 				if(toSearch.getEmail().equals(resultSet.getString(1)) && toSearch.getPassword().equals(resultSet.getString(2)))
@@ -42,13 +42,13 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				}
 			}
 
-			if (isAdmin=false)
+			if (isAdmin==false)
 			{
 				String queryLoginAccount = "SELECT * FROM account WHERE Email='"+toSearch.getEmail()+"' && Password='"+toSearch.getPassword()+"'";
 				statement=connection.createStatement();
 				resultSet = statement.executeQuery(queryLoginAccount);
 				boolean isUtente=false; 
-				
+		
 				while (resultSet.next())
 				{
 					Account accountTrovato = new Account(resultSet.getString(1), resultSet.getString(2));
@@ -57,11 +57,20 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 					{
 						isUtente = true;
 						if (toSearch.getTipo().equals("R"))			//account Regolare
+						{
+							System.out.println(toSearch.getEmail()+toSearch.getTipo());
 							return 1;
+						}
 						else if (toSearch.getTipo().equals("I"))	//account Invalidato per breve tempo
+						{
+							System.out.println(toSearch.getEmail()+toSearch.getTipo());
 							return 2;
+						}
 						else if (toSearch.getTipo().equals("B"))	//account Bannato, non è possibile accedere
+						{
+							System.out.println(toSearch.getEmail()+toSearch.getTipo());
 							return 3;
+						}
 					}
 					else
 						return -1;
@@ -75,7 +84,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			
+			return -1;
 		} finally
 		{
 			if(statement!=null)
@@ -90,8 +99,9 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			return -1;
+
 		}
+		return -1;
 	}
 	
 	/**
@@ -167,7 +177,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 			{
 				nomeUtente = resultSet.getString(1);
 			}
-
+			
 			return nomeUtente;
 		} catch (SQLException e)
 		{
@@ -203,8 +213,10 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
-		GregorianCalendar dataInvalidazione = null;
+		GregorianCalendar dataInvalidazione = new GregorianCalendar();
 		Date dataDb = null;
+		long invDateInMill=0;	//data invalidazione 
+		long attDateInMill=0;	//data attuale
 
 
 		try
@@ -218,8 +230,10 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 			{
 				dataDb = resultSet.getDate(1);
 				dataInvalidazione.setTime(dataDb);
-				
-				if (dataAttuale.before(dataInvalidazione))		
+				invDateInMill = dataInvalidazione.getTimeInMillis()+604800000;		//604800000 sono 7 giorni in ms
+				attDateInMill = dataAttuale.getTimeInMillis();
+
+				if (attDateInMill<=invDateInMill)		
 					return false;
 				else
 					return true;
@@ -243,8 +257,8 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			return false;
 		}
+		return false;
 
 	}
 
