@@ -98,7 +98,7 @@ public class RecuperaPasswordServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Il metodo che si occupa di inviare l'email all'utente
+	 * Il metodo che si occupa di recuperare la password associata all'e-mail passata come parametro.
 	 * @param email L'email dell'utente a cui recuperare la password, passato come parametro dall'utente
 	 * @return password La password recuperata dal database.
 	 * @pre email != null
