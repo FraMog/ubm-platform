@@ -3,7 +3,7 @@ use ubmplatform;
 CREATE TABLE IF NOT EXISTS account (
   Email varchar(40) NOT NULL,
   Password varchar(20) NOT NULL,
-  Tipo varchar(1) NOT NULL,
+  Tipo varchar(1) NOT NULL DEFAULT 'R',
   DataInvalidazione date DEFAULT NULL,
   PRIMARY KEY (Email)
 );
