@@ -12,14 +12,13 @@ import java.text.SimpleDateFormat;
 
 import javax.management.InvalidAttributeValueException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
-
 import it.ubmplatform.eccezioni.FileUploadException;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
@@ -28,13 +27,19 @@ import it.ubmplatform.factory.ManagerFactory;
  * Servlet che si occupa della gestione della modifica di un annuncio
  */
 @WebServlet("/ModificaAnnuncioServlet")
+@MultipartConfig
 public class ModificaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String path, fileName;
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	int edizione = 1, id = 0;
+     throw new ServletException("Metodo get non supportato");
+		
+    }
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int edizione = 1, id = 0;
 		double prezzo = 0;
 		String foto;
 		Date dataPubblicazione = null;
@@ -108,11 +113,6 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
-		
-    }
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
 	}
 	
 	

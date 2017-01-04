@@ -61,23 +61,23 @@
 			
 		  </div>
       </div>
-		<%} else if (session.getAttribute("user")!=null || session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>	<%--Se l'utente che sta navigando è l'utente che ha pubblicato l'annuncio può modificare --%>
+		<%} else if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>	<%--Se l'utente che sta navigando è l'utente che ha pubblicato l'annuncio può modificare --%>
 		 <div class="col-sm-6">
        	<div class="panel panel-default">
        		<div class="panel-body">
-       			<form id="annuncio" class="form-horizontal" action="ModificaAnnuncioServlet" method="get" enctype="multipart/form-data" onsubmit="return validateForm()">
+       			<form id="annuncio" class="form-horizontal" action="ModificaAnnuncioServlet" method="post" enctype="multipart/form-data">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="titolo">Titolo: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo" pattern="[a-zA-Z0-9]{1,50}" title="Inserire una stringa alfanumerica di lunghezza 1-50"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Categoria: *</label>
 		    			<div class="input-group col-sm-10" style="padding-left:25px">
 		    				<div class="radio">
-	                			<label><input type="radio" name="categoria" value="libro" <%if(annuncioDettagliato.getCategoria().equalsIgnoreCase("libro")){ %>checked="true"<%}%>>Libro</label>
+	                			<label><input type="radio" id="libroRadioButton" onclick="categoriaLibro()" name="categoria" value="libro" <%if(annuncioDettagliato.getCategoria().equalsIgnoreCase("libro")){ %>checked<%}%>>Libro</label>
 	              			</div>
 	              			<div class="radio">
-	                			<label><input type="radio" name="categoria" value="appunti" <%if(annuncioDettagliato.getCategoria().equalsIgnoreCase("appunti")){%>checked="true"<%}%>>Appunti</label>
+	                			<label><input type="radio" id="appuntiRadioButton" onclick="categoriaAppunti()" name="categoria" value="appunti" <%if(annuncioDettagliato.getCategoria().equalsIgnoreCase("appunti")){%>checked<%}%>>Appunti</label>
 	              			</div>
 		    			</div>
 	    			</div>
@@ -91,39 +91,47 @@
               				</select>
               			</div>
             		</div>
+            		<div class="form-group">
+	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:*</label>
+	    				<div class="col-sm-10"><input class="form-control" type="number" step="0.1" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>" placeholder="Inserisce il prezzo nel formato x,y o nel formato x" /></div>
+	    			</div>
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
 	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto" value="<%=annuncioDettagliato.getFoto()%>"/></div>
 	    			</div>
 	    			<div class="form-group">
+	    				<label class="control-label col-sm-2" for="descrizione">Descrizione:* </label>
+	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="annuncio" rows="3" cols="50" maxlength="100" placeholder="Inserisci una Descrizione" required="required"><%if(annuncioDettagliato.getDescrizione()!=null){%><%=annuncioDettagliato.getDescrizione()%><%}%></textarea></div>
+	    			</div>
+	    			
+	    			<div class="form-group">
+	    				<label class="control-label col-sm-2" for="condizioni">Condizioni: </label>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto"/></div>
+	    			</div>	   
+	    			
+	    		<div id="soloLibro"> <!-- Solo libro -->
+	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="[a-zA-Z0-9]{0,13}" title="Inserire una stringa alfanumerica di lunghezza 0-13"/></div>
 	    			</div>
 
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="autore">Autore: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="[a-zA-Z0-9]{0,20}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="edizione">Edizione: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="edizione" id="edizione" <%if(annuncioDettagliato.getEdizione()!=0){%>value="<%=annuncioDettagliato.getEdizione()%>"<%}%>/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="number" name="edizione" id="edizione" <%if(annuncioDettagliato.getEdizione()!=0){%>value="<%=annuncioDettagliato.getEdizione()%>"<%}%> /></div>
 	    			</div>
+	    		</div>  
+	    		 <div id="soloAppunti">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="materia">Materia: </label>
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia" <%if (annuncioDettagliato.getMateria()!=null){%>value="<%=annuncioDettagliato.getMateria()%>"<%}%> placeholder="Inserisci una Materia" /></div>
 	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="condizioni">Condizioni: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto"/></div>
-	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: </label>
-	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="profilo" rows="3" cols="50" maxlength="200" placeholder="Inserisci una Descrizione"><%if(annuncioDettagliato.getDescrizione()!=null){%><%=annuncioDettagliato.getDescrizione()%><%}%></textarea></div>
-	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:*</label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>"/></div>
-	    			</div>
+	    		  </div>	
+	    			 			
+	    			
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>
        		</div>
@@ -131,28 +139,7 @@
       </div>		
 	   
 	   
-	 <script type="text/javascript">
-    function validateForm()
-    {
-    var a=document.forms["Form"]["titolo"].value;
-    var b=document.forms["Form"]["categoria"].value;
-    var c=document.forms["Form"]["facolta"].value;
-    var d=document.forms["Form"]["foto"].value;
-    var h=document.forms["Form"]["descrizione"].value;
-    var e=document.forms["Form"]["prezzo"].value;
-    var f=document.forms["Form"]["data"].value;
-    var g=document.forms["Form"]["email"].value;
-    if (a==null || a=="",b==null || b=="",c==null || c=="",d==null || d=="",h==null || d=="",e==null || e=="",f==null || f=="",g==null || g=="")
-      {
-    	alert("Completa tutti i campi");
-        return false;
-      }
-    else{
-    	alert("Request complete");
-    	return true;
-    }
-    }
-    </script> 
+	
 	   
       
       <%} %>
@@ -207,8 +194,55 @@
 	
 	
     </section>
+    
+    
+   <script>
+   function categoriaLibro(){
+	  $("#soloAppunti").css("display", "none");
+	  $("#soloLibro").css("display", "block");
+	  $("#isbn").prop('disabled', false);
+	  $("#autoreLibro").prop('disabled', false);
+	  $("#edizione").prop('disabled', false);
+	  $("#materia").prop('disabled', true);
+   }
+   </script>
+   
+   
+     
+   <script>
+   function categoriaAppunti(){
+	  $("#soloAppunti").css("display", "block");
+	  $("#soloLibro").css("display", "none");
+	  $("#isbn").prop('disabled', true);
+	  $("#autoreLibro").prop('disabled', true);
+	  $("#edizione").prop('disabled', true);
+	  $("#materia").prop('disabled', false);
+   }
+   </script>
+   
+   <script>
+   
+   function controllaCategoriaSelezionata(){
+	   if($('#libroRadioButton').is(':checked')){
+		   categoriaLibro();
+	   }
+	   else if($('#appuntiRadioButton').is(':checked')){
+		   categoriaAppunti();
+	   }
+   }
+   
+   window.onload(controllaCategoriaSelezionata());
+
+   
+   </script>
+   
+   
+  <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>	
    <div id="containerFooterVisualizzaAnnuncio">
+   <%} %>
     <%@ include file="includes/footer.jsp" %>
+   <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>
   </div>
+   <%}%>
   </body>
 </html>
