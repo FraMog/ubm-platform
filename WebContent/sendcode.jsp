@@ -15,12 +15,15 @@
 	
 	session.setAttribute("codice",codice);
 	String host = "smtp.gmail.com";
-	String to =(String) session.getAttribute("indirizzo"); 
+	String dest=(String)request.getAttribute("indirizzo");
+	String to=null;//=${email};//=(String) session.getAttribute("indirizzo"); 
 	String from = request.getParameter("pasqualedeluca335@gmail.com");
-	String subject = request.getParameter("subject"); 
+	session.setAttribute("indirizzo_mail", dest);
+	request.setAttribute("webello", dest);
+	String subject = "CODICE VERIFICA UBM"; 
 	String messageText = "CODICE DI VERIFICA "+codice+".";
-	final String username="pasquale335@gmail.com";
-	final String password="pasquale11";
+	final String username="ubmplatform@gmail.com";
+	final String password="UbmPlatform2016";
 	// Create some properties and get the default Session
 		Properties props = new Properties();
 		
@@ -40,7 +43,7 @@
 
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(to));
+				InternetAddress.parse(dest));
 			message.setSubject(subject);
 			message.setText(messageText);
  

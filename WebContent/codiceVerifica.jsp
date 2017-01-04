@@ -43,18 +43,19 @@
         	codice_locale=Integer.parseInt(request.getParameter("codice_locale")); 
         	cod_sessione=(int)session.getAttribute("codice");
         //DEBUG	out.print("codice-->"+codice_locale+"\t cod sess= "+cod_sessione); 
-    		String email=(String) session.getAttribute("indirizzo");
+    		String email=(String) session.getAttribute("indirizzo_mail");
          	//DEBUG out.print("EMAIL = "+email);
 
         	 if (codice_locale==cod_sessione){
-             	// DEBUG out.print("CODICE OK");
+             	//out.print("CODICE OK\n");
              	//Query per cambiare stat
              	Class.forName("com.mysql.jdbc.Driver"); 
-             	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ubmplatform",
-             	"root",""); 
+             	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3060/ubmplatform",
+             	"root","root"); 
              	Statement st= con.createStatement(); 
              	ResultSet rs; 
-             	int i=st.executeUpdate("UPDATE account SET Tipo='v' WHERE Email='"+email+"'");
+             	//out.println("EMAI PER QUERY: "+email);
+             	int i=st.executeUpdate("UPDATE account SET Tipo='r' WHERE Email='"+email+"'");
 				
              	//Redirect alla pagina di completamento	
              	response.sendRedirect("registrazioneEffettuata.jsp");
