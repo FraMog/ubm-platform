@@ -52,7 +52,7 @@
             		</div>
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
-	    				<div class="col-sm-4"><input class="form-control" type="file" name="foto" id="foto"/></div>
+	    				<div class="col-sm-3"><input class="form-control" type="file" name="foto" id="foto"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
@@ -80,7 +80,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="prezzo" id="prezzo"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="prezzo" id="prezzo"/></div>
 	    			</div>
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>

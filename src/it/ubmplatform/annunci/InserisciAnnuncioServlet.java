@@ -47,6 +47,11 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
+		if ("Libro".equals(categoria)) {
+			categoria = "Libro";
+		} else if ("Appunti".equals(categoria)){
+			categoria = "Appunti";
+		}
 		String facolta = request.getParameter("facolta");
 		foto = verificaFile(request); //controlli sull'immagine
 		String isbn = request.getParameter("isbn");

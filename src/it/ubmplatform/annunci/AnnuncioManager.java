@@ -93,15 +93,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				s.setString(13, toInsert.getEmail());
 			}
 			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
-			//controllo se i campi obbligatori sono stati compilati
-			if ((toInsert.getTitolo()==null)||(toInsert.getCategoria()==null)||
-				(toInsert.getFacolta()==null)||(toInsert.getFoto()==null)|| (toInsert.getDescrizione()==null) || (toInsert.getPrezzo()==0)) {
-				throw new InvalidAttributeValueException("Compilare tutti i campi obbligatori e riprovare");
-			}
 			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
 		} finally{
 			if(s!=null)
 				try {
