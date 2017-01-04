@@ -18,15 +18,13 @@
               <div class="dropdown-menu" style="padding:10px;">
                 <form class="form" action="LoginServlet" method="POST">
                   <div class="form-group">
-                    <input name="username" type="text" class="form-control" placeholder="e-mail" autofocus>
+                    <input name="username" type="text" class="form-control" placeholder="e-mail" autofocus required>
                   </div>
                   <div class="form-group">
-                    <input name="password" type="password" class="form-control" placeholder="password"><br>
+                    <input name="password" type="password" class="form-control" placeholder="password" required><br>
                   </div>
                   <a href="recuperaPassword.jsp">Password dimenticata?</a>
-                  <div class="checkbox">
-                    <label><input type="checkbox">Remember me</label>
-                  </div>
+
                     <input type="submit" class="btn btn-primary" value="Login"/>
                 </form>
               </div>
