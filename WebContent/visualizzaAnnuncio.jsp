@@ -25,8 +25,7 @@
     <%} %>
     
     <%@ include file="includes/sideBar.jsp" %>
-    <%session.removeAttribute("user"); %>
-    <%session.setAttribute("admin","ciao@hotmail.it");%>
+
     <%Annuncio annuncioDettagliato =(Annuncio) request.getAttribute("annuncioDettagliato"); %>
     
     <%if (session.getAttribute("user")==null || !session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%> <%--Se l'utente che sta naigando non è loggato come l'utente che ha pubblicato l'annuncio può solo visualizzare e non modificare --%>

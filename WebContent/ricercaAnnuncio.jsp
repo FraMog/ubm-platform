@@ -121,15 +121,12 @@
         <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annunciPertinenti.get(i).getEmail())){ %>
           <div class="row">
           <div class="col-xs-4 col-md-8"></div>
-          <%--<a class="btn btn-secondary col-xs-4 col-md-2" href='<%="ModificaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>'>Modifica</a> --%>
-           <button onmouseover="this.style.color='white';" onmouseleave="this.style.color='#5bc0de';" style="color: #5bc0de;" class="btn btn-info btn-outline col-md-2" type="button" onclick="window.location.href='ModificaAnnuncioServlet?annuncioID=<%=annunciPertinenti.get(i).getId()%>'">Modifica</button>
-           <%-- <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a>   --%>     
+           <button onmouseover="this.style.color='white';" onmouseleave="this.style.color='#5bc0de';" style="color: #5bc0de;" class="btn btn-info btn-outline col-md-2" type="button" onclick="window.location.href='VisualizzaDettagliAnnuncio?annuncioID=<%=annunciPertinenti.get(i).getId()%>'">Modifica</button>
             <button class="btn btn-info col-md-2" type="button"  data-toggle="modal" data-target="#rimuoviModal" onclick="settaIdAnnuncioDaRimuovereUtente('<%=annunciPertinenti.get(i).getId()%>')">Elimina</button>
         </div>
         <%} else if (session.getAttribute("admin")!=null){ %>
          <div class="row">
          <div class="col-xs-8 col-md-10"></div>
-           <%--   <a class="btn btn-info col-xs-4 col-md-2" href='<%="CancellaAnnuncioServlet?annuncioID=" + annunciPertinenti.get(i).getId()%>' >Elimina</a> --%>      
            <button class="btn btn-info col-md-2" type="button"  data-toggle="modal" data-target="#rimuoviModal" onclick="settaIdAnnuncioDaRimuovereAmministratore('<%=annunciPertinenti.get(i).getId()%>')">Rimuovi</button>
          </div>
         <%} %>
