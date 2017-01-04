@@ -219,5 +219,18 @@ img.modalImageClasse{
       text-decoration: underline;
       cursor: pointer;
     }
+    
+   #containerFooterVisualizzaAnnuncio{
+  	  padding-top:100px;
+   }  
+}   
+    
+  @media screen and (min-width: 800px) {
+  	#containerFooterVisualizzaAnnuncio{
+  	  padding-top:800px;
+  	}
+  
+   }  
+    
         
-}
+

@@ -25,12 +25,12 @@
     <%} %>
     
     <%@ include file="includes/sideBar.jsp" %>
-    <%session.removeAttribute("admin"); %>
-    <%session.setAttribute("user","ciao@hotmail.it");%>
+    <%session.removeAttribute("user"); %>
+    <%session.setAttribute("admin","ciao@hotmail.it");%>
     <%Annuncio annuncioDettagliato =(Annuncio) request.getAttribute("annuncioDettagliato"); %>
     
     <%if (session.getAttribute("user")==null || !session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%> <%--Se l'utente che sta naigando non è loggato come l'utente che ha pubblicato l'annuncio può solo visualizzare e non modificare --%>
-    <section class="col-sm-10" id="section">
+    <section class="row col-sm-10" id="section">
       <div class="col-sm-8 panel panel-default">
       	<div class="panel-body">
 			<h3 style="margin-bottom: 20px"><%=annuncioDettagliato.getTitolo()%></h3>
@@ -69,7 +69,7 @@
        			<form id="annuncio" class="form-horizontal" action="ModificaAnnuncioServlet" method="get" enctype="multipart/form-data" onsubmit="return validateForm()">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="titolo">Titolo: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Categoria: *</label>
@@ -84,55 +84,47 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Facoltà: *</label>
-		    			<div class="form-group col-sm-3" style="padding-left:30px">
+		    			<div class="form-group col-sm-4" style="padding-left:30px">
               			 	<select class="form-control" name="facolta">
-               			 		<option value="informatica">Informatica</option>
-               					<option value="biologia">Biologia</option>
-               			 		<option value="matematica">Matematica</option>
+               			 		<option value="Informatica" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Informatica")){%> selected="selected"<%}%>>Informatica</option>
+               					<option value="Biologia" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Biologia")){%> selected="selected"<%}%>>Biologia</option>
+               			 		<option value="Matematica" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Matematica")){%> selected="selected"<%}%>>Matematica</option>
               				</select>
               			</div>
             		</div>
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
-	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto"/></div>
+	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto" value="<%=annuncioDettagliato.getFoto()%>"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN"/></div>
 	    			</div>
+
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="autore">Autore: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="edizione">Edizione: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="edizione" id="edizione"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="number" name="edizione" id="edizione" <%if(annuncioDettagliato.getEdizione()!=0){%>value="<%=annuncioDettagliato.getEdizione()%>"<%}%>/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="materia">Materia: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia" <%if (annuncioDettagliato.getMateria()!=null){%>value="<%=annuncioDettagliato.getMateria()%>"<%}%> placeholder="Inserisci una Materia" /></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="condizioni">Condizioni: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: </label>
-	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="profilo" rows="3" cols="50" maxlength="200"></textarea></div>
+	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="profilo" rows="3" cols="50" maxlength="200" placeholder="Inserisci una Descrizione"><%if(annuncioDettagliato.getDescrizione()!=null){%><%=annuncioDettagliato.getDescrizione()%><%}%></textarea></div>
 	    			</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="prezzo">Prezzo: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="prezzo" id="prezzo"/></div>
+	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:*</label>
+	    				<div class="col-sm-10"><input class="form-control" type="number" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>"/></div>
 	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="email">Email: <% request.getAttribute("email");%> *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email"/></div>
-	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="dataPubblicazione">DataPubblicazione: <% request.getAttribute("dataPubblicazione");%>*</label>
-	    				<div class="col-sm-10"><input class="form-control" type="date" name="dataPubblicazione" id="dataPubblicazione"/></div>
-	    			</div>
-	    			
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>
        		</div>
@@ -212,9 +204,12 @@
 		    	</div>	
 			</div>
 		</div>
-	<%} %>	
-
+	<%} %>
+	
+	
     </section>
+   <div id="containerFooterVisualizzaAnnuncio">
     <%@ include file="includes/footer.jsp" %>
+  </div>
   </body>
 </html>
