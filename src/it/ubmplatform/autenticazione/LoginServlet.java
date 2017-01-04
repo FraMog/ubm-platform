@@ -61,11 +61,12 @@ public class LoginServlet extends HttpServlet {
 				{
 					session.setAttribute("name", nome);
 				}
-				else 
+				else 		//se non ha completato il profilo inserendo i propri dati, visualizza l'e-mail al posto del nome
 				{
 					session.setAttribute("name", myAccount.getEmail());
 				}
 				
+				session.setAttribute("emailLoggato", myAccount.getEmail());
 				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
 				
@@ -85,6 +86,8 @@ public class LoginServlet extends HttpServlet {
 					{
 						session.setAttribute("name", myAccount.getEmail());
 					}
+					
+					session.setAttribute("emailLoggato", myAccount.getEmail());
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
