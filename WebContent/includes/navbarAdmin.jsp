@@ -1,4 +1,19 @@
 <nav class="navbar navbar-inverse">
+<script type="text/javascript">
+function logout()
+{
+	var http = new XMLHttpRequest();
+	http.onreadystatechange = function()
+	{
+  		if(this.readyState==4 && this.status==200)
+		{
+			open("index.jsp","_self");
+		}  
+	}
+	http.open("POST", "http://localhost:8080/UBM-Platform/LogoutServlet", true);
+	http.send(null);
+}
+</script>
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -19,25 +34,22 @@
 					<div class="dropdown-menu" style="padding: 10px;">
 						<form class="form" action="#">
 							<div class="form-group" style="text-align: center;">
-								<input type="text" class="form-control" name="key"
-									placeholder="keyword" />
+								<input type="text" class="form-control" name="key" placeholder="keyword" />
 							</div>
 							<input type="button" class="btn btn-primary" value="Cerca" />
 						</form>
 					</div></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Benvenuto UBM-ADMIN<span class="caret"></span></a>
-					<div class="dropdown-menu"
-						style="padding: 10px; text-align: center">
-
+					<div class="dropdown-menu" style="padding: 10px; text-align: center">
 						<form action="VisualizzaListaUtentiServlet" method="get">
 							<div>
 								<input type="submit" value="Lista utenti" class="btn btn-primary" />
 							</div>
 						</form>
+						<%--<a href="#" class="btn btn-primary">Lista utenti</a>--%>
 					</div></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
-						Logout</a></li>
+				<li onclick="logout()"><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
 			</ul>
 		</div>
 	</div>
