@@ -8,7 +8,7 @@ public interface AutenticazioneInterface {
 	
 	int queryLogin(Account toSearch);
 	String queryRecuperaPassword(String email);
-	boolean queryControllaData(GregorianCalendar dataAttuale, Account trovato);
+	int queryControllaData(GregorianCalendar dataAttuale, Account trovato);
 	String queryEstraiNome(Account trovato);
 
 }
