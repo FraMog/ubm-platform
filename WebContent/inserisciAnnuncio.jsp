@@ -75,7 +75,7 @@
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni"/></div>
 	    			</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: </label>
+	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: *</label>
 	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="profilo" rows="3" cols="50" maxlength="200"></textarea></div>
 	    			</div>
 	    			<div class="form-group">
@@ -92,11 +92,9 @@
     var b=document.forms["Form"]["categoria"].value;
     var c=document.forms["Form"]["facolta"].value;
     var d=document.forms["Form"]["foto"].value;
-    var h=document.forms["Form"]["descrizione"].value;
-    var e=document.forms["Form"]["prezzo"].value;
-    var f=document.forms["Form"]["data"].value;
-    var g=document.forms["Form"]["email"].value;
-    if (a==null || a=="",b==null || b=="",c==null || c=="",d==null || d=="",h==null || d=="",e==null || e=="",f==null || f=="",g==null || g=="")
+    var e=document.forms["Form"]["descrizione"].value;
+    var f=document.forms["Form"]["prezzo"].value;
+    if (a==null || a=="",b==null || b=="",c==null || c=="",d==null || d=="",e==null || e=="",f==null || f=="")
       {
     	alert("Completa tutti i campi");
         return false;
