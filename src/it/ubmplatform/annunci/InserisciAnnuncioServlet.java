@@ -8,9 +8,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.time.LocalDateTime;
 
 import javax.management.InvalidAttributeValueException;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import it.ubmplatform.eccezioni.FileUploadException;
 import it.ubmplatform.eccezioni.InsertFailedException;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
+import sun.util.calendar.CalendarDate;
 
 
 /**
@@ -43,7 +45,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		int edizione = 1, id = 1;
 		double prezzo = 0;
 		String foto;
-		Date dataPubblicazione;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
@@ -64,11 +66,8 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		}catch(Exception e){
 			prezzo = 0;
 		}
-		try {
-			dataPubblicazione=(Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataPubblicazione")); //recupero e cast data
-		} catch (ParseException e) {
-			dataPubblicazione=null;
-		}
+		Date dataPubblicazione = new Date(0);
+		System.out.println(dateFormat.format(dataPubblicazione));
 		String email = request.getParameter("email");
 		try {
 			if(inserisciAnnuncio(new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione))){ //controllo se l'operazione è riuscita

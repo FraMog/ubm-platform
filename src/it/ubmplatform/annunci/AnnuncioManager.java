@@ -29,12 +29,12 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 	public boolean queryCancellaAnnuncio(int idAnnuncio)throws SQLException {
 		Connection conn=null;
-		Statement s=null;
+		PreparedStatement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection();
-			String query="DELETE annuncio WHERE ID='"+idAnnuncio+"'";
-			s=conn.createStatement();
-			s.executeUpdate(query);
+			s=conn.prepareStatement("DELETE annuncio WHERE ID=?");
+			s.setInt(1, idAnnuncio);
+			s.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 			s.setString(3, toInsert.getCategoria());
 			s.setString(4, toInsert.getFacolta());
 			s.setString(5, toInsert.getFoto());
-			if (toInsert.getCategoria().equals("Libro")) { //controllo se è un libro
+			if (toInsert.getCategoria().equals("L")) { //controllo se è un libro
 				s.setString(6, toInsert.getIsbn());
 				s.setString(7, toInsert.getAutoreLibro());
 				s.setInt(8, toInsert.getEdizione());
@@ -89,7 +89,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 					date=new java.sql.Date(toInsert.getDataPubblicazione().getTime());
 				s.setDate(14, date);
 			}
-			else if (toInsert.getCategoria().equals("Appunti")) { //controllo se sono appunti
+			else if (toInsert.getCategoria().equals("A")) { //controllo se sono appunti
 				s.setString(9, toInsert.getMateria());
 				s.setString(10, toInsert.getCondizioni());
 				s.setString(11, toInsert.getDescrizione());
@@ -115,7 +115,6 @@ public class AnnuncioManager implements AnnuncioInterface {
 				try {
 					s.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			if(conn!=null)
