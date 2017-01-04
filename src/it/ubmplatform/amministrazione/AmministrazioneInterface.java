@@ -10,5 +10,5 @@ public interface AmministrazioneInterface {
 	boolean queryInvalidaAccount(String email);
 	boolean queryRimuoviAnnuncioNonInerente(int idAnnuncio) throws SQLException;
 	public ArrayList<Account> queryVisualizzaListaUtenti() throws Exception;
-	
+	boolean queryCancellaFeedback(String email);
 }
