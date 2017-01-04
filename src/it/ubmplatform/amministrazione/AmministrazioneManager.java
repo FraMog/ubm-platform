@@ -54,6 +54,38 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 				}
 		}
 	}
+	
+	public boolean queryCancellaFeedback(String email){
+		Connection conn=null;
+		Statement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			String query="DELETE FROM feedback where feedback.EmailP='"+email+"'";
+			s=conn.createStatement();
+			s.executeUpdate(query);
+			if(s.getUpdateCount()>=0) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+		}
+	}
 
 	/**
 	 * Si occupa dell'interrogazione al database per l'invalidazione dell'account. 
@@ -141,8 +173,8 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 		try {
 			conn=DBManager.getInstance().getConnection(); 
 			String query="SELECT account.* "+  						//prendo solo gli account validi
-					"FROM account JOIN profilo "+
-					"WHERE account.Email= profilo.Email AND account.Tipo='R' "+
+					"FROM account "+
+					"WHERE account.Tipo='R' "+
 					"ORDER BY account.Email";
 			
 			s=conn.createStatement();
