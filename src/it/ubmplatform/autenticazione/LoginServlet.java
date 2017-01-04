@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import it.ubmplatform.account.Account;
-import it.ubmplatform.annunci.AnnuncioInterface;
 import it.ubmplatform.autenticazione.AutenticazioneInterface;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
@@ -55,6 +54,7 @@ public class LoginServlet extends HttpServlet {
 			else if (login(myAccount)==1)	//cerca nella tabella degli account utente e trova account
 			{
 				session.setAttribute("user", "utente");
+				session.setAttribute("accountNonTrovato", null);
 				
 				String nome = estraiNome(myAccount);
 				if (nome!=null)
@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				else 		//se non ha completato il profilo inserendo i propri dati, visualizza l'e-mail al posto del nome
 				{
-					session.setAttribute("name", myAccount.getEmail());
+					session.setAttribute("name", myAccount.getEmail());				
 				}
 				
 				session.setAttribute("emailLoggato", myAccount.getEmail());
@@ -77,6 +77,8 @@ public class LoginServlet extends HttpServlet {
 				if (controllaData(dataAttuale, myAccount)==0)
 				{
 					session.setAttribute("user", "utente");
+					session.setAttribute("accountNonTrovato", null);
+					
 					String nome = estraiNome(myAccount);
 					if (nome!=null)
 					{
@@ -110,6 +112,8 @@ public class LoginServlet extends HttpServlet {
 			else if (login(myAccount)==3)	//trova account ma è stato bannato. avvisa l'utente
 			{
 				session.setAttribute("accountBannato", "true");
+				session.setAttribute("accountNonTrovato", null);
+				
 				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
 			}
