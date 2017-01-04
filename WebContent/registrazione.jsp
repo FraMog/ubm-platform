@@ -39,7 +39,7 @@
 			<table>
 				<tr>
 					<td class="td">e-mail</td>
-					<!--  Richiamo il codice javascript da file -->
+					<!--  Richiamo il codice javascript da fil e -->
 					<input type="text" name="email" id="email"	 onblur="validateEmail()" />
 					<script type="text/javascript" src="javascript/email/validateEmail.js"></script>
 					

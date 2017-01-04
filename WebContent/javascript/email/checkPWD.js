@@ -6,7 +6,7 @@
   			{
   				alert("Controlla le due password \n"+txt1.value+"\n"+txt2.value);
   				return false;
-  				
+  				//
   			}
 
   	}

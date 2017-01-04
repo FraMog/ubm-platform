@@ -3,7 +3,7 @@ function validateEmail(emailField){
 
         if (reg.test(emailField.value) == false) 
         {
-            alert('Invalid Email Addresweoooeooeeoeos\n'+emailField.value);
+            alert('Invalid Email Address\n'+emailField.value);
             return false;
         }
         alert('Valid mail')

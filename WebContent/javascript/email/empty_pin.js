@@ -5,5 +5,6 @@ function empty_pin()
     {
         window.alert("Inserire PIN!");
         return false;
+        //
     }
 }
