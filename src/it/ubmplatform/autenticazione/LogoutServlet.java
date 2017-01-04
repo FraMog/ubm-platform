@@ -27,32 +27,18 @@ public class LogoutServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		session = request.getSession();
-		session.invalidate();
-		if (logout())
-		{
-			RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
-			rs.forward(request, response);
-		}
-		else
-		{
-			session.setAttribute("logoutErrato", "true");
-			RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
-			rs.forward(request, response);
-		}
+		logout();
 	}
 	
 	/**
 	 * Metodo che si occupa della gestione del logout, togliendo dalla sessione l'utente loggato
-	 * @return Un booleano che indica se il logout è stato effettuato correttamente
 	 */
-	private boolean logout()
-	{
-		if ((session.getAttribute("user")==null)&&(session.getAttribute("mail")==null))
-			return true;
-		else 
-			return false;
+	private void logout()
+	{	
+		session.invalidate();
 	}
 
 }
