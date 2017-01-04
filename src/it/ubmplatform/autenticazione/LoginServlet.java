@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet {
 			else if (login(myAccount)==1)	//cerca nella tabella degli account utente e trova account
 			{
 				session.setAttribute("user", "utente");
+				
 				String nome = estraiNome(myAccount);
 				if (nome!=null)
 				{
@@ -62,10 +63,11 @@ public class LoginServlet extends HttpServlet {
 				}
 				else 
 				{
-					session.setAttribute("name", "utente");
+					session.setAttribute("name", myAccount.getEmail());
 				}
-					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-					rd.forward(request, response);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+				rd.forward(request, response);
 				
 			}
 			else if (login(myAccount)==2)	//trova account invalidato. compare avviso e verifica se puo accedere
@@ -81,14 +83,14 @@ public class LoginServlet extends HttpServlet {
 					}
 					else 
 					{
-						session.setAttribute("name", "utente");
+						session.setAttribute("name", myAccount.getEmail());
 					}
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
 				else
 				{
-					session.setAttribute("dataInvalidazioneNonTrovata", "true");
+					session.setAttribute("accountInvalidato", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
