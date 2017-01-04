@@ -10,7 +10,7 @@ function logout()
 			open("index.jsp","_self");
 		}  
 	}
-	http.open("POST", "http://localhost:8080/UBM-Platform/LogoutServlet", true);
+	http.open("POST", "LogoutServlet", true);
 	http.send(null);
 }
 </script>
