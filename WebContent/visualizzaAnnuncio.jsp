@@ -19,19 +19,27 @@
   
 
   <body>
-    <%if(session.getAttribute("user")!=null) {%>
-    <%@ include file="includes/navbarLoggato.jsp" %>
-    <%} else if(session.getAttribute("admin")!=null){%>
+  <%String tipologiaUtenteConnesso=null, emailLoggato=null;
+   tipologiaUtenteConnesso=(String)session.getAttribute("user");
+   if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente")){
+	   emailLoggato=(String)session.getAttribute("emailLoggato");
+   }   
+  %>
+  
+  
+  <%if (tipologiaUtenteConnesso==null){ %>
+      <%@ include file="includes/navbarNonLoggato.jsp" %>
+   <%}else if(tipologiaUtenteConnesso.equals("utente")) {%>
+         <%@ include file="includes/navbarLoggato.jsp" %>
+    <%} else if(tipologiaUtenteConnesso.equals("admin")){%>
     	<%@ include file="includes/navbarAdmin.jsp" %>
-    <%} else {%>
-    	<%@ include file="includes/navbarNonLoggato.jsp" %>
     <%} %>
     
     <%@ include file="includes/sideBar.jsp" %>
 
     <%Annuncio annuncioDettagliato =(Annuncio) request.getAttribute("annuncioDettagliato"); %>
     
-    <%if (session.getAttribute("user")==null || !session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%> <%--Se l'utente che sta naigando non è loggato come l'utente che ha pubblicato l'annuncio può solo visualizzare e non modificare --%>
+    <%if (tipologiaUtenteConnesso==null || !tipologiaUtenteConnesso.equals("utente") || !emailLoggato.equals(annuncioDettagliato.getEmail())){%> <%--Se l'utente che sta navigando non è loggato come l'utente che ha pubblicato l'annuncio può solo visualizzare e non modificare --%>
     <section class="row col-sm-10" id="section">
       <div class="col-sm-8 panel panel-default">
       	<div class="panel-body">
@@ -64,7 +72,7 @@
 			
 		  </div>
       </div>
-		<%} else if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>	<%--Se l'utente che sta navigando è l'utente che ha pubblicato l'annuncio può modificare --%>
+		<%} else if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente") && emailLoggato.equals(annuncioDettagliato.getEmail())){%>	<%--Se l'utente che sta navigando è l'utente che ha pubblicato l'annuncio può modificare --%>
 		 <div class="col-sm-6">
        	<div class="panel panel-default">
        		<div class="panel-body">
@@ -147,7 +155,7 @@
       
       <%} %>
       
-      <% if (session.getAttribute("admin")!=null || session.getAttribute("user")!=null){ %>
+      <% if (tipologiaUtenteConnesso!=null){ %>
       <div class="col-sm-4">
 	      <img id="logo_ubm" class="img-responsive" src="<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
 	      <h3 class="">Pubblicato da: <a href="#" class="btn btn-info"><%=annuncioDettagliato.getEmail()%></a></h3>
@@ -159,8 +167,8 @@
       <h4>Pubblicato Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>    
        </div>
       <%} %>
-        <%if (session.getAttribute("admin")!=null || (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail()))) {%>
-		<button class="btn btn-danger btn-lg col-sm-1 col-sm-offset-4 pull-left" type="button"  data-toggle="modal" data-target="#rimuoviModal">Rimuovi</button>
+        <%if (tipologiaUtenteConnesso!=null && (tipologiaUtenteConnesso.equals("admin")||(tipologiaUtenteConnesso.equals("utente")&& emailLoggato.equals(annuncioDettagliato.getEmail())))){%><%-- Un admin ed il creatore dell'annuncio possono scegliere di rimuoverlo --%>
+		<button class="btn btn-danger btn-lg col-md-1 col-md-offset-4" type="button"  data-toggle="modal" data-target="#rimuoviModal">Rimuovi</button>
 		<!-- Popup in caso di tentata rimozione -->
 		<div id="rimuoviModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">	
@@ -172,7 +180,7 @@
 		      		</div>
 			       	<div class="modal-footer">
 			        	<button type="button" class="btn btn-success" data-dismiss="modal">Annulla</button>
-			         	<button onclick='<%if(session.getAttribute("admin")!=null){%>rimuovi<%} else if(session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>rimuoviAnnuncioUtente<%}%>(<%=annuncioDettagliato.getId()%>)' class="btn btn-danger">Rimuovi</button>
+			         	<button onclick='<%if(tipologiaUtenteConnesso.equals("admin")){%>rimuovi<%} else if(tipologiaUtenteConnesso.equals("utente") && emailLoggato.equals(annuncioDettagliato.getEmail())){%>rimuoviAnnuncioUtente<%}%>(<%=annuncioDettagliato.getId()%>)' class="btn btn-danger">Rimuovi</button>
 			       	</div>
 		    	</div>	
 			</div>
@@ -239,11 +247,11 @@
    </script>
    
    
-  <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>	
+  <%if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente")&& emailLoggato.equals(annuncioDettagliato.getEmail())){%>	
    <div id="containerFooterVisualizzaAnnuncio">
    <%} %>
     <%@ include file="includes/footer.jsp" %>
-   <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>
+ <%if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente")&& emailLoggato.equals(annuncioDettagliato.getEmail())){%>	
   </div>
    <%}%>
   </body>

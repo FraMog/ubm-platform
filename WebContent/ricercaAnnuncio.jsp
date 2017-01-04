@@ -21,13 +21,23 @@
   </head>
   <body>
   
-  	<%if(session.getAttribute("user")!=null) {%>
-    	<%@ include file="includes/navbarLoggato.jsp" %>
-    <%} else if(session.getAttribute("admin")!=null){%>
+
+  <%String tipologiaUtenteConnesso=null, emailLoggato=null;
+   tipologiaUtenteConnesso=(String)session.getAttribute("user");
+   if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente")){
+	   emailLoggato=(String)session.getAttribute("emailLoggato");
+   }   
+  %>
+  
+  
+  <%if (tipologiaUtenteConnesso==null){ %>
+      <%@ include file="includes/navbarNonLoggato.jsp" %>
+   <%}else if(tipologiaUtenteConnesso.equals("utente")) {%>
+         <%@ include file="includes/navbarLoggato.jsp" %>
+    <%} else if(tipologiaUtenteConnesso.equals("admin")){%>
     	<%@ include file="includes/navbarAdmin.jsp" %>
-    <%} else {%>
-    	<%@ include file="includes/navbarNonLoggato.jsp" %>
     <%} %>
+    
     <%@ include file="includes/sideBar.jsp" %>
     <%ArrayList <Annuncio> annunciPertinenti= (ArrayList<Annuncio>) request.getAttribute("annunciPertinenti"); %>
     
@@ -118,13 +128,13 @@
       <div id="content" class="panel panel-default">
         <div class="panel-body risultato">
      
-        <%if (session.getAttribute("user")!=null && session.getAttribute("user").equals(annunciPertinenti.get(i).getEmail())){ %>
+        <%if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente") && emailLoggato.equals(annunciPertinenti.get(i).getEmail())){ %>
           <div class="row">
           <div class="col-xs-4 col-md-8"></div>
            <button onmouseover="this.style.color='white';" onmouseleave="this.style.color='#5bc0de';" style="color: #5bc0de;" class="btn btn-info btn-outline col-md-2" type="button" onclick="window.location.href='VisualizzaDettagliAnnuncio?annuncioID=<%=annunciPertinenti.get(i).getId()%>'">Modifica</button>
             <button class="btn btn-info col-md-2" type="button"  data-toggle="modal" data-target="#rimuoviModal" onclick="settaIdAnnuncioDaRimuovereUtente('<%=annunciPertinenti.get(i).getId()%>')">Elimina</button>
         </div>
-        <%} else if (session.getAttribute("admin")!=null){ %>
+        <%} else if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("admin")){ %>
          <div class="row">
          <div class="col-xs-8 col-md-10"></div>
            <button class="btn btn-info col-md-2" type="button"  data-toggle="modal" data-target="#rimuoviModal" onclick="settaIdAnnuncioDaRimuovereAmministratore('<%=annunciPertinenti.get(i).getId()%>')">Rimuovi</button>
