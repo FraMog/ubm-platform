@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
-	String session_account = (String)session.getAttribute("accountNonTrovato"); 
-	String session_data = (String)session.getAttribute("dataInvalidazioneNonTrovata");
- 	String session_bannato = (String)session.getAttribute("accountBannato"); 
- 	String session_logout = (String)session.getAttribute("logoutErrato"); 
+	String session_account = (String)session.getAttribute("accountNonTrovato");
+	String session_invalidato = (String)session.getAttribute("accountInvalidato");
+ 	String session_bannato = (String)session.getAttribute("accountBannato");  
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -20,32 +19,25 @@
     onload = function()
     {
     	var session_account_obj= '<%=session_account%>';
-    	var session_data_obj= '<%=session_data%>';
+    	var session_invalidato_obj= '<%=session_invalidato%>';
     	var session_bannato_obj= '<%=session_bannato%>';
-    	var session_logout_obj= '<%=session_logout%>';
     	
-    	if (session_account_obj.equals("true"))
+    	if (session_account_obj=="true")
     	{
     		alert ("Account non trovato. E-mail e/o password errate.");
     		session.setAttribute("accountNonTrovato", null);
     	}
     	
-    	if (session_data_obj).equals("true"))
+    	if (session_invalidato_obj=="true")
     	{
-    		alert ("Il tuo account è stato invalidato, ma c'è un problema nel recupero della data di invalidazione. Riprova per verfiicare se è possibile l'accesso alla piattaforma.");
+    		alert ("Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra qualche giorno.");
     		session.setAttribute("dataInvalidazioneNonTrovata", null);
     	}
     	
-    	if (session_bannato_obj.equals("true"))
+    	if (session_bannato_obj=="true")
     	{
     		alert ("Il tuo account è stato bannato dall'ammministratore: non puoi accedere alla piattaforma.");
     		session.setAttribute("accountBannato", null);
-    	}
-    	
-    	if (session_logout_obj.equals("true"))
-    	{
-    		alert ("Impossibile effettuare il logout. Riprovare tra qualche minuto.");
-    		session.setAttribute("logoutErrato", null);
     	}
     }
     </script>
