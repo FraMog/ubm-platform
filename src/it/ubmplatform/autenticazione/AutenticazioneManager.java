@@ -58,17 +58,14 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 						isUtente = true;
 						if (toSearch.getTipo().equals("R"))			//account Regolare
 						{
-							System.out.println(toSearch.getEmail()+toSearch.getTipo());
 							return 1;
 						}
 						else if (toSearch.getTipo().equals("I"))	//account Invalidato per breve tempo
 						{
-							System.out.println(toSearch.getEmail()+toSearch.getTipo());
 							return 2;
 						}
 						else if (toSearch.getTipo().equals("B"))	//account Bannato, non è possibile accedere
 						{
-							System.out.println(toSearch.getEmail()+toSearch.getTipo());
 							return 3;
 						}
 					}
@@ -208,7 +205,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	 * @return true se l'utente può accedere al sistema, false altrimenti.
 	 */
 	
-	public boolean queryControllaData(GregorianCalendar dataAttuale, Account trovato)
+	public int queryControllaData(GregorianCalendar dataAttuale, Account trovato)
 	{
 		Connection connection = null;
 		Statement statement = null;
@@ -233,16 +230,20 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				invDateInMill = dataInvalidazione.getTimeInMillis()+604800000;		//604800000 sono 7 giorni in ms
 				attDateInMill = dataAttuale.getTimeInMillis();
 
-				if (attDateInMill<=invDateInMill)		
-					return false;
+				if (attDateInMill<=invDateInMill)
+				{
+					long giorniInMill= invDateInMill-attDateInMill;
+					int giorni = Math.round(giorniInMill / 86400000);		//1 giorno medio = 1000*60*60*24 ms = 86400000 ms 
+					return giorni;
+				}
 				else
-					return true;
+					return 0;
 			}
 
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			return false;
+			return -1;
 		} finally
 		{
 			if(statement!=null)
@@ -258,7 +259,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 					e.printStackTrace();
 				}
 		}
-		return false;
+		return -1;
 
 	}
 
