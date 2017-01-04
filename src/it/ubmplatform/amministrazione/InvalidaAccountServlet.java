@@ -17,17 +17,20 @@ import it.ubmplatform.factory.ManagerFactory;
 @WebServlet("/InvalidaAccountServlet")
 public class InvalidaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private boolean valoreFeedback=true;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("trovata"+ request.getParameter("email"));
 		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
-		if(request.getParameter("eliminaFeedback").equals("true")){
-			//AGGIUNGERE RIMOZIONE FEEDBACK
+		String email=request.getParameter("email");
+		String decisione=request.getParameter("eliminaFeedback");
+		
+		boolean valoreInvalida=invalidaAccount(email);
+		
+	   	if(decisione.equals("true")){
+			boolean valoreFeedback=cancellaFeedback(email);
 		}
-		boolean valore=invalidaAccount(request.getParameter("email"));
-	   	if(valore){ 
-    		//invalido l'account  
+	   	if(valoreInvalida && valoreFeedback){   
     		request.removeAttribute("email");
     		response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("Success Data");  
@@ -35,6 +38,7 @@ public class InvalidaAccountServlet extends HttpServlet {
 		else{
 			throw new OperationFailedException("L'invalidazione dell'account non ha avuto successo, riprova più tardi");
 		}
+	   	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,5 +56,11 @@ public class InvalidaAccountServlet extends HttpServlet {
 		AbstractFactory factory = new ManagerFactory();
 		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
 		return managerAmministrazione.queryInvalidaAccount(email);
+	}
+	
+	private boolean cancellaFeedback(String email){
+		AbstractFactory factory = new ManagerFactory();
+		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
+		return managerAmministrazione.queryCancellaFeedback(email);
 	}
 }

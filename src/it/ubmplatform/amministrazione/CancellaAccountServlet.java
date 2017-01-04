@@ -20,17 +20,20 @@ import it.ubmplatform.factory.ManagerFactory;
 @WebServlet("/CancellaAccountServlet")
 public class CancellaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private boolean valoreFeedback=true;
 	Logger logger= Logger.getLogger("global");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("trovata"+ request.getParameter("email"));
 		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
-		if(request.getParameter("eliminaFeedback").equals("true")){
-			//AGGIUNGERE RIMOZIONE FEEDBACK
+		String email=request.getParameter("email");
+		String decisione=request.getParameter("eliminaFeedback");
+		
+		boolean valoreCancella=cancellaAccount(email);
+		if(decisione.equals("true")){
+			boolean valoreFeedback=cancellaFeedback(email);
 		}
-		boolean valore=cancellaAccount(request.getParameter("email"));
-	   	if(valore){ 
-    		//rimuovo l'account 
+	   	if(valoreCancella && valoreFeedback){
     		request.removeAttribute("email");
     		response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("Success Data");  
@@ -59,6 +62,12 @@ public class CancellaAccountServlet extends HttpServlet {
 			logger.info(" service error " + e);
 			return true;
 		}
+	}
+	
+	private boolean cancellaFeedback(String email){
+		AbstractFactory factory = new ManagerFactory();
+		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
+		return managerAmministrazione.queryCancellaFeedback(email);
 	}
 
 }
