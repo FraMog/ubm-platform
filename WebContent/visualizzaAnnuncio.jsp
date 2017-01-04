@@ -14,7 +14,10 @@
     <script  src="http://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="javascript/amministrazione/rimuoviAnnuncio.js"></script>
+    <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
   </head>
+  
+
   <body>
     <%if(session.getAttribute("user")!=null) {%>
     <%@ include file="includes/navbarLoggato.jsp" %>
@@ -137,7 +140,7 @@
        		</div>
        	</div>
       </div>		
-	   
+
 	   
 	
 	   
@@ -156,8 +159,8 @@
       <h4>Pubblicato Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>    
        </div>
       <%} %>
-        <%if (session.getAttribute("admin")!=null) {%>
-		<button class="btn btn-danger btn-lg" type="button"  data-toggle="modal" data-target="#rimuoviModal">Rimuovi</button>
+        <%if (session.getAttribute("admin")!=null || (session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail()))) {%>
+		<button class="btn btn-danger btn-lg col-sm-1 col-sm-offset-4 pull-left" type="button"  data-toggle="modal" data-target="#rimuoviModal">Rimuovi</button>
 		<!-- Popup in caso di tentata rimozione -->
 		<div id="rimuoviModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">	
@@ -169,7 +172,7 @@
 		      		</div>
 			       	<div class="modal-footer">
 			        	<button type="button" class="btn btn-success" data-dismiss="modal">Annulla</button>
-			         	<button onclick="rimuovi(<%= annuncioDettagliato.getId()%>)" class="btn btn-danger">Rimuovi</button>
+			         	<button onclick='<%if(session.getAttribute("admin")!=null){%>rimuovi<%} else if(session.getAttribute("user")!=null && session.getAttribute("user").equals(annuncioDettagliato.getEmail())){%>rimuoviAnnuncioUtente<%}%>(<%=annuncioDettagliato.getId()%>)' class="btn btn-danger">Rimuovi</button>
 			       	</div>
 		    	</div>	
 			</div>
@@ -190,10 +193,9 @@
 		    	</div>	
 			</div>
 		</div>
-	<%} %>
-	
-	
-    </section>
+	<%}%>
+</section>	
+   
     
     
    <script>

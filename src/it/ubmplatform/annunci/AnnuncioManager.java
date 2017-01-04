@@ -32,7 +32,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		PreparedStatement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection();
-			s=conn.prepareStatement("DELETE annuncio WHERE ID=?");
+			s=conn.prepareStatement("DELETE FROM annuncio WHERE ID=?");
 			s.setInt(1, idAnnuncio);
 			s.executeUpdate();
 			return true;
