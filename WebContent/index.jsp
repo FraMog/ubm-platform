@@ -5,6 +5,7 @@
  	String session_bannato = (String)session.getAttribute("accountBannato");
  	String session_data = (String)session.getAttribute("dataInvalidazioneNonTrovata");
  	String session_giorni = (String)session.getAttribute("giorniAttesa");
+ 	String session_email = (String)session.getAttribute("emailInviata");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -25,6 +26,7 @@
     	var session_bannato_obj= '<%=session_bannato%>';
     	var session_data_obj= '<%=session_data%>';
      	var session_giorni_obj= '<%=session_giorni%>';
+     	var session_email_obj= '<%=session_email%>';
     	
     	if (session_account_obj=="true")
     	{
@@ -36,6 +38,7 @@
     	{
     		alert ("Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra "+ session_giorni_obj +" giorno/i.");
     		session.setAttribute("accountInvalidato", null);
+    		session.setAttribute("giorniAttesa", null);
     	}
     	
     	if (session_bannato_obj=="true")
@@ -49,6 +52,18 @@
     		alert ("Il tuo account è stato invalidato dall'ammministratore, ma c'è un problema nel recupero della data. Riprova ad accedere alla piattaforma.");
     		session.setAttribute("dataInvalidazioneNonTrovata", null);
     	}
+    	
+    	if (session_email_obj=="true")
+    	{
+    		alert ("Ti abbiamo inviato una e-mail contenente la password per effettuare l'accesso alla piattaforma. Riprova ad autenticarti.");
+    		session.setAttribute("emailInviata", null);
+    	}
+    	
+    	if (session_email_obj=="false")
+    	{
+    		alert ("C'è stato un problema nell'invio della e-mail. Riprova ad inserire la password.");
+    		session.setAttribute("emailInviata", null);
+    	}  	
     	
     }
     </script>
