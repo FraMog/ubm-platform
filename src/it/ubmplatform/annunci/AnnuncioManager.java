@@ -68,7 +68,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		try {
 			conn=DBManager.getInstance().getConnection(); //recupero una connessione
 			//creo la query
-			String query="INSERT INTO annuncio (ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query="INSERT INTO annuncio (ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,CURDATE())";
 			s=conn.prepareStatement(query);
 			s.setInt(1, toInsert.getId());
 			s.setString(2, toInsert.getTitolo());
@@ -83,11 +83,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				s.setString(10, toInsert.getCondizioni());
 				s.setString(11, toInsert.getDescrizione());
 				s.setDouble(12, toInsert.getPrezzo());
-				s.setString(13, toInsert.getEmail());
-				java.sql.Date date=null;
-				if(toInsert.getDataPubblicazione()!=null)
-					date=new java.sql.Date(toInsert.getDataPubblicazione().getTime());
-				s.setDate(14, date);
+				s.setString(13, toInsert.getEmail());	
 			}
 			else if (toInsert.getCategoria().equals("A")) { //controllo se sono appunti
 				s.setString(9, toInsert.getMateria());
@@ -95,10 +91,6 @@ public class AnnuncioManager implements AnnuncioInterface {
 				s.setString(11, toInsert.getDescrizione());
 				s.setDouble(12, toInsert.getPrezzo());
 				s.setString(13, toInsert.getEmail());
-				java.sql.Date date=null;
-				if(toInsert.getDataPubblicazione()!=null)
-					date=new java.sql.Date(toInsert.getDataPubblicazione().getTime());
-				s.setDate(14, date);
 			}
 			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
 			//controllo se i campi obbligatori sono stati compilati
@@ -203,7 +195,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 							
 					//formo la stringa contenente la query da effettuare
 					String queryInserisci = "UPDATE ANNUNCIO "
-							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizioni = ?, Descrizione = ?, Prezzo = ?"
+							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizioni = ?, Descrizione = ?, Prezzo = ?, annuncio.DataPubblicazione = CURDATE()"
 							+ "WHERE ID = ?";
 							
 					//preparo lo statement per formare la query

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.management.InvalidAttributeValueException;
@@ -41,8 +42,8 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int edizione = 1, id = 0;
 		double prezzo = 0;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String foto;
-		Date dataPubblicazione = null;
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
 		String facolta = request.getParameter("facolta");
@@ -62,14 +63,8 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		}catch(Exception e){
 			prezzo = 0;
 		}
-		try {
-			dataPubblicazione=(Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataPubblicazione")); //recupero e cast data
-		} catch (ParseException e) {
-			dataPubblicazione=null;
-		} catch (java.text.ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Date dataPubblicazione = new Date(0);
+		System.out.println(dateFormat.format(dataPubblicazione));
 		String email = request.getParameter("email"); 
 		
 		Annuncio toUpdate = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
