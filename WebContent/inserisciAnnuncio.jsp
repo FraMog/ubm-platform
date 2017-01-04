@@ -88,7 +88,7 @@
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email"/></div>
 	    			</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="dataPubblicazione">DataPubblicazione: <% request.getAttribute("dataPubblicazione");%>*</label>
+	    				<label class="control-label col-sm-2" for="dataPubblicazione">DataPubblicazione: *</label>
 	    				<div class="col-sm-10"><input class="form-control" type="date" name="dataPubblicazione" id="dataPubblicazione"/></div>
 	    			</div>
 	    			
