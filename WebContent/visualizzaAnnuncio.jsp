@@ -243,7 +243,6 @@
    
    window.onload(controllaCategoriaSelezionata());
 
-   
    </script>
    
    
