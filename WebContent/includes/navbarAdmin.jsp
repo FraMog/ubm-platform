@@ -24,7 +24,7 @@ function logout()
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li><a id="ubm" href="index.jsp" style="font-size: 110%">UBM
+				<li><a id="ubm" href="homePageAdmin.jsp" style="font-size: 110%">UBM
 						Platform</a></li>
 			</ul>
 			<%@ include file="navbarSearchForm.jsp"%>
