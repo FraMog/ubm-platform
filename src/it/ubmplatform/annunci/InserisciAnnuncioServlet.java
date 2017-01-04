@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 
 import javax.management.InvalidAttributeValueException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import it.ubmplatform.factory.ManagerFactory;
  * Servlet che si occupa di gestire l'inserimento di un annuncio
  */
 @WebServlet("/InserisciAnnuncioServlet")
+@MultipartConfig
 public class InserisciAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String path, fileName;
@@ -46,10 +48,10 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
-		if ("Libro".equals(categoria)) {
-			categoria = "Libro";
-		} else if ("Appunti".equals(categoria)){
-			categoria = "Appunti";
+		if ("libro".equals(categoria.toLowerCase())) {
+			categoria = "L";
+		} else if ("appunti".equals(categoria.toLowerCase())){
+			categoria = "A";
 		}
 		String facolta = request.getParameter("facolta");
 		foto = verificaFile(request); //controlli sull'immagine

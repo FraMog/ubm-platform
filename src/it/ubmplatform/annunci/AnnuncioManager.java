@@ -75,6 +75,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 			s.setString(3, toInsert.getCategoria());
 			s.setString(4, toInsert.getFacolta());
 			s.setString(5, toInsert.getFoto());
+			System.out.println(toInsert.getCategoria());
 			if (toInsert.getCategoria().equals("L")) { //controllo se è un libro
 				s.setString(6, toInsert.getIsbn());
 				s.setString(7, toInsert.getAutoreLibro());
@@ -86,6 +87,9 @@ public class AnnuncioManager implements AnnuncioInterface {
 				s.setString(13, toInsert.getEmail());	
 			}
 			else if (toInsert.getCategoria().equals("A")) { //controllo se sono appunti
+				s.setString(6, null);
+				s.setString(7, null);
+				s.setInt(8, 0);
 				s.setString(9, toInsert.getMateria());
 				s.setString(10, toInsert.getCondizioni());
 				s.setString(11, toInsert.getDescrizione());
