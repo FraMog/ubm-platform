@@ -25,7 +25,7 @@ import it.ubmplatform.factory.ManagerFactory;
 /**
  * Servlet che gestisce la cancellazione di utente da parte di un amministratore
  */
-@WebServlet("/CancellaAccountServlet")
+@WebServlet("/CancellaAccountServlet") 
 public class CancellaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private boolean valoreFeedback=true;
