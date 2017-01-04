@@ -23,7 +23,7 @@
 				<h4 style="margin-top: 36px">Inserisci l'indirizzo e-mail del
 					tuo account. Ti sarà inviata una e-mail contenente la password
 					corrente.</h4>
-				<form id="email" class="form-horizontal" action="RecuperaPasswordServlet" method="POST" enctype="multipart/form-data">
+				<form id="email" class="form-horizontal" action="RecuperaPasswordServlet" method="POST">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="email" style="margin-top: 23px; margin-left: 23px;">E-mail: *</label>
 						<div class="col-sm-8">
