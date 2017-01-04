@@ -42,7 +42,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int edizione = 1, id = 1;
 		double prezzo = 0;
-		String foto;
+		String foto, email = null;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		
 		String titolo = request.getParameter("titolo");
@@ -66,12 +66,11 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		}
 		Date dataPubblicazione = new Date(0);
 		System.out.println(dateFormat.format(dataPubblicazione));
-		String email = request.getParameter("email");
 		try {
 			if(inserisciAnnuncio(new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione))){ //controllo se l'operazione è riuscita
 				if(foto != null)
 					saveFile(request); //se il file è stato inserito lo carico
-				request.getSession().setAttribute("ID", id);
+				request.getSession().setAttribute("user", email);
 				response.sendRedirect("visualizzaAnnuncio.jsp");
 			}
 			else{

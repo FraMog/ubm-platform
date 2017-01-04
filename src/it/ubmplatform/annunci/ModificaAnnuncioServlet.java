@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import it.ubmplatform.eccezioni.FileUploadException;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
@@ -43,7 +42,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		int edizione = 1, id = 0;
 		double prezzo = 0;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String foto;
+		String foto, email = null;
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
 		String facolta = request.getParameter("facolta");
@@ -65,7 +64,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		}
 		Date dataPubblicazione = new Date(0);
 		System.out.println(dateFormat.format(dataPubblicazione));
-		String email = request.getParameter("email"); 
+		request.getSession().setAttribute("user", email);
 		
 		Annuncio toUpdate = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
 		try {
