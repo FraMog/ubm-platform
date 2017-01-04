@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 			else if (login(myAccount)==2)	//trova account invalidato. compare avviso e verifica se puo accedere
 			{
 				GregorianCalendar dataAttuale = new GregorianCalendar();
-				if (controllaData(dataAttuale, myAccount))
+				if (controllaData(dataAttuale, myAccount)==0)
 				{
 					session.setAttribute("user", "utente");
 					String nome = estraiNome(myAccount);
@@ -88,8 +88,17 @@ public class LoginServlet extends HttpServlet {
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
+				else if (controllaData(dataAttuale, myAccount)==-1)
+				{
+					session.setAttribute("dataInvalidazioneNonTrovata", "true");
+					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+					rd.forward(request, response);
+				}
 				else
 				{
+					int giorni = controllaData(dataAttuale, myAccount);
+					String giorniAttesa = ""+giorni;
+					session.setAttribute("giorniAttesa", giorniAttesa);
 					session.setAttribute("accountInvalidato", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
@@ -145,7 +154,8 @@ public class LoginServlet extends HttpServlet {
 	 * @pre dataAttuale != null
 	 */
 	
-	private boolean controllaData (GregorianCalendar dataAttuale, Account trovato)
+	//0 se true, la differenza in giorni se false, -1 errore recupero data
+	private int controllaData (GregorianCalendar dataAttuale, Account trovato)
 	{
 		AbstractFactory factory = new ManagerFactory();
 		AutenticazioneInterface model = factory.createAutenticazioneManager();
