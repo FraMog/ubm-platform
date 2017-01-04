@@ -75,7 +75,6 @@
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni"/></div>
 	    			</div>
 	    			<div class="form-group">
-	    				<input name="descrizione" id="descrizione" type="text" class="validate">
 	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: </label>
 	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="profilo" rows="3" cols="50" maxlength="200"></textarea></div>
 	    			</div>
@@ -83,15 +82,6 @@
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo: *</label>
 	    				<div class="col-sm-10"><input class="form-control" type="number" name="prezzo" id="prezzo"/></div>
 	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="email">Email: <% request.getAttribute("email");%> *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email"/></div>
-	    			</div>
-	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="dataPubblicazione">DataPubblicazione: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="date" name="dataPubblicazione" id="dataPubblicazione"/></div>
-	    			</div>
-	    			
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>
 				
