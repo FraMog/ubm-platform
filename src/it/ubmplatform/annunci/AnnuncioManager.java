@@ -247,7 +247,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 			//Se cioè sto cercando usando il form di ricerca nel navbar
 			if (titolo!=null && categoria!=null && orderBy!=null){
-				query+= "WHERE Titolo = '" + titolo + "' AND Facolta = '" + facolta + "' ";
+				query+= "WHERE Titolo LIKE '%" + titolo + "%' AND Facolta = '" + facolta + "' ";
 
 				//Verifico quale categoria di prodotto è stata scelta
 				switch (categoria){
