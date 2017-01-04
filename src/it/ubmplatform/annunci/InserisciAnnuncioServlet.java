@@ -40,8 +40,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int edizione = 1, id = 1;
-		double prezzo = 0;
+		int id = 1;
 		String foto, email = null;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		
@@ -56,19 +55,11 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		foto = verificaFile(request); //controlli sull'immagine
 		String isbn = request.getParameter("isbn");
 		String autoreLibro = request.getParameter("autoreLibro");
-		try{
-			edizione = Integer.parseInt(request.getParameter("edizione"));
-		}catch(Exception e){
-			//L'edizione è scelta tramite un menù a tendina con le opzioni disponibili, quindi nessuna eccezione?
-		}
+		int edizione = Integer.parseInt(request.getParameter("edizione"));
 		String materia = request.getParameter("materia");
 		String condizioni = request.getParameter("condizioni");
 		String descrizione = request.getParameter("descrizione");
-		try{
-			prezzo = Double.parseDouble(request.getParameter("prezzo"));
-		}catch(Exception e){
-			prezzo = 0;
-		}
+		double prezzo = Double.parseDouble(request.getParameter("prezzo"));
 		Date dataPubblicazione = new Date(0);
 		System.out.println(dateFormat.format(dataPubblicazione));
 		try {
