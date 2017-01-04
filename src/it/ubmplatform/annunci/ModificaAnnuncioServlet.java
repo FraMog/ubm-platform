@@ -94,6 +94,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 				   toUpdate.setPrezzo(oldAnnuncio.getPrezzo());
 			   }
 			   modificaAnnuncio(toUpdate);
+			   saveFile(request); //salvo il file
 		} catch (InvalidAttributeValueException | SQLException e) {
 			
 			e.printStackTrace();

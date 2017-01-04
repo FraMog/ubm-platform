@@ -108,7 +108,7 @@
 	    			</div>
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
-	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto" value="<%=annuncioDettagliato.getFoto()%>"/></div>
+	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="descrizione">Descrizione:* </label>
@@ -243,7 +243,6 @@
    
    window.onload(controllaCategoriaSelezionata());
 
-   
    </script>
    
    
