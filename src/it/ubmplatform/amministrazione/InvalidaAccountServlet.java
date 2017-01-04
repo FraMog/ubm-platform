@@ -1,6 +1,15 @@
 package it.ubmplatform.amministrazione;
 
 import java.io.IOException;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +39,8 @@ public class InvalidaAccountServlet extends HttpServlet {
 	   	if(decisione.equals("true")){
 			boolean valoreFeedback=cancellaFeedback(email);
 		}
-	   	if(valoreInvalida && valoreFeedback){   
+	   	if(valoreInvalida && valoreFeedback){
+	   		sendMail(email);
     		request.removeAttribute("email");
     		response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("Success Data");  
@@ -62,5 +72,47 @@ public class InvalidaAccountServlet extends HttpServlet {
 		AbstractFactory factory = new ManagerFactory();
 		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
 		return managerAmministrazione.queryCancellaFeedback(email);
+	}
+	
+	private void sendMail(String email){
+		String to = email;
+		System.out.println(to);
+		String from = "ubmplatform@gmail.com";
+		String host = "smtp.gmail.com";
+		String subject ="Sei stato Invalidato da UBM-Platform";
+		String messageText ="Sei stato invalidato dalla piattaforma UBM-Platform in seguito al tuo comportamento inadatto riguardo le tue publicazioni sulla piattaforma. "+
+		"Potrai riaccedere ad essa soltanto tra 7 giorni.";
+		final String username="ubmplatform@gmail.com";
+		final String password="UbmPlatform2016";
+		
+		Properties props = new Properties();
+		
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		
+		Session sessionMail = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+		
+		try {
+			Message message = new MimeMessage(sessionMail);
+			sessionMail.setDebug(true);
+
+			message.setFrom(new InternetAddress(username));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(to));
+			message.setSubject(subject);
+			message.setText(messageText);
+ 
+			Transport.send(message);
+ 
+ 
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
