@@ -7,6 +7,7 @@ function cancellaAccount(email){
 			var eliminaFeedback= confirm("Vuoi eliminare anche i feedback creati da "+ email +"?");
 			$.get("CancellaAccountServlet", { "email": email, "eliminaFeedback": eliminaFeedback}, function(valore){
 				if(valore) {
+					
 				console.log("sono prima del refresh",valore);
 			location.reload(true);
 				}
@@ -21,6 +22,7 @@ function cancellaAccount(email){
 	}
 	
 }
+
 
 function invalidaAccount(email){
 	if(email==null) alert("Non è possibile invalidare l'account riprovare più tardi!")
