@@ -70,6 +70,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 			//creo la query
 			String query="INSERT INTO annuncio (ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,CURDATE())";
 			s=conn.prepareStatement(query);
+			System.out.println(toInsert.getId());
 			s.setInt(1, toInsert.getId());
 			s.setString(2, toInsert.getTitolo());
 			s.setString(3, toInsert.getCategoria());

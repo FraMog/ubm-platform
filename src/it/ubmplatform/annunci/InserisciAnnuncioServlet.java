@@ -44,6 +44,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = 1;
 		String foto, email = null;
+		email="prova@ubm.it";
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		
 		String titolo = request.getParameter("titolo");
@@ -65,11 +66,11 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		Date dataPubblicazione = new Date(0);
 		System.out.println(dateFormat.format(dataPubblicazione));
 		try {
+			System.out.println(id);
 			if(inserisciAnnuncio(new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione))){ //controllo se l'operazione è riuscita
 				if(foto != null)
 					saveFile(request); //se il file è stato inserito lo carico
-				request.getSession().setAttribute("user", email);
-				response.sendRedirect("visualizzaAnnuncio.jsp");
+				response.sendRedirect("VisualizzaDettagliAnnuncio?annuncioID="+id);
 			}
 			else{
 				throw new InsertFailedException("L'inserimento dell'annuncio ha riscontrato dei problemi, riprova più tardi");
@@ -91,7 +92,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private String verificaFile(HttpServletRequest request) throws IOException, ServletException{
-		final Part filePart = request.getPart("img");
+		final Part filePart = request.getPart("foto");
 		if(filePart==null || "".equals(filePart.getSubmittedFileName().trim())) //verifica se l'immagine è stata inserita
 			return null; //se non è stata inserita restituisco null
 		String ext=filePart.getContentType();
@@ -112,7 +113,7 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 	 * @throws FileNotFoundException
 	 */
 	private void saveFile(HttpServletRequest request) throws ServletException, IOException, FileNotFoundException {
-		final Part filePart = request.getPart("img");
+		final Part filePart = request.getPart("foto");
 		OutputStream out = null;
 		InputStream filecontent = null;
 

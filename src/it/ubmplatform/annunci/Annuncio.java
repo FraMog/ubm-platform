@@ -25,6 +25,7 @@ public class Annuncio {
 	 * @param prezzo Il prezzo del prodotto a cui è riferito l'annuncio
 	 */
 	public Annuncio(int id, String titolo, String categoria, String facolta, String foto, String isbn, String autoreLibro, int edizione, String materia, String condizioni, String descrizione, double prezzo, String email, Date dataPubblicazione) {
+		this.id=id;
 		this.foto = foto;
 		this.edizione = edizione;
 		this.email = email;
