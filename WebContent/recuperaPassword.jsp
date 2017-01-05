@@ -27,7 +27,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="email" style="margin-top: 23px; margin-left: 23px;">E-mail: *</label>
 						<div class="col-sm-8">
-							<input class="form-control" type="text" name="email" id="email" required="required" style="margin-top: 18px;" />
+							<input class="form-control" type="text" name="email" id="email" required="required" style="margin-top: 18px;" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)" title="L'e-mail deve essere del tipo nome@studenti.unisa.it, con 'nome' contenente tra 5 e 40 caratteri alfanumerici e non (sono consentiti i seguenti simboli: .,_,%,+,-)." />
 						</div>
 					</div>
 					<input type="submit" class="btn btn-info center-block"
