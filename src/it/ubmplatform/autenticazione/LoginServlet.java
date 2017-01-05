@@ -63,7 +63,10 @@ public class LoginServlet extends HttpServlet {
 				}
 				else 		//se non ha completato il profilo inserendo i propri dati, visualizza l'e-mail al posto del nome
 				{
-					session.setAttribute("name", myAccount.getEmail());				
+					session.removeAttribute("user");
+					session.setAttribute("password", password);
+					request.setAttribute("email", email);
+					request.getRequestDispatcher("creaProfilo.jsp").forward(request,response);
 				}
 				
 				session.setAttribute("emailLoggato", myAccount.getEmail());

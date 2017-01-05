@@ -71,7 +71,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="email">E-mail: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email" readonly="readonly" value="v"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="email" id="email" readonly="readonly" value="<%=request.getAttribute("email") %>"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="tel">Telefono: </label>

@@ -4,6 +4,8 @@ import java.io.*;
 import java.sql.SQLException;
 import java.text.*;
 import java.util.Date;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
@@ -51,9 +53,9 @@ public class CreaProfiloServlet extends HttpServlet {
 			creaProfilo(new Profilo(email,name,surname,residence, phone,interest, img, date)); //eseguo il salvataggio
 			if(img!=null)
 				saveFile(request); //se il file è stato inserito lo carico
-			request.getSession().setAttribute("user", email);
-			request.getSession().setAttribute("name", name);
-			response.sendRedirect("index.jsp");
+			RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/LoginServlet?username="+email+"&password="+request.getSession().getAttribute("password"));
+			request.getSession().removeAttribute("password");
+			dispatcher.forward(request, response);
 		}
 		catch(Exception e){
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
