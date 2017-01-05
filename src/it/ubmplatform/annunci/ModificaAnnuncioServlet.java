@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.management.InvalidAttributeValueException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -39,11 +40,16 @@ public class ModificaAnnuncioServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = 0;
+		int id = Integer.parseInt(request.getParameter("annuncioID"));
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String foto, email = null;
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
+		if ("libro".equals(categoria.toLowerCase())) {
+			categoria = "L";
+		} else if ("appunti".equals(categoria.toLowerCase())){
+			categoria = "A";
+		}
 		String facolta = request.getParameter("facolta");
 		foto = verificaFile(request); //controlli sull'immagine
 		String isbn = request.getParameter("isbn");
@@ -55,46 +61,37 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		double prezzo = Double.parseDouble(request.getParameter("prezzo"));
 		Date dataPubblicazione = new Date(0);
 		System.out.println(dateFormat.format(dataPubblicazione));
-		request.getSession().setAttribute("user", email);
 		
 		Annuncio toUpdate = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
 		try {
 			Annuncio oldAnnuncio = OttieniAnnuncioDaModificare(toUpdate.getId());
-			   if(toUpdate.getTitolo().equals(null)|| toUpdate.getTitolo().equals("")){
+			if(oldAnnuncio==null)
+				response.sendError(500, "annuncio non trovato");
+			   if(toUpdate.getTitolo()==null || toUpdate.getTitolo().trim().equals("")){
 			    toUpdate.setTitolo(oldAnnuncio.getTitolo());
 			   }
-			   else if(toUpdate.getCategoria().equals(null)|| toUpdate.getCategoria().equals("")) {
+			   else if(toUpdate.getCategoria()==null || toUpdate.getCategoria().trim().equals("")) {
 				   toUpdate.setCategoria(oldAnnuncio.getCategoria());
 			   }
-			   else if(toUpdate.getFacolta().equals(null)|| toUpdate.getFacolta().equals("")){
+			   else if(toUpdate.getFacolta()==null || toUpdate.getFacolta().trim().equals("")){
 				   toUpdate.setFacolta(oldAnnuncio.getFacolta());
 			   }
-			   else if(toUpdate.getFoto().equals(null)|| toUpdate.getFoto().equals("")){
+			   else if(toUpdate.getFoto()==null || toUpdate.getFoto().equals("")){
 				   toUpdate.setFoto(oldAnnuncio.getFoto());
 			   }
-			   else if(toUpdate.getIsbn().equals(null)|| toUpdate.getIsbn().equals("")){
-				   toUpdate.setIsbn(oldAnnuncio.getIsbn());
-			   }
-			   else if(toUpdate.getAutoreLibro().equals(null)|| toUpdate.getAutoreLibro().equals("")) {
-				   toUpdate.setAutoreLibro(oldAnnuncio.getAutoreLibro());
-			   }
-			   else if(toUpdate.getEdizione()== 0) {
-				   toUpdate.setEdizione(oldAnnuncio.getEdizione());
-			   }
-			   else if(toUpdate.getMateria().equals(null)|| toUpdate.getMateria().equals("")) {
-				   toUpdate.setMateria(oldAnnuncio.getMateria());
-			   }
-			   else if(toUpdate.getCondizioni().equals(null)|| toUpdate.getCondizioni().equals("")) {
-				   toUpdate.setCondizioni(oldAnnuncio.getCondizioni());
-			   }
-			   else if(toUpdate.getDescrizione().equals(null)|| toUpdate.getDescrizione().equals("")){
+			   else if(toUpdate.getDescrizione()== null|| toUpdate.getDescrizione().trim().equals("")){
 				   toUpdate.setDescrizione(oldAnnuncio.getDescrizione());
 			   }
 			   else if(toUpdate.getPrezzo() == 0) {
 				   toUpdate.setPrezzo(oldAnnuncio.getPrezzo());
 			   }
 			   modificaAnnuncio(toUpdate);
-			   saveFile(request); //salvo il file
+			   if(!toUpdate.getFoto().equals(oldAnnuncio.getFoto())){
+				   removeOld(oldAnnuncio.getFoto()); //rimuovo la vecchia immagine
+				   saveFile(request); //carico la nuova
+			   }
+			   response.sendRedirect("VisualizzaDettagliAnnuncio?annuncioID="+id);
+			   
 		} catch (InvalidAttributeValueException | SQLException e) {
 			
 			e.printStackTrace();
@@ -110,7 +107,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	private String verificaFile(HttpServletRequest request) throws IOException, ServletException{
-		final Part filePart = request.getPart("img");
+		final Part filePart = request.getPart("foto");
 		if(filePart==null || "".equals(filePart.getSubmittedFileName().trim())) //verifica se l'immagine è stata inserita
 			return null; //se non è stata inserita restituisco null
 		String ext=filePart.getContentType();
@@ -119,7 +116,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		if(filePart.getSize()>10*1024*1024) //verifica dimensione
 			throw new FileUploadException("Le dimensioni del file superano i 10MB");
 		path = this.getServletContext().getRealPath("")+"img"+File.separator+"annunci"; //path in cui salvare l'immagine
-		fileName = request.getParameter("email")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
+		fileName = request.getParameter("emailLoggato")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
 		return fileName; //restituisco il nome del file
 	}
 	
@@ -131,7 +128,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	 * @throws FileNotFoundException
 	 */
 	private void saveFile(HttpServletRequest request) throws ServletException, IOException, FileNotFoundException {
-		final Part filePart = request.getPart("img");
+		final Part filePart = request.getPart("foto");
 		OutputStream out = null;
 		InputStream filecontent = null;
 
@@ -152,6 +149,13 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 				filecontent.close();
 			}
 		}
+	}
+	
+	private void removeOld(String toRemove){ //funzione che rimuove l'immagine vecchia 
+		File deleteFile = new File(path + File.separator + toRemove) ;
+		// check if the file is present or not
+		if( deleteFile.exists())
+			deleteFile.delete();
 	}
 	
 	/**

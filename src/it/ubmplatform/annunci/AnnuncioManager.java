@@ -129,7 +129,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		try{
 			conn = DBManager.getInstance().getConnection();
 			
-			String query = "SELECT ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizioni, Descrizione, Prezzo FROM Annuncio Where ID = ?";
+			String query = "SELECT ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione FROM Annuncio Where ID = ?";
 			
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, idAnnuncio);
@@ -192,7 +192,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 							
 					//formo la stringa contenente la query da effettuare
 					String queryInserisci = "UPDATE ANNUNCIO "
-							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizioni = ?, Descrizione = ?, Prezzo = ?, annuncio.DataPubblicazione = CURDATE()"
+							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizione = ?, Descrizione = ?, Prezzo = ?, annuncio.DataPubblicazione = CURDATE()"
 							+ "WHERE ID = ?";
 							
 					//preparo lo statement per formare la query
@@ -209,6 +209,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 					ps.setString(9, toUpdate.getCondizioni());
 					ps.setString(10, toUpdate.getDescrizione());
 					ps.setDouble(11, toUpdate.getPrezzo());
+					ps.setInt(12, toUpdate.getId());
 							
 					ps.execute();
 						
