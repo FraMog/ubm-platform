@@ -116,7 +116,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		if(filePart.getSize()>10*1024*1024) //verifica dimensione
 			throw new FileUploadException("Le dimensioni del file superano i 10MB");
 		path = this.getServletContext().getRealPath("")+"img"+File.separator+"annunci"; //path in cui salvare l'immagine
-		fileName = request.getParameter("emailLoggato")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
+		fileName = request.getSession().getAttribute("emailLoggato")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
 		return fileName; //restituisco il nome del file
 	}
 	
