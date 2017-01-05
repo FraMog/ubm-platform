@@ -2,6 +2,8 @@ package it.ubmplatform.annunci;
 
 import java.sql.Date;
 
+import it.ubmplatform.eccezioni.BadInputAnnuncioException;
+
 /**
  * Bean Annuncio che rappresenta l'annuncio nel sistema
  * @author Marco
@@ -23,8 +25,13 @@ public class Annuncio {
 	 * @param isbn Eventualmente, l'isbn del libro a cui è riferito l'annuncio, null se non è presente/conosciuto
 	 * @param materia La materia a cui è riferito il prodotto dell'annuncio
 	 * @param prezzo Il prezzo del prodotto a cui è riferito l'annuncio
+	 * @param dataPubblicazione La data di pubblicazione dell'annuncio
 	 */
-	public Annuncio(int id, String titolo, String categoria, String facolta, String foto, String isbn, String autoreLibro, int edizione, String materia, String condizioni, String descrizione, double prezzo, String email, Date dataPubblicazione) {
+	public Annuncio(int id, String titolo, String categoria, String facolta, String foto, String isbn, String autoreLibro, int edizione, String materia, String condizioni, String descrizione, double prezzo, String email, Date dataPubblicazione) throws BadInputAnnuncioException {
+		if (edizione < 0 || prezzo < 0 || email.indexOf("unisa.it") == - 1) {
+			throw new BadInputAnnuncioException();
+		}
+		else {
 		this.id=id;
 		this.foto = foto;
 		this.edizione = edizione;
@@ -39,7 +46,7 @@ public class Annuncio {
 		this.materia = materia;
 		this.prezzo = prezzo;
 		this.dataPubblicazione= dataPubblicazione;
-		
+		}
 	}
 	
 
@@ -132,16 +139,9 @@ public class Annuncio {
 	public void setDataPubblicazione(Date dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
 	}
-
-	
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-
-
 
 	private String foto;
 	private int id, edizione;

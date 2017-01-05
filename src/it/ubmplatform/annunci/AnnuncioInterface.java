@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.management.InvalidAttributeValueException;
 
 import it.ubmplatform.eccezioni.BadAnnuncioIdException;
+import it.ubmplatform.eccezioni.BadInputAnnuncioException;
 import it.ubmplatform.eccezioni.BadResearchException;
 
 public interface AnnuncioInterface {
@@ -15,6 +16,6 @@ public interface AnnuncioInterface {
 	boolean queryModificaAnnuncio(Annuncio toUpdate) throws InvalidAttributeValueException, SQLException;;
 	ArrayList<Annuncio> queryRicercaAnnuncio(Annuncio daCercare, String orderBy) throws BadResearchException;
 	Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio) throws BadAnnuncioIdException;
-	Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio);
+	Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio) throws BadInputAnnuncioException;
 
 }

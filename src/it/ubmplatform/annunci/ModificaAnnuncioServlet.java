@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import it.ubmplatform.eccezioni.BadInputAnnuncioException;
 import it.ubmplatform.eccezioni.FileUploadException;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
@@ -162,8 +164,9 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 	 * Metodo che si occupa di prendere l'annuncio da modificare
 	 * @param idAnnuncio Annuncio esistente da modificare
 	 * @return idAnnuncio Annuncio da modificare
+	 * @throws BadInputAnnuncioException 
 	 */
-	private Annuncio OttieniAnnuncioDaModificare(int idAnnuncio){
+	private Annuncio OttieniAnnuncioDaModificare(int idAnnuncio) throws BadInputAnnuncioException{
 		AbstractFactory factory = new ManagerFactory();
 		AnnuncioInterface managerAnnuncio = factory.createAnnuncioManager();
 		return managerAnnuncio.queryOttieniAnnuncioDaModificare(idAnnuncio);

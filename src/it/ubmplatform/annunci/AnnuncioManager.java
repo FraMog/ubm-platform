@@ -13,6 +13,7 @@ import javax.management.InvalidAttributeValueException;
 
 import it.ubmplatform.database.DBManager;
 import it.ubmplatform.eccezioni.BadAnnuncioIdException;
+import it.ubmplatform.eccezioni.BadInputAnnuncioException;
 import it.ubmplatform.eccezioni.BadResearchException;
 
 /**
@@ -121,7 +122,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @param idAnnuncio Id dell'annuncio già esistente da modificare
 	 * @return oldAnnuncio Annuncio da modificare 
 	 */
-	public Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio){
+	public Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio) throws BadInputAnnuncioException{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
