@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 import it.ubmplatform.database.DBManager;
+import it.ubmplatform.eccezioni.BadInputFeedbackException;
 
 /**
  * Il model che contiene le query inerenti alla sezione Feedback
@@ -89,8 +90,13 @@ public class FeedbackManager implements FeedbackInterface {
 			if(rs.next()){
 				int valutazione = rs.getInt(1);
 				String descrizione = rs.getString(2);
+				Feedback oldFeedback;
 				
-				Feedback oldFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+				try{
+					oldFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+				}catch(BadInputFeedbackException e){
+					return null;
+				}
 				
 				return oldFeedback;
 			}else{
@@ -178,7 +184,8 @@ public class FeedbackManager implements FeedbackInterface {
 			
 			ArrayList<Feedback> feedbacks = new ArrayList<Feedback>();
 			
-			//valuto i risultati.. se c'è qualcosa.. 
+			//valuto i risultati.. se c'è qualcosa ritorno l'arraylist con i feedback
+			//altrimenti ritorno l'arraylist vuoto.. 
 			if(rs.next()){
 				do{
 					String email = rs.getString(1);
@@ -186,17 +193,17 @@ public class FeedbackManager implements FeedbackInterface {
 					String desc = rs.getString(3);
 					java.sql.Date data = rs.getDate(4);
 					
-					//aggiungo gli n feedback all'arraylist
-					feedbacks.add(new Feedback(val, desc, email, data));
+					//aggiungo il feedback all'arraylist
+					try{
+						feedbacks.add(new Feedback(val, desc, email, data));
+					}catch(BadInputFeedbackException e){
+						return null;
+					}
+					
 				}while(rs.next());
-				
-				return feedbacks;
-			}else{
-				//non ci sono risultati (no feedback)
-				//per capirlo, aggiungo un feedback "vuoto"
-				feedbacks.add(new Feedback(0,"","",""));
-				return feedbacks;
 			}
+			
+			return feedbacks;
 		}catch(SQLException e){
 			e.printStackTrace();
 
