@@ -23,11 +23,9 @@ public class DisattivaProfiloServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session=request.getSession();
     	try{
-	    	disattivaProfilo((String)session.getAttribute("user")); //eseguo l'operazione
-			//rimuovo l'accesso e effettuo redirect alla home
-			session.removeAttribute("user");
-			session.removeAttribute("name");
-			response.sendRedirect("index.jsp");
+	    	disattivaProfilo((String)session.getAttribute("emailLoggato")); //eseguo l'operazione
+			//forward sul logout
+			request.getRequestDispatcher("/LogoutServlet").forward(request, response);
     	}
     	catch(Exception e){
     		response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
