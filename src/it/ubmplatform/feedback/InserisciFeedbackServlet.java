@@ -24,43 +24,50 @@ public class InserisciFeedbackServlet extends HttpServlet {
 		super();
 
 	}
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//if(request.getSession().getAttribute("email") != null){
-			//inizialmente la valutazione sarà uguale a 0 per effettuarne controlli 
-			//in caso di mancata modifica
-			int valutazione = 0;
 
+		int valutazione;
 
-			try{
-				valutazione = Integer.parseInt(request.getParameter("valutazioneFeedback"));
-			}catch(Exception e){
-				//NON E' STATO POSSIBILE EFFETTUARE LA RICHIESTA
-			}
-
-			String descrizione = request.getParameter("descrizioneFeedback");
+		String jsonReturn;
+		response.setContentType("application/json");
+		
+		try{
+			valutazione = Integer.parseInt(request.getParameter("valutazione"));
+			String descrizione = request.getParameter("descrizione");
 
 			if(valutazione > 0 && valutazione < 6 && descrizione != null){
 				//prendo l'email di chi sta pubblicando e di chi riceve
 				//uno dalla sessione (chi pubblica) e l'altro dal profilo dell'utente (un input hidden?) inviato
-				String emailP = "m.dellamedaglia@studenti.unisa.it";
-				String emailR = "example@studenti.unisa.it";
+				String emailP = "marco@unisa.it";
+				String emailR = "prova@unisa.it";
 
 				Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
 
 				if(inserisciFeedback(newFeedback)){
-					request.getRequestDispatcher("visualizzaProfiloAltro.jsp").forward(request, response);
+					jsonReturn = "{\"state\":\"ok\"}";
 				}else{
-					//NON E' STATO POSSIBILE COMPLETARE LA RICHIESTA
+					//sql exception .. 
+					jsonReturn = "{\"state\":\"feedbackerror\"}";
 
 				}
-			}else{
-				//NON E' STATO POSSIBILE ACCEDERE ALLA RICHIESTA
+			}else jsonReturn = "{\"state\":\"inputerror\"}";
 
-			}
-		//}
+		}catch(NumberFormatException e){
+			jsonReturn = "{\"state\":\"valerror\"}";
+		}
 
+
+		/*DA USARE-----------------------------
+				}else{
+					jsonReturn = "{\"state\":\"nosession\"}";
+				}
+		 */
+		response.getWriter().write(jsonReturn);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
 	}
 
 	/**

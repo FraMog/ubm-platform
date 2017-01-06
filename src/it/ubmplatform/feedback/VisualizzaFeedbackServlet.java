@@ -28,27 +28,31 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
 
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String responseJson;
+    	
+    	//if(request.getSession().getAttribute("email") != null){
+    	
     	String emailR = request.getParameter("emailR");
-    	ArrayList<Feedback> feedbacks = null;
-    	String responseJson = "{\"state\":\"error\"}";
-
-
+    	
     	if(emailR != null){
-    		feedbacks = visualizzaFeedbacks(emailR);
+    		ArrayList<Feedback> feedbacks = visualizzaFeedbacks(emailR);
     		
     		if(feedbacks != null){
     			//converto in json e invio
+    			//se l'arraylist è vuoto (no feedback) il controllo verrà fatto in javascript
+    			
     			Gson gson = new Gson();
     			responseJson = gson.toJson(feedbacks);
     			
     			
     		}else{
-    			//il metodo ritorna null. perché?
+    			responseJson = "{\"state\":\"feedbackerror\"}";
     		}
     	}else{
-    		//non sono riuscito ad ottenere l'email da parametro
+    		responseJson = "{\"state\":\"emailerror\"}";
     	}
     	
+    	System.out.println(responseJson);
     	response.getWriter().write(responseJson);
     }
 

@@ -9,10 +9,15 @@
 //che si occupa di stilare i feedback nel modal
 $(document).ready(function(){
 	
-	var emailR = $("#email").text();
+	//var emailR = $("#email").text();
+	var emailR = "marco@unisa.it";
+	
 	$.get("VisualizzaFeedbackServlet?emailR=" + emailR, function(text, status){
-		var feedbacks = JSON.parse(text);
-		mostraFeedbacks(feedbacks);
+		if(status == 'success'){
+			
+			var feedbacks = JSON.parse(text);
+			var mostraFeedbacks(feedbacks);
+		}
 	})
 })
 

@@ -140,8 +140,6 @@
           			<h4 class="modal-title">Inserisci feedback</h4>
         		</div>
         		
-        		<form action="InserisciFeedbackServlet" method="POST">
-        		
         		<div class="modal-body">
         			<div class="form-group">
           				<label for="valutazioneFeedback">Valutazione:</label>
@@ -159,11 +157,15 @@
           			</div>
         		</div>
        	 		<div class="modal-footer">
-       	 			<input type="submit" class="btn btn-default">
-          			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       	 			<div class="formgroup col-sm-12">
+       	 				<div class="col-sm-6" id="insertLogger"></div>
+       	 				<div class="col-sm-6">
+       	 					<button type="button" class="btn btn-primary" id="buttonInserisci">Inserisci</button>
+          					<button type="button" class="btn btn-warning" data-dismiss="modal">Annulla</button>
+        				</div>
+        			</div>
         		</div>
         		
-        		</form>
       		</div>
       
     	</div>
@@ -189,7 +191,8 @@
       
     	</div>
   	</div>
-    
+  	
+    <script src="javascript/feedback/inserisciFeedback.js"></script>
     <script src="javascript/feedback/caricaModal.js"></script>
   </body>
 </html>

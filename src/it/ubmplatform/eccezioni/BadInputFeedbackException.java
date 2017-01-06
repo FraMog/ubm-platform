@@ -7,7 +7,7 @@ import java.io.IOException;
  * degli input non validi. BadInputFeedbackException è lanciata se 
  * l'input ad un determinato costruttore (o setter) non è valido. 
  * In particolare, è lanciata se la valutazione è negativa o maggiore di 
- * 5 e se l'email non rispecchia il formato x@unisa.it
+ * 5 e se l'email non rispecchia il formato x@unisa.it oppure x@y.unisa.it
  * 
  * @author Marco
  *

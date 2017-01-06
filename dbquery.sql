@@ -57,19 +57,19 @@ CREATE TABLE IF NOT EXISTS amministratore (
 
 
 
---INSERT INTO account VALUES ('francesco@ubm.it','ciao','R',NULL);
---INSERT INTO account VALUES ('marco@ubm.it','ciao','R',NULL);
---INSERT INTO account VALUES ('prova@ubm.it','ciao','R',NULL);
+--INSERT INTO account VALUES ('francesco@unisa.it','ciao','R',NULL);
+--INSERT INTO account VALUES ('marco@unisa.it','ciao','R',NULL);
+--INSERT INTO account VALUES ('prova@unisa.it','ciao','R',NULL);
 
---INSERT INTO profilo VALUES ('francesco@ubm.it','Francesco','Mogavero','1996-01-24','foto1','San Marino','3421244323','Basso e sassofono');
---INSERT INTO profilo VALUES ('marco@ubm.it','Marco','Della Medaglia','1994-02-21','foto2','Marcianise','3294121233','Chitarra e batteria');
---INSERT INTO profilo VALUES ('prova@ubm.it','Prova','Di Ubm','1980-12-31','foto3','Scampia','3333333333','Piano e politica svedese');
+--INSERT INTO profilo VALUES ('francesco@unisa.it','Francesco','Mogavero','1996-01-24','foto1','San Marino','3421244323','Basso e sassofono');
+--INSERT INTO profilo VALUES ('marco@unisa.it','Marco','Della Medaglia','1994-02-21','foto2','Marcianise','3294121233','Chitarra e batteria');
+--INSERT INTO profilo VALUES ('prova@unisa.it','Prova','Di Ubm','1980-12-31','foto3','Scampia','3333333333','Piano e politica svedese');
 
---INSERT INTO annuncio VALUES ('1', 'prova@ubm.it', 'fotoannuncio', '23.2', 'Lezioni di C', '2017-01-04', 'Lezioni di base di C', 'Matematica', 'L', 'Informatica', '1', '22444-53', 'Prova Tartaglione', 'Sottolineato'); 
---INSERT INTO annuncio VALUES ('2', 'francesco@ubm.it', 'fotoannuncio', '13.2', 'Appunti Biologia', '2014-01-04', 'Appunti della prof X', 'Biologia', 'A', 'Biologia', null, null, null, null);
---INSERT INTO annuncio VALUES ('3', 'prova@ubm.it', 'fotoannuncio', '50.2', 'Astrofisica spaziale', '2011-01-04', 'Libro della Mondadori di Astrofisica', 'Ingegneria Nucleare', 'L', 'Astrofisica', '1', '24111-53', 'Naomi Ugami', 'Evidenziato'); 
---INSERT INTO annuncio VALUES ('4', 'marco@ubm.it', 'fotoannuncio', '563.2', 'Appunti ottimi', '2003-01-04', 'Appunti buoni per una materia', 'Informatica', 'A', null, null, null, null, null);
+--INSERT INTO annuncio VALUES ('1', 'prova@unisa.it', 'fotoannuncio', '23.2', 'Lezioni di C', '2017-01-04', 'Lezioni di base di C', 'Matematica', 'L', 'Informatica', '1', '22444-53', 'Prova Tartaglione', 'Sottolineato'); 
+--INSERT INTO annuncio VALUES ('2', 'francesco@unisa.it', 'fotoannuncio', '13.2', 'Appunti Biologia', '2014-01-04', 'Appunti della prof X', 'Biologia', 'A', 'Biologia', null, null, null, null);
+--INSERT INTO annuncio VALUES ('3', 'prova@unisa.it', 'fotoannuncio', '50.2', 'Astrofisica spaziale', '2011-01-04', 'Libro della Mondadori di Astrofisica', 'Ingegneria Nucleare', 'L', 'Astrofisica', '1', '24111-53', 'Naomi Ugami', 'Evidenziato'); 
+--INSERT INTO annuncio VALUES ('4', 'marco@unisa.it', 'fotoannuncio', '563.2', 'Appunti ottimi', '2003-01-04', 'Appunti buoni per una materia', 'Informatica', 'A', null, null, null, null, null);
 
---INSERT INTO feedback VALUES ('francesco@ubm.it', 'marco@ubm.it', '5', 'Complimenti non me lo sarei mai aspettato', '2017-01-04');
---INSERT INTO feedback VALUES ('marco@ubm.it', 'francesco@ubm.it', '1', 'Pessimo! Che schifo!', '2017-01-04');
---INSERT INTO feedback VALUES ('prova@ubm.it', 'marco@ubm.it', '2', 'La terza pagina era strappata! Ma che combini?', '2016-11-02');
+--INSERT INTO feedback VALUES ('francesco@unisa.it', 'marco@unisa.it', '5', 'Complimenti non me lo sarei mai aspettato', '2017-01-04');
+--INSERT INTO feedback VALUES ('marco@unisa.it', 'francesco@unisa.it', '1', 'Pessimo! Che schifo!', '2017-01-04');
+--INSERT INTO feedback VALUES ('prova@unisa.it', 'marco@unisa.it', '2', 'La terza pagina era strappata! Ma che combini?', '2016-11-02');

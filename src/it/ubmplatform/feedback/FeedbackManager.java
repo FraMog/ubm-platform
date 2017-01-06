@@ -54,8 +54,7 @@ public class FeedbackManager implements FeedbackInterface {
 			return true;
 			
 		
-		}catch(SQLException e){
-			e.printStackTrace();		
+		}catch(SQLException e){		
 			return false;
 		}finally{
 			//provo la chiusura
@@ -151,7 +150,6 @@ public class FeedbackManager implements FeedbackInterface {
 					
 				
 		}catch(SQLException e){
-			e.printStackTrace();
 			return false;
 		}finally{
 			//provo la chiusura
