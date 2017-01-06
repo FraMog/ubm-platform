@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.text.*;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,9 +39,16 @@ public class CreaProfiloServlet extends HttpServlet {
 		}
 		//recupero tutti i parametri
 		String name=request.getParameter("nome");
+		Pattern p=Pattern.compile("^[a-zA-Z]{1,20}$");
+		if(!p.matcher(name).find())
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo nome non è stato compilato correttamente");
 		String surname=request.getParameter("cognome");
+		if(!p.matcher(surname).find())
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo cognome non è stato compilato correttamente");
 		String email=request.getParameter("email");
 		String phone=request.getParameter("tel");
+		if(!Pattern.compile("^[0-9]{0}$|^[0-9]{10}$").matcher(phone).find())
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo telefono non è stato compilato correttamente");
 		Date date;
 		try {
 			date=new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data")); //recupero e cast data
