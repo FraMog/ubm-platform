@@ -113,11 +113,13 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		Statement statement = null;
 		ResultSet resultSet = null;
 		String passwordRecuperata = null;
+		boolean isAdmin=false;
 
 		try
 		{
+			//cerca prima nella tabella dell'amministratore
 			connection=DBManager.getInstance().getConnection();
-			String queryRecuperaPass = "SELECT Password FROM account WHERE Email='"+email+"'";
+			String queryRecuperaPass = "SELECT Password FROM amministratore WHERE Email='"+email+"'";
 			statement=connection.createStatement();
 			resultSet = statement.executeQuery(queryRecuperaPass);
 
@@ -126,7 +128,28 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				passwordRecuperata = resultSet.getString(1);
 			}
 
-			return passwordRecuperata;
+			if (passwordRecuperata!=null)
+			{
+				isAdmin=true;
+				return passwordRecuperata;
+			}
+			
+			//altrimenti in quella dell'account
+			else
+			{
+				connection=DBManager.getInstance().getConnection();
+				queryRecuperaPass = "SELECT Password FROM account WHERE Email='"+email+"'";
+				statement=connection.createStatement();
+				resultSet = statement.executeQuery(queryRecuperaPass);
+				
+				while (resultSet.next())
+				{
+					passwordRecuperata = resultSet.getString(1);
+				}
+
+				return passwordRecuperata;
+			}
+			
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
