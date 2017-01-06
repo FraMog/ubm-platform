@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
-	String session_account = (String)session.getAttribute("accountNonTrovato");
-	String session_invalidato = (String)session.getAttribute("accountInvalidato");
- 	String session_bannato = (String)session.getAttribute("accountBannato");
- 	String session_data = (String)session.getAttribute("dataInvalidazioneNonTrovata");
- 	String session_giorni = (String)session.getAttribute("giorniAttesa");
- 	String session_email = (String)session.getAttribute("emailInviata");
+	String request_account = (String)request.getAttribute("accountNonTrovato");
+	String request_invalidato = (String)request.getAttribute("accountInvalidato");
+ 	String request_bannato = (String)request.getAttribute("accountBannato");
+ 	String request_data = (String)request.getAttribute("dataInvalidazioneNonTrovata");
+ 	String request_giorni = (String)request.getAttribute("giorniAttesa");
+ 	String request_email = (String)request.getAttribute("emailInviata");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -21,48 +21,42 @@
     <script type="text/javascript">
     onload = function()
     {
-    	var session_account_obj= '<%=session_account%>';
-    	var session_invalidato_obj= '<%=session_invalidato%>';
-    	var session_bannato_obj= '<%=session_bannato%>';
-    	var session_data_obj= '<%=session_data%>';
-     	var session_giorni_obj= '<%=session_giorni%>';
-     	var session_email_obj= '<%=session_email%>';
+    	var request_account_obj= '<%=request_account%>';
+    	var request_invalidato_obj= '<%=request_invalidato%>';
+    	var request_bannato_obj= '<%=request_bannato%>';
+    	var request_data_obj= '<%=request_data%>';
+     	var request_giorni_obj= '<%=request_giorni%>';
+     	var request_email_obj= '<%=request_email%>';
     	
-    	if (session_account_obj=="true")
+    	if (request_account_obj=="true")
     	{
     		alert ("Account non trovato. E-mail e/o password errate.");
-    		session.setAttribute("accountNonTrovato", null);
+    		request.removeAttribute("accountNonTrovato");
     	}
     	
-    	if (session_invalidato_obj=="true")
+    	if (request_invalidato_obj=="true")
     	{
-    		alert ("Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra "+ session_giorni_obj +" giorno/i.");
-    		session.setAttribute("accountInvalidato", null);
-    		session.setAttribute("giorniAttesa", null);
+    		alert ("Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra "+ request_giorni_obj +" giorno/i.");
+    		request.removeAttribute("accountInvalidato");
+    		request.removeAttribute("giorniAttesa");
     	}
     	
-    	if (session_bannato_obj=="true")
+    	if (request_bannato_obj=="true")
     	{
     		alert ("Il tuo account è stato bannato dall'ammministratore: non puoi accedere alla piattaforma.");
-    		session.setAttribute("accountBannato", null);
+    		request.removeAttribute("accountBannato");
     	}
     	
-    	if (session_data_obj=="true")
+    	if (request_data_obj=="true")
     	{
     		alert ("Il tuo account è stato invalidato dall'ammministratore, ma c'è un problema nel recupero della data. Riprova ad accedere alla piattaforma.");
-    		session.setAttribute("dataInvalidazioneNonTrovata", null);
+    		request.removeAttribute("dataInvalidazioneNonTrovata");
     	}
     	
-    	if (session_email_obj=="true")
+    	if (request_email_obj=="true")
     	{
     		alert ("Ti abbiamo inviato una e-mail contenente la password per effettuare l'accesso alla piattaforma. Riprova ad autenticarti.");
-    		session.setAttribute("emailInviata", null);
-    	}
-    	
-    	if (session_email_obj=="false")
-    	{
-    		alert ("C'è stato un problema nell'invio della e-mail. Riprova ad inserire la password.");
-    		session.setAttribute("emailInviata", null);
+    		request.removeAttribute("emailInviata");
     	}  	
     	
     }

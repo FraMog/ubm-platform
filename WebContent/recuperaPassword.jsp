@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%  	String request_email = (String)request.getAttribute("emailInviata"); %>
 <!DOCTYPE html>
 <html lang="it">
   <head>
@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    onload = function()
+    {
+    	var request_email_obj= '<%=request_email%>';
+    	
+    	if (request_email_obj=="false")
+    	{
+    		alert ("C'è stato un problema nell'invio della e-mail. Riprova ad inserire l'e-mail correttamente.");
+    		request.removeAttribute("emailInviata");
+    	}
+    }
+    </script>
   </head>
   <body>
     <%@ include file="includes/navbarNonLoggato.jsp" %>

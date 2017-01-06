@@ -54,7 +54,6 @@ public class LoginServlet extends HttpServlet {
 			else if (login(myAccount)==1)	//cerca nella tabella degli account utente e trova account
 			{
 				session.setAttribute("user", "utente");
-				session.setAttribute("accountNonTrovato", null);
 				
 				String nome = estraiNome(myAccount);
 				if (nome!=null)
@@ -77,10 +76,10 @@ public class LoginServlet extends HttpServlet {
 			else if (login(myAccount)==2)	//trova account invalidato. compare avviso e verifica se puo accedere
 			{
 				GregorianCalendar dataAttuale = new GregorianCalendar();
+				
 				if (controllaData(dataAttuale, myAccount)==0)
 				{
 					session.setAttribute("user", "utente");
-					session.setAttribute("accountNonTrovato", null);
 					
 					String nome = estraiNome(myAccount);
 					if (nome!=null)
@@ -98,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				else if (controllaData(dataAttuale, myAccount)==-1)
 				{
-					session.setAttribute("dataInvalidazioneNonTrovata", "true");
+					request.setAttribute("dataInvalidazioneNonTrovata", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
@@ -106,23 +105,21 @@ public class LoginServlet extends HttpServlet {
 				{
 					int giorni = controllaData(dataAttuale, myAccount);
 					String giorniAttesa = ""+giorni;
-					session.setAttribute("giorniAttesa", giorniAttesa);
-					session.setAttribute("accountInvalidato", "true");
+					request.setAttribute("giorniAttesa", giorniAttesa);
+					request.setAttribute("accountInvalidato", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
 			}
 			else if (login(myAccount)==3)	//trova account ma è stato bannato. avvisa l'utente
 			{
-				session.setAttribute("accountBannato", "true");
-				session.setAttribute("accountNonTrovato", null);
-				
+				request.setAttribute("accountBannato", "true");
 				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
 			}
 			else
 			{
-				session.setAttribute("accountNonTrovato", "true");
+				request.setAttribute("accountNonTrovato", "true");
 				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
 			}
