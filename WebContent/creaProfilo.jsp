@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="javascript/profilo/validation.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-inverse">
@@ -42,9 +43,9 @@
       <div class="col-sm-9">
        	<div class="panel panel-default">
        		<div class="panel-body">
-       			<form id="profilo" class="form-horizontal" action="CreaProfilo" method="post" enctype="multipart/form-data">
+       			<form id="profilo" class="form-horizontal" action="CreaProfilo" method="post" onsubmit="return validation()" enctype="multipart/form-data">
        				<div class="form-group">
-       					<img id="foto" class="img-responsive" src="img/default_profile.PNG" style="width:150px"/>
+       					<img id="foto" class="img-responsive" src="img/profilo/default_profile.PNG" style="width:150px"/>
 	    				<label class="btn btn-info btn-file" style="margin-top:5px;margin-left:20px">Foto profilo<input class="btn btn-primary" type="file" name="img" id="img" accept=".jpg,.png,.jpg,.jpeg" style="display:none"/></label>
 	    				<script type="text/javascript">
 		    				function readURL(input) {
@@ -63,11 +64,11 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="nome">Nome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome" required="required" pattern="[A-Z a-z] {1-20}" title="Il nome deve contenere al più 20 lettere"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome" required="required" pattern="^[a-zA-Z]{1,20}$" title="Il nome deve contenere al più 20 lettere"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="cognome">Cognome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required" pattern="[A-Z a-z] {1-20}" title="Il cognome deve contenere al più 20 lettere"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required" pattern="^[a-zA-Z]{1,20}$" title="Il cognome deve contenere al più 20 lettere"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="email">E-mail: </label>
@@ -75,7 +76,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="tel">Telefono: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="tel" id="tel" pattern="[0-9]{10}" title="Questo campo deve contenere 10 numeri"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="tel" id="tel" pattern="^[0-9]{0}$|^[0-9]{10}$" title="Questo campo deve contenere 10 numeri"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="data">Data di nascita: </label>
@@ -89,6 +90,7 @@
 	    				<label class="control-label col-sm-2" for="residenza">Residenza: </label>
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="residenza" id="residenza" pattern="{0-40}" title="Massimo 40 caratteri"/></div>
 	    			</div>
+	    			<p id="errore" style="color: red"></p>
     				<input type="submit" class="btn btn-info center-block"/>
 				</form>
        		</div>
