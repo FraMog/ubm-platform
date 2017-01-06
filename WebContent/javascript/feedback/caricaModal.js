@@ -1,11 +1,6 @@
-/**
- * http://usejsdoc.org/
- */
-
 //sull'attributo dell'id vediFeedbackModal, quando accade l'evento "show"
 //esegui quella funzione
 $('#vediFeedbackModal').on('show.bs.modal', function(e){
-	alert("..");
 	//ottengo il link del file contenente il caricamento dell'html con contenuto remoto
 	var link = $(e.relatedTarget);
 

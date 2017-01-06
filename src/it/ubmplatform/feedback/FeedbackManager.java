@@ -102,7 +102,6 @@ public class FeedbackManager implements FeedbackInterface {
 				return null;
 			}
 		}catch(SQLException e){
-			e.printStackTrace();
 			return null;
 		}finally{
 			//provo la chiusura
@@ -142,13 +141,14 @@ public class FeedbackManager implements FeedbackInterface {
 			ps.setString(4, changed.getEmailR());
 					
 			ps.execute();
+			//ritorno true se il metodo execute è andato a buon fine
+			//ed ha cambiato qualcosa
+
+			if(ps.getUpdateCount() != 0) return true;
+			else return false;
 					
 
-			//ritorno true se il metodo execute è andato a buon fine
 			
-			return true;
-					
-				
 		}catch(SQLException e){
 			return false;
 		}finally{
@@ -173,6 +173,8 @@ public class FeedbackManager implements FeedbackInterface {
 		String queryVisualizzaFeedback = "SELECT EmailP, Valutazione, Descrizione, DataPubblicazione "
 				+ "FROM Feedback "
 				+ "WHERE EmailR = '" + emailR + "'";
+
+
 		try{
 			conn = DBManager.getInstance().getConnection();
 			st = conn.createStatement();
@@ -203,8 +205,6 @@ public class FeedbackManager implements FeedbackInterface {
 			
 			return feedbacks;
 		}catch(SQLException e){
-			e.printStackTrace();
-
 			return null;
 			
 		}finally{

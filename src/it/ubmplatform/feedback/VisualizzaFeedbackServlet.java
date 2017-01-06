@@ -52,7 +52,11 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
     		responseJson = "{\"state\":\"emailerror\"}";
     	}
     	
-    	System.out.println(responseJson);
+    	/*DA USARE-----------------------------
+	}else{
+		jsonReturn = "{\"state\":\"nosession\"}";
+	}
+*/
     	response.getWriter().write(responseJson);
     }
 
@@ -70,7 +74,7 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
 		//istanzio un manager factory, che mi fornirà il metodo per la creazione del feedback manager
 		AbstractFactory factory = new ManagerFactory();
 		FeedbackInterface model = factory.createFeedbackManager();
-		return model.queryVisualizzaFeedbacks("example@studenti.unisa.it");
+		return model.queryVisualizzaFeedbacks(emailR);
 	}
 
 }

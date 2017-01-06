@@ -1,6 +1,3 @@
-/**
- * http://usejsdoc.org/
- */
 
 //al caricamento avvenuto del documento (la parte del modal)
 //invio una richiesta alla servlet VisualizzaFeedbackServlet che
@@ -16,7 +13,24 @@ $(document).ready(function(){
 		if(status == 'success'){
 			
 			var feedbacks = JSON.parse(text);
-			var mostraFeedbacks(feedbacks);
+			
+			if(feedbacks.state == 'feedbackerror'){
+				$('#modalBody').text("Problema con l'inserimento nel database!");
+			}else if(feedbacks.state == 'emailerror'){
+				$('#modalBody').text("Problema con il recupero dell'email!");
+			}else if(feedbacks.state == 'nosession'){
+				$('#modalBody').text("Devi essere loggato al sistema!");
+			}else{
+				//nessun feedback presente
+				
+				if(feedbacks.length == 0){
+					$('#modalBody').text("Non sono presenti feedback! Inseriscine uno!");
+				}else{
+					mostraFeedbacks(feedbacks);
+				}
+			}
+			
+			
 		}
 	})
 })
@@ -36,11 +50,11 @@ function mostraFeedbacks(feedbacks){
 		
 				//i due span per l'email e la data da inserire nell'header
 				var spanEmail = document.createElement('span');
-				spanEmail.className = "col-sm-6";
+				spanEmail.className = "col-sm-8";
 				spanEmail.innerHTML = "Pubblicato da:<p>" + feedbacks[i].emailP + "</p>";
 		
 				var spanData = document.createElement('span');
-				spanData.className = "col-sm-6";
+				spanData.className = "col-sm-4";
 				spanData.innerHTML = feedbacks[i].data;
 		
 			//li aggiungo al div head
@@ -58,9 +72,9 @@ function mostraFeedbacks(feedbacks){
 			labelVal.innerHTML = "Valutazione:";
 		
 			//LA VALUTAZIONE
-			var spanVal = document.createElement('span');
-			spanVal.id = "val";
-			spanVal.innerHTML = feedbacks[i].valutazione;
+			var pVal = document.createElement('p');
+			pVal.id = "val";
+			pVal.innerHTML = feedbacks[i].valutazione;
 		
 			//LA LABEL CHE SI COLLEGA ALLA DESCRIZIONE
 			var labelDesc = document.createElement('label');
@@ -77,7 +91,7 @@ function mostraFeedbacks(feedbacks){
 		//valutazione e descrizione li metto in due tag p differenti
 		var p1 = document.createElement('p');
 		p1.appendChild(labelVal);
-		p1.appendChild(spanVal);
+		p1.appendChild(pVal);
 		
 		var p2 = document.createElement('p');
 		p2.appendChild(labelDesc);
