@@ -78,7 +78,7 @@ public class RecuperaPasswordServlet extends HttpServlet {
 			 
 						Transport.send(message);
 						
-						session.setAttribute("emailInviata", "true");
+						request.setAttribute("emailInviata", "true");
 						RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 						rd.forward(request, response);
 
@@ -90,7 +90,7 @@ public class RecuperaPasswordServlet extends HttpServlet {
 			}
 			else
 			{
-				session.setAttribute("emailInviata", "false");
+				request.setAttribute("emailInviata", "false");
 				RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
 				rd.forward(request, response);
 			}
