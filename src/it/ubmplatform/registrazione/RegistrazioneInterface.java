@@ -5,5 +5,5 @@ import it.ubmplatform.account.Account;
 public interface RegistrazioneInterface {
 	
 	boolean queryRegistraAccount(Account toInsert);
-		
+	boolean queryAccountEsistente(String email);
 }

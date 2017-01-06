@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="javascript/email/empty_pin.js"></script>
+	<script type="text/javascript" src="javascript/email/check.js"></script>
+
   </head>
   <body>
     <%@ include file="includes/navbarNonLoggato.jsp" %>
@@ -25,47 +28,16 @@
       <div id="confermareg" class="panel panel-default">
         <h4>Abbiamo inviato una e-mail al tuo indirizzo.</h4>
         <h4>Inserisci il codice di verifica</h4>
-	<input type="text" name="cod" id="cod" onblur="empty_pin()" />  
-	
-      <button onclick="prova()">Invia</button>
-           <script type="text/javascript" src="javascript/email/check.js"></script>
-                      <script type="text/javascript" src="javascript/email/empty_pin.js"></script>
-           
-       	<%@ page import ="java.sql.*" %>
-<%@ page import ="javax.sql.*" %>	
-        <%	int codice_locale;
-        	int cod_sessione;
-        	//if(codice_locale==cod_sessione)
-        		//	out.print("CODICE RICEVUTO");
-        	//else
-        		//out.print("CODICE NON RICEVUTO");
-        	try{
-        	codice_locale=Integer.parseInt(request.getParameter("codice_locale")); 
-        	cod_sessione=(int)session.getAttribute("codice");
-        //DEBUG	out.print("codice-->"+codice_locale+"\t cod sess= "+cod_sessione); 
-    		String email=(String) session.getAttribute("indirizzo_mail");
-         	//DEBUG out.print("EMAIL = "+email);
-
-        	 if (codice_locale==cod_sessione){
-             	//out.print("CODICE OK\n");
-             	//Query per cambiare stat
-             	Class.forName("com.mysql.jdbc.Driver"); 
-             	java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3060/ubmplatform",
-             	"root","root"); 
-             	Statement st= con.createStatement(); 
-             	ResultSet rs; 
-             	//out.println("EMAI PER QUERY: "+email);
-             	int i=st.executeUpdate("UPDATE account SET Tipo='r' WHERE Email='"+email+"'");
-				
-             	//Redirect alla pagina di completamento	
-             	response.sendRedirect("registrazioneEffettuata.jsp");
-        	 }
-        	}
-        	finally{
-        		
-        	}
-       
-        %>
+       <%String codiceInviato=(String) request.getAttribute("codice");
+      	 String email=(String) request.getAttribute("email");
+      	 String password=(String) request.getAttribute("password");%>
+      	 
+        <form  action="javascript:confrontoCodice()">
+       		 <input type="text" name="codiceInserito" id="codiceInserito" required="required" pattern="<%=codiceInviato%>" title="INSERISCI IL CODICE ESATTO."/>  
+       		  <input type="hidden" name="email" id="email" value="<%=email%>"/> 
+       		   <input type="hidden" name="password" id="password" value="<%=password%>"/> 
+       		  <input type="submit" class="btn btn-primary" value="invia"/>
+		</form>           
       </div>
     </section>
     <%@ include file="includes/footer.jsp" %>
