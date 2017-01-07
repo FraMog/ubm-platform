@@ -112,7 +112,7 @@ public class AnnuncioTest {
 	@Test
 	public void testGetPrezzo() {
 		double prezzo = annuncio.getPrezzo();
-		assertEquals(15.00, prezzo);
+		assertEquals(15.00, prezzo, 0.1);
 	}
 	@Test
 	public void testGetCategoria() {
@@ -183,7 +183,7 @@ public class AnnuncioTest {
 	public void testSetPrezzo() {
 		double prezzo = 15.00;
 		annuncio.setPrezzo(prezzo);
-		assertEquals(15.00, annuncio.getPrezzo());
+		assertEquals(15.00, annuncio.getPrezzo(), 0.1);
 	}
 	@Test
 	public void testSetId() {

@@ -1,9 +1,7 @@
 package it.ubmplatform.registrazione;
-
-import com.mysql.jdbc.Statement;
-
 import it.ubmplatform.account.Account;
-import javax.sql.*;
+import it.ubmplatform.database.DBManager;
+
 import java.sql.*;
 /**
  * Il model che gestisce la query per la registrazione di un account
@@ -17,36 +15,64 @@ public class RegistrazioneManager implements RegistrazioneInterface {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 	public boolean queryRegistraAccount(Account toInsert){
+		Connection conn=null;
+		Statement s=null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		java.sql.Connection con = null;
-		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3060/ubmplatform",
-			"root","root");
+			conn=DBManager.getInstance().getConnection();
+			String query="INSERT INTO account VALUES ('"+toInsert.getEmail()+"','"+toInsert.getPassword()+"','R')";
+			s=conn.createStatement();
+			s.executeUpdate(query);
+			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		java.sql.Statement st = null;
-		try {
-			st =  con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		ResultSet rs; 
-		try {
-			int i=st.executeUpdate("INSERT INTO account VALUES ('"+toInsert.getEmail()+"','"+toInsert.getPassword()+"','n')");
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-
-		return false;
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 	}
+	
+	public boolean queryAccountEsistente(String email){
+		Connection conn=null;
+		Statement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			String query="SELECT * FROM account WHERE account.Email='"+email+"'";
+			s=conn.createStatement();
+			ResultSet res=s.executeQuery(query);
+			if(res.next())
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+}
 }

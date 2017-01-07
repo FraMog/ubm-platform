@@ -16,14 +16,15 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="javascript/email/validateForm.js"></script>
 </head>
 <body>
-	<%@ include file="includes/navbarNonLoggato.jsp" %>
-	<%@ include file="includes/sideBar.jsp" %>
-	<%@ page import ="java.sql.*" %>
-	
-<%@ page import ="javax.sql.*" %>
- 
+	<%@ include file="includes/navbarNonLoggato.jsp"%>
+	<%@ include file="includes/sideBar.jsp"%>
+	<%@ page import="java.sql.*"%>
+
+	<%@ page import="javax.sql.*"%>
+
 
 
 
@@ -36,29 +37,30 @@
 				<h3>Inserisci i tuoi dati personali</h3>
 			</div>
 		</div>
-	
-		<form action="${pageContext.request.contextPath}/RegistraUtenteServlet" method="post" >
-    <p>e-mail        
-    <input type="text" name="name" id= "email" onblur="validateEmail()" />
-    <script type="text/javascript" language="javascript" src="javascript/email/validateEmail.js"></script>
-    </p>
+			<%if(request.getAttribute("esiste")!=null){ %>
+				<h1>Sei gia registrato alla piattaforma con questo indirizzo mail.</h1>
+			<%request.removeAttribute("esiste");} %>
+		<form action="${pageContext.request.contextPath}/RegistraUtenteServlet" onsubmit="return validateForm()" method="post">
+			<p>
+				e-mail <input type="text" name="email" id="email" required="required" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)" title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it."/>
+			</p>
+			<p>
+				password <input type="password" name="pass" id="password" required="required" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}" title="La password deve essere lunga tra gli 8 e i 20 caratteri, contenere almeno 1 numero(i) e 1 lettera(e) minuscola(e) o maiuscola(e)."/>
+				
+			</p>
 
-    <p>password       
-    <input type="password" name="pass" id="password" onblur="validatePassword()"/>
-    <script type="text/javascript" language="javascript" src="javascript/email/validatePassword.js"></script>
-	</p>
-    
-    <p>conferma password       
-    <input type="password" name="pass" id="passwordV" onblur="checkPWD()"/>
-    <script type="text/javascript" language="javascript" src="javascript/email/checkPWD.js"></script>
-	</p>
-    <p><input type="submit" name="submit" value="OK" /></p>
-	
-</form>
-		
-		
+			<p>
+				conferma password <input type="password" name="pass" id="passwordV" required="required"  />
+			</p>
+			<p>
+				<input type="submit" name="submit" value="Registrati" />
+			</p>
+
+		</form>
+
+
 		</div>
 	</section>
-	<%@ include file="includes/footer.jsp" %>
+	<%@ include file="includes/footer.jsp"%>
 </body>
 </html>
