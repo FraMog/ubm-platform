@@ -266,8 +266,10 @@
 		</div>
 	</div>
 
+
 	<script src="javascript/feedback/inserisciFeedback.js"></script>
 	<script src="javascript/feedback/modificaFeedback.js"></script>
 	<script src="javascript/feedback/caricaModal.js"></script>
 </body>
 </html>
+<!-- AGGIORNATO -->
