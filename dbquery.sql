@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS annuncio (
   ID int(11) NOT NULL,
   Email varchar(20) NOT NULL,
   Foto varchar(100) NOT NULL,
-  Prezzo float NOT NULL,
+  Prezzo float unsigned NOT NULL,
   Titolo varchar(50) NOT NULL,
   DataPubblicazione date NOT NULL,
   Descrizione varchar(100) NOT NULL,

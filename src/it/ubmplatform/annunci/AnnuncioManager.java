@@ -28,7 +28,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
 	 */
 
-	public boolean queryCancellaAnnuncio(int idAnnuncio)throws SQLException {
+	public boolean queryCancellaAnnuncio(int idAnnuncio) {
 		Connection conn=null;
 		PreparedStatement s=null;
 		try {
@@ -36,7 +36,10 @@ public class AnnuncioManager implements AnnuncioInterface {
 			s=conn.prepareStatement("DELETE FROM annuncio WHERE ID=?");
 			s.setInt(1, idAnnuncio);
 			s.executeUpdate();
-			return true;
+			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -61,6 +64,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * Si occupa dell'interrogazione al database per l'inserimento di un annuncio
 	 * @param toInsert L'annuncio da inserire
 	 * @return Un booleano che indica se l'operazione è andata a buon fine
+	 * @throws  
 	 */
 
 	public boolean queryInserisciAnnuncio(Annuncio toInsert) throws InvalidAttributeValueException, SQLException{
@@ -78,6 +82,8 @@ public class AnnuncioManager implements AnnuncioInterface {
 			s.setString(4, toInsert.getFacolta());
 			s.setString(5, toInsert.getFoto());
 			System.out.println(toInsert.getCategoria());
+			if(toInsert.getCategoria()==null)
+				throw new InvalidAttributeValueException("La categoria non può essere null");
 			if (toInsert.getCategoria().equals("L")) { //controllo se è un libro
 				s.setString(6, toInsert.getIsbn());
 				s.setString(7, toInsert.getAutoreLibro());
@@ -212,15 +218,12 @@ public class AnnuncioManager implements AnnuncioInterface {
 					ps.setDouble(11, toUpdate.getPrezzo());
 					ps.setInt(12, toUpdate.getId());
 							
-					ps.execute();
-						
+					ps.executeUpdate();						
 
-					//ritorno true se il metodo execute è andato a buon fine
-					//dopo aver provato la chiusura
-					conn.close();
-					ps.close();
-					return true;
-							
+					if(ps.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga
+						return true;
+					else
+						return false;
 						
 				}catch(SQLException e){
 					e.printStackTrace();
@@ -228,6 +231,10 @@ public class AnnuncioManager implements AnnuncioInterface {
 					ps.close();
 							
 					return false;
+				}
+				finally{
+					conn.close();
+					ps.close();
 				}
 	}
 
