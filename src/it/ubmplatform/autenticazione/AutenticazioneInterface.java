@@ -1,14 +1,11 @@
 package it.ubmplatform.autenticazione;
 
-import java.util.GregorianCalendar;
-
-import it.ubmplatform.account.Account;
 
 public interface AutenticazioneInterface {
 	
-	int queryLogin(Account toSearch);
+	int queryLogin(String email, String password);
 	String queryRecuperaPassword(String email);
-	int queryControllaData(GregorianCalendar dataAttuale, Account trovato);
-	String queryEstraiNome(Account trovato);
+	int queryControllaData(long dataAttuale, String emailTrovata);
+	String queryEstraiNome(String emailTrovata);
 
 }
