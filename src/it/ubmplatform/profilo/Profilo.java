@@ -37,11 +37,11 @@ public class Profilo {
 		return foto;
 	}
 	
-	String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 	
-	String getNome() {
+	public String getNome() {
 		return nome;
 	}
 	
