@@ -2,6 +2,8 @@ package it.ubmplatform.autenticazione;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
@@ -25,38 +27,46 @@ import it.ubmplatform.factory.ManagerFactory;
 @WebServlet("/RecuperaPasswordServlet")
 public class RecuperaPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private HttpSession session; 
-    
-    public RecuperaPasswordServlet() {
-        super();
-    }
+	private HttpSession session; 
+
+	public RecuperaPasswordServlet() {
+		super();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
-		
+
 		String email = request.getParameter("email");
-		if (email.equals(""))
+		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)");
+		if(!p.matcher(email).find())
 		{
-			RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
-			rd.forward(request, response);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo non è stato compilato correttamente.");
 		}
+
 		else
-		{
-			if (recuperaPassword(email)!=null)
+		try{
+			if (email.equals(""))
 			{
-				String passwordRecuperata = recuperaPassword(email);
-				String host = "smtp.gmail.com";
-				String to = email;
-				String from = "ubmplatform@gmail.com";
-				String subject = "Recupero password per UBM-Platform"; 
-				String messageText = "La password per accedere alla piattaforma di UBM-Platform è:\n"+ passwordRecuperata +"\n";
-				final String username="ubmplatform@gmail.com";
-				final String password="UbmPlatform2016";
-				// Create some properties and get the default Session
+				RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
+				rd.forward(request, response);
+			}
+			else
+			{
+				if (recuperaPassword(email)!=null)
+				{
+					String passwordRecuperata = recuperaPassword(email);
+					String host = "smtp.gmail.com";
+					String to = email;
+					String from = "ubmplatform@gmail.com";
+					String subject = "Recupero password per UBM-Platform"; 
+					String messageText = "La password per accedere alla piattaforma di UBM-Platform è:\n"+ passwordRecuperata +"\n";
+					final String username="ubmplatform@gmail.com";
+					final String password="UbmPlatform2016";
+					// Create some properties and get the default Session
 					Properties props = new Properties();
-					
+
 					props.put("mail.smtp.auth", "true");
 					props.put("mail.smtp.starttls.enable", "true");
 					props.put("mail.smtp.host", "smtp.gmail.com");
@@ -65,38 +75,41 @@ public class RecuperaPasswordServlet extends HttpServlet {
 						protected PasswordAuthentication getPasswordAuthentication() {
 							return new PasswordAuthentication(username, password);
 						}
-					  });
-			 
+					});
+
 					try {
 						Message message = new MimeMessage(sessionMail);
 						sessionMail.setDebug(true);
 						message.setFrom(new InternetAddress(username));
 						message.setRecipients(Message.RecipientType.TO,
-							InternetAddress.parse(to));
+								InternetAddress.parse(to));
 						message.setSubject(subject);
 						message.setText(messageText);
-			 
+
 						Transport.send(message);
-						
+
 						request.setAttribute("emailInviata", "true");
 						RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 						rd.forward(request, response);
 
-			 
-			 
+
+
 					} catch (MessagingException e) {
 						throw new RuntimeException(e);
 					}
+				}
+				else
+				{
+					request.setAttribute("emailInviata", "false");
+					RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
+					rd.forward(request, response);
+				}
 			}
-			else
-			{
-				request.setAttribute("emailInviata", "false");
-				RequestDispatcher rd = request.getRequestDispatcher("recuperaPassword.jsp");
-				rd.forward(request, response);
-			}
-		}
+		}catch(Exception e){
+ 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+ 		}
 	}
-	
+
 	/**
 	 * Il metodo che si occupa di recuperare la password associata all'e-mail passata come parametro.
 	 * @param email L'email dell'utente a cui recuperare la password, passato come parametro dall'utente
@@ -109,6 +122,4 @@ public class RecuperaPasswordServlet extends HttpServlet {
 		String password = model.queryRecuperaPassword(email);
 		return password;
 	}
-	
-
 }
