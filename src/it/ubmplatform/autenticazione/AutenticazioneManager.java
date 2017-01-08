@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.GregorianCalendar;
 
 import it.ubmplatform.account.Account;
 import it.ubmplatform.autenticazione.AutenticazioneInterface;
@@ -19,7 +18,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	 * @return 0 se l'utente loggato è l'admin, 1 se l'account è stato trovato ed è Regolare, 2 se l'account è stato trovato ed è Invalidato, 3 se l'account è stato trovato ed è Bannato, -1 in caso di errore
 	 */
 	
-	public int queryLogin(Account toSearch)
+	public int queryLogin(String emailToSearch, String passwordToSearch)
 	{
 		Connection connection = null;
 		Statement statement = null;
@@ -29,13 +28,13 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		try
 		{
 			connection=DBManager.getInstance().getConnection();
-			String queryLoginAdmin = "SELECT * FROM amministratore WHERE Email='"+toSearch.getEmail()+"' && Password='"+toSearch.getPassword()+"'";
+			String queryLoginAdmin = "SELECT * FROM amministratore WHERE Email='"+emailToSearch+"' && Password='"+passwordToSearch+"'";
 			statement=connection.createStatement();
 			resultSet = statement.executeQuery(queryLoginAdmin);
 			
 			while (resultSet.next())
 			{
-				if(toSearch.getEmail().equals(resultSet.getString(1)) && toSearch.getPassword().equals(resultSet.getString(2)))
+				if(emailToSearch.equals(resultSet.getString(1)) && passwordToSearch.equals(resultSet.getString(2)))
 				{
 					isAdmin=true;
 					return 0; 
@@ -44,27 +43,26 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 
 			if (isAdmin==false)
 			{
-				String queryLoginAccount = "SELECT * FROM account WHERE Email='"+toSearch.getEmail()+"' && Password='"+toSearch.getPassword()+"'";
+				String queryLoginAccount = "SELECT * FROM account WHERE Email='"+emailToSearch+"' && Password='"+passwordToSearch+"'";
 				statement=connection.createStatement();
 				resultSet = statement.executeQuery(queryLoginAccount);
 				boolean isUtente=false; 
 		
 				while (resultSet.next())
 				{
-					Account accountTrovato = new Account(resultSet.getString(1), resultSet.getString(2));
-					accountTrovato.setTipo(resultSet.getString(3));
-					if(toSearch.getEmail().equals(accountTrovato.getEmail()) && toSearch.getPassword().equals(accountTrovato.getPassword()))
+					if(emailToSearch.equals(resultSet.getString(1)) && passwordToSearch.equals(resultSet.getString(2)))
 					{
 						isUtente = true;
-						if (toSearch.getTipo().equals("R"))			//account Regolare
+						Account accountTrovato = new Account(emailToSearch, passwordToSearch, resultSet.getString(3));
+						if (accountTrovato.getTipo().equals("R"))		//account Regolare
 						{
 							return 1;
 						}
-						else if (toSearch.getTipo().equals("I"))	//account Invalidato per breve tempo
+						else if (accountTrovato.getTipo().equals("I"))	//account Invalidato per breve tempo
 						{
 							return 2;
 						}
-						else if (toSearch.getTipo().equals("B"))	//account Bannato, non è possibile accedere
+						else if (accountTrovato.getTipo().equals("B"))	//account Bannato, non è possibile accedere
 						{
 							return 3;
 						}
@@ -73,7 +71,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 						return -1;
 				}
 				
-				if (isUtente=false)
+				if (isUtente==false)
 				{
 					return -1;
 				}
@@ -104,7 +102,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	/**
 	 * Si occupa dell'interrogazione al database per la ricerca della password dell'account associato all'email
 	 * @param email L'email dell'account a cui ricercare la password
-	 * @return La password dell'account in caso di successo, null altrimenti (account non trovato)
+	 * @return La password dell'account in caso di successo, null altrimenti (account non trovato).
 	 */
 	
 	public String queryRecuperaPassword(String email)
@@ -175,11 +173,11 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	
 	/**
 	 * Si occupa dell'interrogazione al database per la ricerca dei dati dell'account associato all'email trovata
-	 * @param trovato L'account trovato nel database di cui estrarre le informazioni
-	 * @return La password dell'account in caso di successo, null altrimenti (account non trovato)
+	 * @param emailTrovata L'e-mail dell'utente di cui bisogna trovare il nome.
+	 * @return Una stringa che indica il nome in caso di successo, null altrimenti.
 	 */
 	
-	public String queryEstraiNome(Account trovato)
+	public String queryEstraiNome(String emailTrovata)
 	{
 		Connection connection = null;
 		Statement statement = null;
@@ -189,7 +187,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		try
 		{
 			connection=DBManager.getInstance().getConnection();
-			String queryNome = "SELECT Nome FROM profilo WHERE Email='"+trovato.getEmail()+"'";
+			String queryNome = "SELECT Nome FROM profilo WHERE Email='"+emailTrovata+"'";
 			statement=connection.createStatement();
 			resultSet = statement.executeQuery(queryNome);
 
@@ -222,41 +220,38 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	}
 	
 	/**
-	 * Si occupa dell'interrogazione al database per la ricerca della data di invalidazione.
-	 * @param trovato L'account trovato nel database di cui estrarre la data di invalidazione.
-	 * @param trovato L'account di cui verificare la data di invalidazione.
-	 * @return true se l'utente può accedere al sistema, false altrimenti.
+	 * Il metodo che si occupa di controllare che un utente invalidato possa accedere al sistema.
+	 * @param dataAttuale La data attuale (in millisecondi) per verificare se la settimana di invalidazione è terminata.
+	 * @param emailTrovata L'email dell'account di cui verificare la data di invalidazione.
+	 * @return 0 se l'utente può accedere al sistema, giorni Un intero che indica quanto tempo aspettare prima di poter effettuare l'accesso, -1 in caso di errore nel recupero della data.
+	 * @pre dataAttuale != null
 	 */
 	
-	public int queryControllaData(GregorianCalendar dataAttuale, Account trovato)
+	public int queryControllaData(long dataAttuale, String emailTrovata)
 	{
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
-		GregorianCalendar dataInvalidazione = new GregorianCalendar();
-		Date dataDb = null;
-		long invDateInMill=0;	//data invalidazione 
-		long attDateInMill=0;	//data attuale
-
+		long dataInvalidazione = 0; //data invalidazione in millisecondi
+		Date dataDb = null;	
 
 		try
 		{
 			connection=DBManager.getInstance().getConnection();
-			String queryData = "SELECT DataInvalidazione FROM account WHERE Email='"+trovato.getEmail()+"'";
+			String queryData = "SELECT DataInvalidazione FROM account WHERE Email='"+emailTrovata+"'";
 			statement=connection.createStatement();
 			resultSet = statement.executeQuery(queryData);
 
 			while (resultSet.next())
 			{
 				dataDb = resultSet.getDate(1);
-				dataInvalidazione.setTime(dataDb);
-				invDateInMill = dataInvalidazione.getTimeInMillis()+604800000;		//604800000 sono 7 giorni in ms
-				attDateInMill = dataAttuale.getTimeInMillis();
+				dataInvalidazione = dataDb.getTime() + 691200000;	//691200000 sono 8 giorni in ms
 
-				if (attDateInMill<=invDateInMill)
+				if (dataAttuale<=dataInvalidazione)
 				{
-					long giorniInMill= invDateInMill-attDateInMill;
-					int giorni = Math.round(giorniInMill / 86400000);		//1 giorno medio = 1000*60*60*24 ms = 86400000 ms 
+					long giorniInMill= dataInvalidazione-dataAttuale;
+					int giorni = (int) Math.floor(giorniInMill / 86400000);		//1 giorno medio = 1000*60*60*24 ms = 86400000 ms
+					System.out.println(giorni);
 					return giorni;
 				}
 				else
