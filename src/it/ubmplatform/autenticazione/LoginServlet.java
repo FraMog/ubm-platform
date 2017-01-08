@@ -1,7 +1,7 @@
 package it.ubmplatform.autenticazione;
 
 import java.io.IOException;
-import java.util.GregorianCalendar;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.ubmplatform.account.Account;
 import it.ubmplatform.autenticazione.AutenticazioneInterface;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
@@ -23,152 +22,160 @@ import it.ubmplatform.factory.ManagerFactory;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session;
-    
-    public LoginServlet() {
-        super();
-    }
+
+	public LoginServlet() {
+		super();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
-		
+
 		String email = request.getParameter("username");
 		String password = request.getParameter("password");
+		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)");
+		Pattern q = Pattern.compile("((?=.*[0-9])(?=.*[a-zA-Z]).{8,20})");
 		
-		if (email.equals("") && password.equals(""))
+		if(!p.matcher(email).find() || !q.matcher(password).find())
 		{
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-			rd.forward(request, response);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "I campi non sono stati compilati correttamente.");
 		}
 
 		else
-		{
-			Account myAccount = new Account(email, password);
-			if (login(myAccount)==0)	//cerca prima nella tabella dell'amministratore
+		try{
+			if (email.equals("") && password.equals(""))
 			{
-				session.setAttribute("user", "admin");
-				RequestDispatcher rd = request.getRequestDispatcher("homePageAdmin.jsp");
-				rd.forward(request, response);
-			}
-			else if (login(myAccount)==1)	//cerca nella tabella degli account utente e trova account
-			{
-				session.setAttribute("user", "utente");
-				
-				String nome = estraiNome(myAccount);
-				if (nome!=null)
-				{
-					session.setAttribute("name", nome);
-				}
-				else 		//se non ha completato il profilo inserendo i propri dati, visualizza l'e-mail al posto del nome
-				{
-					session.removeAttribute("user");
-					session.setAttribute("password", password);
-					request.setAttribute("email", email);
-					request.getRequestDispatcher("creaProfilo.jsp").forward(request,response);
-				}
-				
-				session.setAttribute("emailLoggato", myAccount.getEmail());
 				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
-				
 			}
-			else if (login(myAccount)==2)	//trova account invalidato. compare avviso e verifica se puo accedere
+
+			else
 			{
-				GregorianCalendar dataAttuale = new GregorianCalendar();
-				
-				if (controllaData(dataAttuale, myAccount)==0)
+				if (login(email, password)==0)	//cerca prima nella tabella dell'amministratore
+				{
+					session.setAttribute("user", "admin");
+					RequestDispatcher rd = request.getRequestDispatcher("homePageAdmin.jsp");
+					rd.forward(request, response);
+				}
+				else if (login(email, password)==1)	//cerca nella tabella degli account utente e trova account
 				{
 					session.setAttribute("user", "utente");
-					
-					String nome = estraiNome(myAccount);
+
+					String nome = estraiNome(email);
 					if (nome!=null)
 					{
 						session.setAttribute("name", nome);
 					}
-					else 
+					else 		//se non ha completato il profilo inserendo i propri dati, visualizza l'e-mail al posto del nome
 					{
-						session.setAttribute("name", myAccount.getEmail());
+						session.removeAttribute("user");
+						session.setAttribute("password", password);
+						request.setAttribute("email", email);
+						request.getRequestDispatcher("creaProfilo.jsp").forward(request,response);
 					}
-					
-					session.setAttribute("emailLoggato", myAccount.getEmail());
+
+					session.setAttribute("emailLoggato", email);
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
+
 				}
-				else if (controllaData(dataAttuale, myAccount)==-1)
+				else if (login(email, password)==2)	//trova account invalidato. compare avviso e verifica se puo accedere
 				{
-					request.setAttribute("dataInvalidazioneNonTrovata", "true");
+					long dataAttuale = System.currentTimeMillis();
+
+					if (controllaData(dataAttuale, email)==0)
+					{
+						session.setAttribute("user", "utente");
+
+						String nome = estraiNome(email);
+						if (nome!=null)
+						{
+							session.setAttribute("name", nome);
+						}
+						else 
+						{
+							session.setAttribute("name", email);
+						}
+
+						session.setAttribute("emailLoggato", email);
+						RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+						rd.forward(request, response);
+					}
+					else if (controllaData(dataAttuale, email)==-1)
+					{
+						request.setAttribute("dataInvalidazioneNonTrovata", "true");
+						RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+						rd.forward(request, response);
+					}
+					else
+					{
+						int giorni = controllaData(dataAttuale, email);
+						String giorniAttesa = ""+giorni;
+						request.setAttribute("giorniAttesa", giorniAttesa);
+						request.setAttribute("accountInvalidato", "true");
+						RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+						rd.forward(request, response);
+					}
+				}
+				else if (login(email, password)==3)	//trova account ma è stato bannato. avvisa l'utente
+				{
+					request.setAttribute("accountBannato", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
 				else
 				{
-					int giorni = controllaData(dataAttuale, myAccount);
-					String giorniAttesa = ""+giorni;
-					request.setAttribute("giorniAttesa", giorniAttesa);
-					request.setAttribute("accountInvalidato", "true");
+					request.setAttribute("accountNonTrovato", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
 			}
-			else if (login(myAccount)==3)	//trova account ma è stato bannato. avvisa l'utente
-			{
-				request.setAttribute("accountBannato", "true");
-				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-				rd.forward(request, response);
-			}
-			else
-			{
-				request.setAttribute("accountNonTrovato", "true");
-				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-				rd.forward(request, response);
-			}
-		}
+		}catch(Exception e){
+ 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+ 		}
 	}
 
 	/**
 	 * Il metodo che si occupa di smistare la richiesta di ricerca all'{@link AutenticazioneManager}
-	 * @param toSearch L'account da cercare
+	 * @param emailToSearch L'email da cercare
+	 * @param passwordToSearch La password da cercare
 	 * @return 0 se l'utente loggato è l'admin, 1 se l'account è stato trovato ed è Regolare, 2 se l'account è stato trovato ed è Invalidato, 3 se l'account è stato trovato ed è Bannato, -1 in caso di errore 
 	 * @pre toSearch != null
 	 */
-	private int login(Account toSearch)
+	private int login(String emailToSearch, String passwordToSearch)
 	{
 		AbstractFactory factory = new ManagerFactory();
 		AutenticazioneInterface model = factory.createAutenticazioneManager();
-		return model.queryLogin(toSearch);
+		return model.queryLogin(emailToSearch, passwordToSearch);
 	}
-	
+
 	/**
 	 * Il metodo che si occupa di recuperare il nome dell'utente loggato.
-	 * @param loggato L'account di cui trovare il nome.
+	 * @param emailTrovata L'e-mail dell'utente di cui bisogna trovare il nome.
 	 * @return Una stringa che indica il nome se la richiesta è stata effettuata con successo, null altrimenti.
 	 * @pre loggato != null
 	 */
-	
-	private String estraiNome (Account trovato)
+
+	private String estraiNome (String emailTrovata)
 	{
 		AbstractFactory factory = new ManagerFactory();
 		AutenticazioneInterface model = factory.createAutenticazioneManager();
-		return model.queryEstraiNome(trovato);
+		return model.queryEstraiNome(emailTrovata);
 	}
-	
+
 	/**
 	 * Il metodo che si occupa di controllare che un utente invalidato possa accedere al sistema.
-	 * @param dataAttuale La data attuale a partire dalla quale bisogna effettuare il controllo.
-	 * @param trovato L'account di cui verificare la data di invalidazione.
-	 * @return true se l'utente può accedere al sistema, false altrimenti.
+	 * @param dataAttuale La data attuale (in millisecondi) per verificare se la settimana di invalidazione è terminata.
+	 * @param emailTrovata L'email dell'account di cui verificare la data di invalidazione.
+	 * @return 0 se l'utente può accedere al sistema, giorni Un intero che indica quanto tempo aspettare prima di poter effettuare l'accesso, -1 in caso di errore nel recupero della data.
 	 * @pre dataAttuale != null
 	 */
-	
-	//0 se true, la differenza in giorni se false, -1 errore recupero data
-	private int controllaData (GregorianCalendar dataAttuale, Account trovato)
+
+	private int controllaData (long dataAttuale, String emailTrovata)
 	{
 		AbstractFactory factory = new ManagerFactory();
 		AutenticazioneInterface model = factory.createAutenticazioneManager();
-		return model.queryControllaData(dataAttuale, trovato);
+		return model.queryControllaData(dataAttuale, emailTrovata);
 	}
 }
-
-
-
