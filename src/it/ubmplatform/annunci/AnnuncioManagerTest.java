@@ -53,6 +53,19 @@ public class AnnuncioManagerTest {
 
 	@After
 	public void tearDown() throws Exception {
+		esistenteOk=null;
+		nonEsistenteOk=null;
+		emailErrata=null;
+		fotoNull=null;
+		titoloNull=null;
+		descrizioneNull=null;
+		facoltaNull=null;
+		categoriaNull=null;
+		ricercaPerFacoltaOk=null;
+		ricercaTitoloNull=null;
+		ricercaCategoriaErrata=null;
+		ricercaOk=null;
+		
 	}
 
 	@Test
