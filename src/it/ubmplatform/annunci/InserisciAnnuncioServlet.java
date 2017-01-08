@@ -42,11 +42,8 @@ public class InserisciAnnuncioServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = 1;
 		String foto, email = null;
-		email="prova@ubm.it";
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		
+		email=(String)request.getSession().getAttribute("emailLoggato");
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
 		if ("libro".equals(categoria.toLowerCase())) {
@@ -58,17 +55,20 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		foto = verificaFile(request); //controlli sull'immagine
 		String isbn = request.getParameter("isbn");
 		String autoreLibro = request.getParameter("autoreLibro");
-		int edizione = Integer.parseInt(request.getParameter("edizione"));
+		int edizione=0;
+		if(request.getParameter("edizione")!=null&&!request.getParameter("edizione").trim().equals(""))
+			edizione = Integer.parseInt(request.getParameter("edizione"));
 		String materia = request.getParameter("materia");
 		String condizioni = request.getParameter("condizioni");
 		String descrizione = request.getParameter("descrizione");
 		double prezzo = Double.parseDouble(request.getParameter("prezzo"));
 		Date dataPubblicazione = new Date(0);
 		try {
-			if(inserisciAnnuncio(new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione))){ //controllo se l'operazione è riuscita
+			Annuncio a = new Annuncio(0, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
+			if(inserisciAnnuncio(a)){ //controllo se l'operazione è riuscita
 				if(foto != null)
 					saveFile(request); //se il file è stato inserito lo carico
-				response.sendRedirect("VisualizzaDettagliAnnuncio?annuncioID="+id);
+				response.sendRedirect("VisualizzaDettagliAnnuncio?annuncioID="+a.getId());
 			}
 			else{
 				throw new InsertFailedException("L'inserimento dell'annuncio ha riscontrato dei problemi, riprova più tardi");

@@ -83,11 +83,6 @@ public class AnnuncioManagerTest {
 	public void testQueryInserisciAnnuncio() {
 		boolean status;
 		try {
-			manager.queryInserisciAnnuncio(esistenteOk);
-			fail("dovrebbe lanciare eccezioni");
-		} catch (InvalidAttributeValueException | SQLException e) {
-		}
-		try {
 			status=manager.queryInserisciAnnuncio(nonEsistenteOk);
 			assertTrue(status);
 		} catch (InvalidAttributeValueException | SQLException e) {

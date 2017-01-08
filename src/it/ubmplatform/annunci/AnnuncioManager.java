@@ -73,36 +73,38 @@ public class AnnuncioManager implements AnnuncioInterface {
 		try {
 			conn=DBManager.getInstance().getConnection(); //recupero una connessione
 			//creo la query
-			String query="INSERT INTO annuncio (ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,CURDATE())";
-			s=conn.prepareStatement(query);
-			s.setInt(1, toInsert.getId());
-			s.setString(2, toInsert.getTitolo());
-			s.setString(3, toInsert.getCategoria());
-			s.setString(4, toInsert.getFacolta());
-			s.setString(5, toInsert.getFoto());
+			String query="INSERT INTO annuncio (Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,CURDATE())";
+			s=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			s.setString(1, toInsert.getTitolo());
+			s.setString(2, toInsert.getCategoria());
+			s.setString(3, toInsert.getFacolta());
+			s.setString(4, toInsert.getFoto());
 			if(toInsert.getCategoria()==null)
 				throw new InvalidAttributeValueException("La categoria non può essere null");
 			if (toInsert.getCategoria().equals("L")) { //controllo se è un libro
-				s.setString(6, toInsert.getIsbn());
-				s.setString(7, toInsert.getAutoreLibro());
-				s.setInt(8, toInsert.getEdizione());
-				s.setString(9, toInsert.getMateria());
-				s.setString(10, toInsert.getCondizioni());
-				s.setString(11, toInsert.getDescrizione());
-				s.setDouble(12, toInsert.getPrezzo());
-				s.setString(13, toInsert.getEmail());	
+				s.setString(5, toInsert.getIsbn());
+				s.setString(6, toInsert.getAutoreLibro());
+				s.setInt(7, toInsert.getEdizione());
+				s.setString(8, toInsert.getMateria());
+				s.setString(9, toInsert.getCondizioni());
+				s.setString(10, toInsert.getDescrizione());
+				s.setDouble(11, toInsert.getPrezzo());
+				s.setString(12, toInsert.getEmail());	
 			}
 			else if (toInsert.getCategoria().equals("A")) { //controllo se sono appunti
+				s.setString(5, null);
 				s.setString(6, null);
-				s.setString(7, null);
-				s.setInt(8, 0);
-				s.setString(9, toInsert.getMateria());
-				s.setString(10, toInsert.getCondizioni());
-				s.setString(11, toInsert.getDescrizione());
-				s.setDouble(12, toInsert.getPrezzo());
-				s.setString(13, toInsert.getEmail());
+				s.setInt(7, 0);
+				s.setString(8, toInsert.getMateria());
+				s.setString(9, toInsert.getCondizioni());
+				s.setString(10, toInsert.getDescrizione());
+				s.setDouble(11, toInsert.getPrezzo());
+				s.setString(12, toInsert.getEmail());
 			}
-			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
+			s.executeUpdate(); //eseguo la query e resituisco true se non lancia eccezioni
+			ResultSet rs = s.getGeneratedKeys();
+			rs.next();
+			toInsert.setId(rs.getInt(1));
 			return true;
 		} finally{
 			if(s!=null)
