@@ -1,6 +1,6 @@
-<form class="navbar-form navbar-left" action="RicercaAnnuncio" method="post">
+<form id="formRicercaAnnuncio" class="navbar-form navbar-left" action="RicercaAnnuncio" method="post">
             <div class="form-group">
-              <input name="titolo" type="text" class="form-control" placeholder="Search" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
+              <input id="titoloAnnuncioRicerca" name="titolo" type="text" class="form-control" placeholder="Search" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
             </div>
             <div class="form-group">
               <select class="form-control" name="facolta">
@@ -26,3 +26,12 @@
             </div>
             <input type="submit" class="btn btn-default" value="Cerca" style="margin-left:20px"/>
 </form>
+
+<script src="javascript/annunci/validaRicercaAnnuncio.js"></script>
+
+<script>
+$("document").ready(function(){
+	validaFormRicerca ("formRicercaAnnuncio");
+});
+		
+</script>

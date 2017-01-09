@@ -79,10 +79,11 @@
           </div>
         </form>
         <%} else if (request.getAttribute("facolta")!=null){%> <%--Se sono giunto a questa pagina basandomi su mostra annunci facoltà, devo poter ricercare annunci in questa sottosezione --%>
-           <form class="navbar-form col-xs-12" action="RicercaAnnuncio" method="post">
-            <div class="form-group">
-              <input name="titolo" type="text" class="form-control" placeholder="Search" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
+           <form id="ricercaAnnunciInUnaFacolta" class="navbar-form col-xs-12" action="RicercaAnnuncio" method="post">
+            <div  class="form-group">
+              <input id="titoloAnnuncioFacolta" name="titolo" type="text" class="form-control" placeholder="Search" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
             </div>
+           <script>validaFormRicerca("ricercaAnnunciInUnaFacolta");</script><%--funzione definita in javascript/annunci/validaRicercaAnnuncio.js --%>
            
             <div class="form-group">
               <select class="form-control" name="categoria">
@@ -141,7 +142,7 @@
          </div>
         <%} %>
         <div class="row">
-          <div class="col-xs-12 col-sm-2"><img src="<%=annunciPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
+          <div class="col-xs-12 col-sm-2"><img src="img/annunci/<%=annunciPertinenti.get(i).getFoto()%>" alt="<%=annunciPertinenti.get(i).getTitolo()%>" class="img-responsive center-block modalImageClasse"></div>
           <div class="col-xs-12 col-sm-8">
           
             <h4><a href='<%="VisualizzaDettagliAnnuncio?annuncioID=" + annunciPertinenti.get(i).getId()%>'><%= annunciPertinenti.get(i).getTitolo()%></a></h4>

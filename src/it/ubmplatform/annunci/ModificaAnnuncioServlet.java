@@ -42,9 +42,11 @@ public class ModificaAnnuncioServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		int id = Integer.parseInt(request.getParameter("annuncioID"));
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String foto, email = null;
+		String foto= null;
+		String email = request.getParameter("emailAutoreAnnuncio");
 		String titolo = request.getParameter("titolo");
 		String categoria = request.getParameter("categoria");
 		if ("libro".equals(categoria.toLowerCase())) {
@@ -56,7 +58,9 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		foto = verificaFile(request); //controlli sull'immagine
 		String isbn = request.getParameter("isbn");
 		String autoreLibro = request.getParameter("autoreLibro");
-		int edizione = Integer.parseInt(request.getParameter("edizione"));
+		int edizione=0;
+		if(request.getParameter("edizione")!=null &&!request.getParameter("edizione").trim().equals(""))
+			edizione=Integer.parseInt(request.getParameter("edizione"));
 		String materia = request.getParameter("materia");
 		String condizioni = request.getParameter("condizioni");
 		String descrizione = request.getParameter("descrizione");
@@ -97,6 +101,7 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
+		
 	}
 	
 	

@@ -15,9 +15,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="javascript/amministrazione/rimuoviAnnuncio.js"></script>
     <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
+    <script src="javascript/annunci/validaModificaAnnuncio.js"></script>
   </head>
-  
-
+ 
   <body>
   <%String tipologiaUtenteConnesso=null, emailLoggato=null;
    tipologiaUtenteConnesso=(String)session.getAttribute("user");
@@ -78,9 +78,10 @@
        		<div class="panel-body">
        			<form id="annuncio" class="form-horizontal" action="ModificaAnnuncioServlet" method="post" enctype="multipart/form-data">
        				<input type="hidden" name="annuncioID" value="<%= annuncioDettagliato.getId()%>"/>
+       				<input type="hidden" name="emailAutoreAnnuncio" value="<%= annuncioDettagliato.getEmail()%>"/>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="titolo">Titolo: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo" pattern="[a-zA-Z0-9]{1,50}" title="Inserire una stringa alfanumerica di lunghezza 1-50"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Inserire una stringa alfanumerica di lunghezza 1-50"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Categoria: *</label>
@@ -104,8 +105,8 @@
               			</div>
             		</div>
             		<div class="form-group">
-	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:*</label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" step="0.1" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>" placeholder="Inserisce il prezzo nel formato x,y o nel formato x" /></div>
+	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:*</label>  
+	    				<div class="col-sm-10"><input class="form-control" type="text" step="0.1" pattern="^[0-9]{1,3}(\.[0-9])?$" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>" placeholder="Inserisci il prezzo nel formato xxx,y o nel formato xxx" title="Inserisci il prezzo nel formato xxx,y o nel formato xxx"/></div>
 	    			</div>
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
@@ -118,28 +119,28 @@
 	    			
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="condizioni">Condizioni: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,19}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
 	    			</div>	   
 	    			
 	    		<div id="soloLibro"> <!-- Solo libro -->
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="[a-zA-Z0-9]{0,13}" title="Inserire una stringa alfanumerica di lunghezza 0-13"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="{0}|[a-zA-Z0-9]{13}" title="Inserire una stringa alfanumerica di lunghezza 13 o lasciare il campo vuoto"/></div>
 	    			</div>
 
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="autore">Autore: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="[a-zA-Z0-9]{0,20}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,19}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="edizione">Edizione: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="number" name="edizione" id="edizione" <%if(annuncioDettagliato.getEdizione()!=0){%>value="<%=annuncioDettagliato.getEdizione()%>"<%}%> /></div>
+	    				<div class="col-sm-10"><input class="form-control" type="number" min="0" placeholder="Inserisci l'edizione del libro" name="edizione" id="edizione" <%if(annuncioDettagliato.getEdizione()!=0){%>value="<%=annuncioDettagliato.getEdizione()%>"<%}%> /></div>
 	    			</div>
 	    		</div>  
 	    		 <div id="soloAppunti">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="materia">Materia: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia" <%if (annuncioDettagliato.getMateria()!=null){%>value="<%=annuncioDettagliato.getMateria()%>"<%}%> placeholder="Inserisci una Materia" /></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia" <%if (annuncioDettagliato.getMateria()!=null){%>value="<%=annuncioDettagliato.getMateria()%>"<%}%> placeholder="Inserisci una Materia" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,39}" title="Inserire una stringa alfanumerica di lunghezza 0-40"/></div>
 	    			</div>
 	    		  </div>	
 	    			 			
@@ -150,7 +151,11 @@
        	</div>
       </div>		
 
-	   
+<script>
+$("document").ready(function(){
+	validaFormModificaAnnuncio ();
+});	
+</script>
 	
 	   
       
@@ -246,6 +251,8 @@
 
    </script>
    
+   
+
    
   <%if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente")&& emailLoggato.equals(annuncioDettagliato.getEmail())){%>	
    <div id="containerFooterVisualizzaAnnuncio">
