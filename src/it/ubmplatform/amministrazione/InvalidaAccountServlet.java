@@ -33,21 +33,26 @@ public class InvalidaAccountServlet extends HttpServlet {
 		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
 		String email=request.getParameter("email");
 		String decisione=request.getParameter("eliminaFeedback");
-		
-		boolean valoreInvalida=invalidaAccount(email);
-		
-	   	if(decisione.equals("true")){
-			boolean valoreFeedback=cancellaFeedback(email);
+		boolean invio=sendMail(email);
+		if(invio){
+			boolean valoreInvalida=invalidaAccount(email);
+			
+		   	if(decisione.equals("true")){
+				boolean valoreFeedback=cancellaFeedback(email);
+			}
+		   	if(valoreInvalida && valoreFeedback){
+	    		request.removeAttribute("email");
+	    		
+			} 
+			else{
+				throw new OperationFailedException("L'invalidazione dell'account non ha avuto successo, riprova più tardi");
+			}
 		}
-	   	if(valoreInvalida && valoreFeedback){
-	   		sendMail(email);
-    		request.removeAttribute("email");
-    		response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("Success Data");  
-		} 
 		else{
-			throw new OperationFailedException("L'invalidazione dell'account non ha avuto successo, riprova più tardi");
+			response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("false");  
 		}
+		
 	   	
 	}
 
@@ -74,7 +79,7 @@ public class InvalidaAccountServlet extends HttpServlet {
 		return managerAmministrazione.queryCancellaFeedback(email);
 	}
 	
-	private void sendMail(String email){
+	private boolean sendMail(String email){
 		String to = email;
 		System.out.println(to);
 		String from = "ubmplatform@gmail.com";
@@ -109,7 +114,7 @@ public class InvalidaAccountServlet extends HttpServlet {
 			message.setText(messageText);
  
 			Transport.send(message);
- 
+				return true;
  
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
