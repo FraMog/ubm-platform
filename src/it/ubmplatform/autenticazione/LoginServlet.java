@@ -52,13 +52,14 @@ public class LoginServlet extends HttpServlet {
 
 			else
 			{
-				if (login(email, password)==0)	//cerca prima nella tabella dell'amministratore
+				int login=login(email, password);
+				if (login==0)	//cerca prima nella tabella dell'amministratore
 				{
 					session.setAttribute("user", "admin");
 					RequestDispatcher rd = request.getRequestDispatcher("homePageAdmin.jsp");
 					rd.forward(request, response);
 				}
-				else if (login(email, password)==1)	//cerca nella tabella degli account utente e trova account
+				else if (login==1)	//cerca nella tabella degli account utente e trova account
 				{
 					session.setAttribute("user", "utente");
 
@@ -80,7 +81,7 @@ public class LoginServlet extends HttpServlet {
 					rd.forward(request, response);
 
 				}
-				else if (login(email, password)==2)	//trova account invalidato. compare avviso e verifica se puo accedere
+				else if (login==2)	//trova account invalidato. compare avviso e verifica se puo accedere
 				{
 					long dataAttuale = System.currentTimeMillis();
 
@@ -118,7 +119,7 @@ public class LoginServlet extends HttpServlet {
 						rd.forward(request, response);
 					}
 				}
-				else if (login(email, password)==3)	//trova account ma è stato bannato. avvisa l'utente
+				else if (login==3)	//trova account ma è stato bannato. avvisa l'utente
 				{
 					request.setAttribute("accountBannato", "true");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
@@ -132,6 +133,7 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 		}catch(Exception e){
+			e.printStackTrace();
  			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
  		}
 	}

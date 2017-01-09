@@ -66,6 +66,10 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 						{
 							return 3;
 						}
+						else if(accountTrovato.getTipo().equals("D")){ //account disattivato
+							statement.executeUpdate("UPDATE account SET Tipo='R' WHERE Email='"+emailToSearch+"'");
+							return 1;
+						}
 					}
 					else
 						return -1;
