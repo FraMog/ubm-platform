@@ -29,9 +29,8 @@ public class ControlloCodiceServlet extends HttpServlet {
 		System.out.println("l'email è "+email);
 		boolean valore = registraAccount(acc);
 		if(valore==true){
-    		request.removeAttribute("email");
-    		response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("true");  
+			request.getSession().setAttribute("password", password);
+    		response.sendRedirect("creaProfilo.jsp");
 		} 
 		else{
 			throw new OperationFailedException("La registrazione dell'account non ha avuto successo, riprova più tardi");
