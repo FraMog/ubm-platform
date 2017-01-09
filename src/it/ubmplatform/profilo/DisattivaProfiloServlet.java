@@ -24,9 +24,8 @@ public class DisattivaProfiloServlet extends HttpServlet {
     	HttpSession session=request.getSession();
     	try{
 	    	disattivaProfilo((String)session.getAttribute("emailLoggato")); //eseguo l'operazione
-			//forward sul logout
-	    	response.sendRedirect("LogoutServlet");
-			//request.getRequestDispatcher("/LogoutServlet").forward(request, response);
+			session.invalidate();
+			response.sendRedirect("index.jsp");
     	}
     	catch(Exception e){
     		e.printStackTrace();

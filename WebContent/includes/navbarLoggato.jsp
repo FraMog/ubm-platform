@@ -45,7 +45,7 @@ function logout()
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benvenuto <%=session.getAttribute("name")%><span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
                  <div class="form-group" style="text-align:center;">
-                   <a class="btn btn-primary" href="#">Il mio profilo</a>
+                   <a class="btn btn-primary" href="VisualizzaProfiloServlet?emailToShow=<%=session.getAttribute("emailLoggato")%>">Il mio profilo</a>
                  </div>
                  <div class="form-group" style="text-align:center;">
                    <a class="btn btn-primary" href="inserisciAnnuncio.jsp">Inserisci annuncio</a>

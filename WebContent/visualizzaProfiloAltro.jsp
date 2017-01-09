@@ -56,12 +56,11 @@
 			</script>  <% 
 			response.sendRedirect("index.jsp");
 		}
-			String foto;
-		try{
+		String foto;
+		if(profileToShow.getFoto()!=null)
 			foto = profileToShow.getFoto();
-		} catch (Exception e){
-			foto = "img/default_profile.PNG";
-		}
+		else
+			foto = "img/profilo/default_profile.PNG";
 	%>
 
 	<section class="col-sm-10" id="section">

@@ -67,9 +67,7 @@ public class VisualizzaProfiloServlet extends HttpServlet {
 
 		try {
 			ArrayList<Annuncio> lista = this.getListaAnnunci(emailToShow);
-			
 			profileToShow = visualizzaProfilo(emailToShow);
-
 			thisSession.setAttribute("profileToShow", profileToShow);
 			request.setAttribute("listaAnnunci", lista);
 

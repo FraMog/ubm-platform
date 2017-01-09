@@ -27,12 +27,9 @@
 		response.sendRedirect("index.jsp");
 	}
 	
-	String fotoPath = "img/default_profile.PNG";
-	try{
+	String fotoPath = "img/profilo/default_profile.PNG";
+	if(profileToUpdate.getFoto()!=null)
 		fotoPath = profileToUpdate.getFoto();
-	} catch (Exception e){
-		fotoPath = "img/default_profile.PNG";
-	}
 	
 %>
   <body>

@@ -39,7 +39,6 @@
 	<%@ include file="includes/navbarLoggato.jsp"%>
 	<%@ include file="includes/sideBar.jsp"%>
 	<%
-		Date data1 = new Date(2017, 1, 1);
 		Profilo profileToShow = null;
 		try{
 			profileToShow = (Profilo) request.getSession().getAttribute("profileToShow");
@@ -47,11 +46,10 @@
 			response.sendRedirect("index.jsp");
 		}
 		String foto;
-		try{
+		if(profileToShow.getFoto()!=null)
 			foto = profileToShow.getFoto();
-		} catch (Exception e){
-			foto = "img/default_profile.PNG";
-		}
+		else
+			foto = "img/profilo/default_profile.PNG";
 		
 		
 		

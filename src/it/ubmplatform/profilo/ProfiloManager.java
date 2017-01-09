@@ -83,7 +83,7 @@ public class ProfiloManager implements ProfiloInterface {
 			String nome = (String) toUpdate.getNome();
 			String cognome = (String) toUpdate.getCognome();
 			
-			if(date == null || nome == null || cognome == null)
+			if(nome == null || cognome == null)
 				throw new BadModificaException();
 			
 			
@@ -411,7 +411,9 @@ public class ProfiloManager implements ProfiloInterface {
 				String telefono = resultSet.getString(5);
 				String interessi = resultSet.getString(6);
 				Date dataNascita1 = resultSet.getDate(7);
-				java.util.Date dataNascita = new Date(dataNascita1.getTime());
+				java.util.Date dataNascita=null;
+				if(dataNascita1!=null)
+					dataNascita = new Date(dataNascita1.getTime());
 				return new Profilo(email, nome, cognome, residenza, telefono, interessi, foto, dataNascita);
 			}
 		} catch (SQLException e) {
