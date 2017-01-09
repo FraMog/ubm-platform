@@ -6,7 +6,7 @@ function cancellaAccount(email){
 		else{
 			var eliminaFeedback= confirm("Vuoi eliminare anche i feedback creati da "+ email +"?");
 			$.get("CancellaAccountServlet", { "email": email, "eliminaFeedback": eliminaFeedback}, function(valore){
-				if(valore) {
+				if(valore=="true") {
 					
 				console.log("sono prima del refresh",valore);
 			location.reload(true);
@@ -32,7 +32,7 @@ function invalidaAccount(email){
 		else{
 			var eliminaFeedback= confirm("Vuoi eliminare anche i feedback creati da "+ email +"?");
 			$.get("InvalidaAccountServlet", { "email": email, "eliminaFeedback": eliminaFeedback}, function(valore){
-				if(valore) {
+				if(valore=="true") {
 				console.log("sono prima del refresh",valore);
 			location.reload(true);
 				}
