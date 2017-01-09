@@ -31,12 +31,14 @@ function logout()
           	<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cerca utente<span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
-                <form class="form" action="#">
-                  <div class="form-group" style="text-align:center;">
-                  	<input type="text" class="form-control" name="key" placeholder="keyword"/>
-                  </div>
-                  <input type="button" class="btn btn-primary" value="Cerca" />
-                </form>
+                <form class="form" action="RicercaProfiloServlet">
+		                  <div class="form-group" style="text-align:center;">
+		                  	<input type="text" class="form-control" name="nameToSearch" id="nameToSearch" placeholder="Nome"/>
+		                  	<input type="text" class="form-control" name="surnameToSearch" id="surnameToSearch" placeholder="Cognome"/>
+		                  	<input type="text" class="form-control" name="emailToSearch" id="emailToSearch" placeholder="Email"/>
+		                  </div>
+		                  <input type="submit" class="btn btn-primary" value="Cerca" />
+		                </form>
               </div>
             </li>
             <li class="dropdown">

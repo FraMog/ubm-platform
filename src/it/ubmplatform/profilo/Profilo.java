@@ -11,13 +11,13 @@ import java.util.Date;
 public class Profilo {
 	/**
 	 * Crea un nuovo profilo con le info associate
-	 * @param newEmail L'email dell'utente a cui è associato il profilo
-	 * @param name Il nome dell'utente a cui è associato il profilo
-	 * @param surname Il cognome dell'utente a cui è associato il profilo
-	 * @param residence La residenza dell'utente a cui è associato il profilo
-	 * @param phone Il telefono dell'utente a cui è associato il profilo
-	 * @param interest I vari interessi dell'utente a cui è associato il profilo
-	 * @param photo La foto dell'utente a cui è associato il profilo
+	 * @param newEmail L'email dell'utente a cui ï¿½ associato il profilo
+	 * @param name Il nome dell'utente a cui ï¿½ associato il profilo
+	 * @param surname Il cognome dell'utente a cui ï¿½ associato il profilo
+	 * @param residence La residenza dell'utente a cui ï¿½ associato il profilo
+	 * @param phone Il telefono dell'utente a cui ï¿½ associato il profilo
+	 * @param interest I vari interessi dell'utente a cui ï¿½ associato il profilo
+	 * @param photo La foto dell'utente a cui ï¿½ associato il profilo
 	 * @param dataNascita La data di nascita dell'utente
 	 */
 	public Profilo(String newEmail, String name, String surname, String residence, String phone, String interest, String photo, Date dataNascita){
@@ -33,7 +33,7 @@ public class Profilo {
 	
 	
 
-	String getFoto() {
+	public String getFoto() {
 		return foto;
 	}
 	
@@ -45,19 +45,19 @@ public class Profilo {
 		return nome;
 	}
 	
-	String getCognome() {
+	public String getCognome() {
 		return cognome;
 	}
 	
-	String getResidenza() {
+	public String getResidenza() {
 		return residenza;
 	}
 	
-	String getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 	
-	String getInteressi() {
+	public String getInteressi() {
 		return interessi;
 	}
 

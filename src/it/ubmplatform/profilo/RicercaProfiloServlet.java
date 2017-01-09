@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.ubmplatform.factory.AbstractFactory;
+import it.ubmplatform.factory.ManagerFactory;
+
 /**
  * Servlet che si occupa di gestire la ricerca di un profilo
  */
@@ -20,10 +23,36 @@ public class RicercaProfiloServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = null, cognome = null, email = null;
+		try{
+			nome = request.getParameter("nameToSearch");
+			cognome = request.getParameter("surnameToSearch");
+			email = request.getParameter("emailToSearch");
+			
+		} catch (Exception e ){
+			request.getSession().setAttribute("listaProfili", null);
+		}
+		
+		if( (nome == null || nome.equals("")) && (cognome == null || cognome.equals("")) && (email == null || email.equals("")) ) {
+			request.getSession().setAttribute("listaProfili", null);
+		}
+
+		
+		try {
+			ArrayList<Profilo> r = ricercaProfilo(nome, cognome, email);
+			request.getSession().setAttribute("listaProfili",r );
+		} catch (Exception e) {
+			request.getSession().setAttribute("listaProfili", null);
+		}
+		
+		
+		response.sendRedirect("RicercaProfilo.jsp");
+		
+	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// ---
+		doGet(request, response);
 	}
 	
 	/**
@@ -35,7 +64,9 @@ public class RicercaProfiloServlet extends HttpServlet {
 	 * @pre nome != null OR cognome != null OR email != null
 	 */
 	private ArrayList<Profilo> ricercaProfilo(String nome, String cognome, String email){
-		return null;
+		AbstractFactory f = new ManagerFactory();
+		ProfiloInterface manager = f.createProfiloManager();
+		return manager.queryRicercaProfilo(nome, cognome, email);
 	}
 
 }
