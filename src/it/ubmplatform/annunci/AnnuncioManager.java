@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.management.InvalidAttributeValueException;
@@ -343,11 +342,6 @@ public class AnnuncioManager implements AnnuncioInterface {
 	 * Si occupa dell'interrogazione al database per la visualizzazione dei dettagli di un annuncio
 	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
 	 * @return L'annuncio relativo all'id passato, null in caso di errore
-	 */
-	/**
-	 * Si occupa dell'interrogazione al database per la visualizzazione dei dettagli di un annuncio
-	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
-	 * @return L'annuncio relativo all'id passato, null in caso di errore
 	 * @throws BadAnnuncioIdException Se all'id passato in input non corrisponde nessun annuncio nel database
 	 */
 	public Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio) throws BadAnnuncioIdException{
@@ -405,4 +399,39 @@ public class AnnuncioManager implements AnnuncioInterface {
 		
 		
 	}
+
+	/**
+	 * Si occupa dell'interrogazione al database per la ricerca degli annunci recenti
+	 * @return lista annunci più recenti
+	 */
+	@Override
+	public ArrayList<Annuncio> queryAnnunciRecenti() {
+		ArrayList<Annuncio> lista=new ArrayList<Annuncio>();
+		Connection conn=null;
+		Statement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			s=conn.createStatement();
+			String query="SELECT DISTINCT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, annuncio.Email FROM Annuncio join Account where tipo!='D' AND tipo!='I' ORDER BY DataPubblicazione DESC";
+			ResultSet rs=s.executeQuery(query);
+			int i=0;
+			while(rs.next() && i<5){
+				Annuncio annuncioPertinente = new Annuncio();
+				annuncioPertinente.setId(rs.getInt(1));
+				annuncioPertinente.setTitolo(rs.getString(2));
+				annuncioPertinente.setFoto(rs.getString(3));
+				annuncioPertinente.setDataPubblicazione(rs.getDate(4));
+				annuncioPertinente.setPrezzo(rs.getDouble(5));
+				annuncioPertinente.setDescrizione(rs.getString(6));
+				annuncioPertinente.setEmail(rs.getString(7));
+				lista.add(annuncioPertinente);
+				i++;
+			}
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }

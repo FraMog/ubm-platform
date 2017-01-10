@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="javascript/home/caricaAnnunci.js"></script>
     <script type="text/javascript">
     onload = function()
     {
@@ -60,6 +61,7 @@
     	}  	
     	
     }
+    $(document).ready(caricaAnnunci());
     </script>
   </head>
   <body>
@@ -80,31 +82,11 @@
         </div>
       </div>
       <div id="cont_ordine" class="container-fluid">
-        <form class="col-sm-8 form-inline" action="#" method="get">
-          <div class="form-group">
-            <label class="control-label" for="ordine">Ordina per </label>
-            <select id="ordine" class="form-control" name="ordine">
-            	<option value="data">Più recenti</option>
-              <option value="prezzo">Prezzo migliore</option>
-            </select>
-          </div>
-        </form>
         <%if(session.getAttribute("user")!=null && ((String)session.getAttribute("user")).equalsIgnoreCase("utente")){%>
-        <a href="inserisciAnnuncio.jsp" class="btn btn-info col-sm-4">Pubblica ora il tuo annuncio</a>
+        <a href="inserisciAnnuncio.jsp" class="btn btn-info pull-right">Pubblica ora il tuo annuncio</a>
         <%}%>
       </div>
       <div id="content" class="panel panel-default">
-        <div class="panel-body risultato">
-          <img src="img/annunci/libro.jpg" alt="libro" class="img-responsive col-sm-2">
-          <div class="col-sm-8">
-            <h4><a href="#">Object oriented software engineering</a></h4>
-            <p>Libro utilizzato per il corso di ingegneria del software tenuto dalla professoresa Ferrucci. Tenuto in ottimo stato e non sottolineato</p>
-          </div>
-          <div class="col-sm-2 pull-right">
-            <h4>Prezzo: 15€</h4>
-            <p>Data pubblicazione: 02/12/2016</p>
-          </div>
-        </div>
       </div>
     </section>
     <%@ include file="includes/footer.jsp" %>
