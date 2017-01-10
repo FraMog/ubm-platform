@@ -25,14 +25,12 @@ public class InserisciFeedbackServlet extends HttpServlet {
 
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
+
 		String jsonReturn;
 
-		String emailP = (String) request.getSession().getAttribute("emailLoggato");
-
-		if(emailP != null){
-
-
-			response.setContentType("application/json");
+		if(request.getSession().getAttribute("emailLoggato") != null){
+			String emailP = (String) request.getSession().getAttribute("emailLoggato");
 
 			try{
 				int valutazione = Integer.parseInt(request.getParameter("valutazione"));
@@ -58,6 +56,7 @@ public class InserisciFeedbackServlet extends HttpServlet {
 
 
 		}else{
+
 			jsonReturn = "{\"state\":\"nosession\"}";
 		}
 

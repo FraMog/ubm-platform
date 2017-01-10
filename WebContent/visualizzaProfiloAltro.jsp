@@ -167,6 +167,8 @@
 							Hai fatto affari con Giovanni? <a data-toggle="modal"
 								data-target="#modificaFeedbackModal">Modifica un Feedback!</a>
 						</h5>
+						<h5><a data-toggle="modal"
+								data-target="#inserisciFeedbackModal">Inserisci un Feedback!</a></h5>
 					</div>
 				</div>
 

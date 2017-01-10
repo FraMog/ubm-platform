@@ -26,12 +26,14 @@ public class ModificaFeedbackServlet extends HttpServlet {
 
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//la risposta da inviare al client
-		String responseJson;
 		response.setContentType("application/json");
 
-		String emailP = (String) request.getSession().getAttribute("emailLoggato");
-		if(emailP != null){
+		//la risposta da inviare al client
+		String responseJson;
+
+		if(request.getSession().getAttribute("emailLoggato") != null){
+			String emailP = (String) request.getSession().getAttribute("emailLoggato");
+
 
 			String emailR = request.getParameter("emailR");
 			if(emailR != null){
