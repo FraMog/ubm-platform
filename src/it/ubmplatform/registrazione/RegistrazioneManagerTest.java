@@ -11,7 +11,7 @@ public class RegistrazioneManagerTest {
 	@Test
 	public void testQueryRegistraAccount() {
 		//fail("Not yet implemented");
-		Account acc=new Account("webelloooooo@bellissimo.it","munnezza");
+		Account acc=new Account("gaetano@pisco.it","bellissimo");
 		RegistrazioneManager rg= new RegistrazioneManager();
 		
 		assertTrue(rg.queryRegistraAccount(acc));
@@ -19,7 +19,7 @@ public class RegistrazioneManagerTest {
 
 	@Test
 	public void testQueryAccountEsistente() {
-		Account acc=new Account("webelloooooo@bellissimo.it","munnezza");
+		Account acc=new Account("m.memoli39@studenti.unisa.it","scientifico96");
 		RegistrazioneManager rg= new RegistrazioneManager();
 		
 		assertTrue(rg.queryAccountEsistente(acc.getEmail()));

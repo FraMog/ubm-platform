@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <%@ include file="includes/navbarLoggato.jsp" %>
+    <%@ include file="includes/navbarNonLoggato.jsp" %>
     <%@ include file="includes/sideBar.jsp" %>
 <%@ page import="java.util.*,it.ubmplatform.account.Account"%>
     <section class="col-sm-10" id="section">
