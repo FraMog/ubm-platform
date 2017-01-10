@@ -35,7 +35,7 @@ public class ProfiloManager implements ProfiloInterface {
 			s.setString(3, toInsert.getCognome());
 			s.setString(4, toInsert.getFoto());
 			s.setString(5, toInsert.getResidenza());
-			s.setString(6, toInsert.getEmail());
+			s.setString(6, toInsert.getTelefono());
 			s.setString(7, toInsert.getInteressi());
 			java.sql.Date date=null;
 			if(toInsert.getDataNascita()!=null)
