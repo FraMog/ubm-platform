@@ -36,6 +36,7 @@
        		 <input type="text" name="codiceInserito" id="codiceInserito" required="required" pattern="<%=codiceInviato%>" title="INSERISCI IL CODICE ESATTO."/>  
        		  <input type="hidden" name="email" id="email" value="<%=email%>"/> 
        		   <input type="hidden" name="password" id="password" value="<%=password%>"/> 
+       		    <input type="hidden" name="codiceInviato" id="codiceInviato" value="<%=codiceInviato%>"/>
        		  <input type="submit" class="btn btn-primary" value="invia"/>
 		</form>           
       </div>
