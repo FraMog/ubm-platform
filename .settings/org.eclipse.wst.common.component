@@ -2,8 +2,7 @@
     <wb-module deploy-name="UBM-Platform">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/testing"/>
-        <property name="context-root" value="UBM-Platform"/>
         <property name="java-output-path" value="/UBM-Platform/build/classes"/>
+        <property name="context-root" value="/"/>
     </wb-module>
 </project-modules>
