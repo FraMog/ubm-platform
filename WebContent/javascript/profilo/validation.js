@@ -8,7 +8,7 @@ function validation(){
 		$('#errore').tetx('Il file può pesare al massimo 10MB');
 		return false;
 	}
-	var reg=/^[a-zA-Z]{1,20}$/;
+	var reg=/^[a-zA-Z ]{1,20}$/;
 	if($('#nome').val().length==0 || !reg.test($('#nome').val())){
 		$('#errore').tetx('Il nome deve contenere al più 20 lettere');
 		return false;
