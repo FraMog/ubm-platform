@@ -29,36 +29,40 @@
      	var request_giorni_obj= '<%=request_giorni%>';
      	var request_email_obj= '<%=request_email%>';
     	
-    	if (request_account_obj=="true")
-    	{
-    		alert ("Account non trovato. E-mail e/o password errate.");
-    		request.removeAttribute("accountNonTrovato");
-    	}
-    	
-    	if (request_invalidato_obj=="true")
-    	{
-    		alert ("Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra "+ request_giorni_obj +" giorno/i.");
-    		request.removeAttribute("accountInvalidato");
-    		request.removeAttribute("giorniAttesa");
-    	}
-    	
-    	if (request_bannato_obj=="true")
-    	{
-    		alert ("Il tuo account è stato bannato dall'ammministratore: non puoi accedere alla piattaforma.");
-    		request.removeAttribute("accountBannato");
-    	}
-    	
-    	if (request_data_obj=="true")
-    	{
-    		alert ("Il tuo account è stato invalidato dall'ammministratore, ma c'è un problema nel recupero della data. Riprova ad accedere alla piattaforma.");
-    		request.removeAttribute("dataInvalidazioneNonTrovata");
-    	}
-    	
-    	if (request_email_obj=="true")
-    	{
-    		alert ("Ti abbiamo inviato una e-mail contenente la password per effettuare l'accesso alla piattaforma. Riprova ad autenticarti.");
-    		request.removeAttribute("emailInviata");
-    	}  	
+		if (request_account_obj == "true")
+		{
+			$('#nonTrovatoModal').modal('show'); //mostro il modal
+			request.removeAttribute("accountNonTrovato");
+			return false;
+		}
+
+		if (request_invalidato_obj == "true")
+		{
+			$('#invalidatoModal').modal('show'); //mostro il modal
+			request.removeAttribute("accountInvalidato");
+			return false;
+		}
+
+		if (request_bannato_obj == "true")
+		{
+			$('#bannatoModal').modal('show'); //mostro il modal
+			request.removeAttribute("accountBannato");
+			return false;
+		}
+
+		if (request_data_obj == "true")
+		{
+			$('#dataInvalidazioneNonTrovata').modal('show'); //mostro il modal
+			request.removeAttribute("dataInvalidazioneNonTrovata");
+			return false;
+		}
+
+		if (request_email_obj == "true")
+		{
+			$('#emailInviata').modal('show'); //mostro il modal
+			request.removeAttribute("emailInviata");
+			return false;
+		}
     	
     }
     $(document).ready(caricaAnnunci());
@@ -90,5 +94,95 @@
       </div>
     </section>
     <%@ include file="includes/footer.jsp" %>
+   	<!-- MODAL NON TROVATO -->
+	<div id="nonTrovatoModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Errore</h4>
+				</div>
+				<div class="modal-body">
+					<p>Account non trovato. E-mail e/o password errate.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL INVALIDATO -->
+	<div id="invalidatoModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Errore</h4>
+				</div>
+				<div class="modal-body">
+					<p>Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra <%=request_giorni%> giorno/i.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL BANNATO -->
+	<div id="bannatoModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Errore</h4>
+				</div>
+				<div class="modal-body">
+					<p>Il tuo account è stato bannato dall'ammministratore: non puoi accedere alla piattaforma.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL DATA INVALIDAZIONE NON TROVATA -->
+	<div id="dataInvalidazioneNonTrovata" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Errore</h4>
+				</div>
+				<div class="modal-body">
+					<p>Il tuo account è stato invalidato dall'ammministratore, ma c'è un problema nel recupero della data. Riprova ad accedere alla piattaforma.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL EMAIL INVIATA -->
+	<div id="emailInviata" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Avviso</h4>
+				</div>
+				<div class="modal-body">
+					<p>Ti abbiamo inviato una e-mail contenente la password per effettuare l'accesso alla piattaforma. Riprova ad autenticarti.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% request.removeAttribute("giorniAttesa"); %>
   </body>
 </html>
