@@ -125,7 +125,7 @@
 	    		<div id="soloLibro"> <!-- Solo libro -->
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="{0}|[a-zA-Z0-9]{13}" title="Inserire una stringa alfanumerica di lunghezza 13 o lasciare il campo vuoto"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="^$|^[a-zA-Z0-9]{13}$" title="Inserire una stringa alfanumerica di lunghezza 13 o lasciare il campo vuoto"/></div>
 	    			</div>
 
 	    			<div class="form-group">
