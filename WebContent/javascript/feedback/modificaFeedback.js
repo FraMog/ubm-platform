@@ -7,8 +7,8 @@ $("#modificaFeedbackModal").on('show.bs.modal', function(){
 		$(this).attr("readonly", false);
 	})
 
-	//var emailR = $("#email").text();
-	var emailR = "marco@unisa.it";
+	var emailR = $("#emailR").text();
+	
 
 	//recupero il feedback da modificare e lo stampo a video
 	recuperaFeedback(emailR);

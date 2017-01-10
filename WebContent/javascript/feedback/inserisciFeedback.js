@@ -6,10 +6,11 @@ $('#inserisciFeedbackModal').on('show.bs.modal', function(){
 	$('#buttonInserisci').on('click', function(){
 		var valutazione = $('#valutazioneFeedback').val();
 		var descrizione = $('#descrizioneFeedback').val();
+		val emailR = $('#emailR').text();
 		
-		if(valutazione != null && descrizione != null){
+		if(valutazione != null && descrizione != null && emailR != null){
 			
-			$.get("InserisciFeedbackServlet?valutazione=" + valutazione + "&descrizione=" + descrizione, function(text, status){
+			$.get("InserisciFeedbackServlet?valutazione=" + valutazione + "&descrizione=" + descrizione + "&emailR=" + emalR, function(text, status){
 				
 				if(status == 'success'){
 					

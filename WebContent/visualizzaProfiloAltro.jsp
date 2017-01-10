@@ -104,7 +104,7 @@
 
 				<h1><%=nomeCognome%></h1>
 				<h3>
-					E-mail: <a href="<%="mailto:" + email%>"><%=email%></a>
+					E-mail: <a id="emailR" href="<%="mailto:" + email%>"><%=email%></a>
 				</h3>
 				<h3>
 					Telefono:

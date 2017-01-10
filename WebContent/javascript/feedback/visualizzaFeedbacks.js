@@ -6,8 +6,7 @@
 //che si occupa di stilare i feedback nel modal
 $(document).ready(function(){
 	
-	//var emailR = $("#email").text();
-	var emailR = "marco@unisa.it";
+	var emailR = $("#emailR").text();
 	
 	$.get("VisualizzaFeedbackServlet?emailR=" + emailR, function(text, status){
 		if(status == 'success'){

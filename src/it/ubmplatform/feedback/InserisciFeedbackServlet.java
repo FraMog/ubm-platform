@@ -25,44 +25,42 @@ public class InserisciFeedbackServlet extends HttpServlet {
 
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//if(request.getSession().getAttribute("email") != null){
-
-		int valutazione;
-
 		String jsonReturn;
-		response.setContentType("application/json");
-		
-		try{
-			valutazione = Integer.parseInt(request.getParameter("valutazione"));
-			String descrizione = request.getParameter("descrizione");
 
-			if(valutazione > 0 && valutazione < 6 && descrizione != null){
-				//prendo l'email di chi sta pubblicando e di chi riceve
-				//uno dalla sessione (chi pubblica) e l'altro dal profilo dell'utente (un input hidden?) inviato
-				String emailP = "marco@unisa.it";
-				String emailR = "prova@unisa.it";
+		String emailP = (String) request.getSession().getAttribute("emailLoggato");
 
-				Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+		if(emailP != null){
 
-				if(inserisciFeedback(newFeedback)){
-					jsonReturn = "{\"state\":\"ok\"}";
-				}else{
-					//sql exception .. 
-					jsonReturn = "{\"state\":\"feedbackerror\"}";
 
-				}
-			}else jsonReturn = "{\"state\":\"inputerror\"}";
+			response.setContentType("application/json");
 
-		}catch(NumberFormatException e){
-			jsonReturn = "{\"state\":\"valerror\"}";
+			try{
+				int valutazione = Integer.parseInt(request.getParameter("valutazione"));
+				String descrizione = request.getParameter("descrizione");
+				String emailR = request.getParameter("emailR");
+
+				if(valutazione > 0 && valutazione < 6 && descrizione != null && emailR != null){
+
+					Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+
+					if(inserisciFeedback(newFeedback)){
+						jsonReturn = "{\"state\":\"ok\"}";
+					}else{
+						//sql exception .. 
+						jsonReturn = "{\"state\":\"feedbackerror\"}";
+
+					}
+				}else jsonReturn = "{\"state\":\"inputerror\"}";
+
+			}catch(NumberFormatException e){
+				jsonReturn = "{\"state\":\"valerror\"}";
+			}
+
+
+		}else{
+			jsonReturn = "{\"state\":\"nosession\"}";
 		}
 
-
-		/*DA USARE-----------------------------
-				}else{
-					jsonReturn = "{\"state\":\"nosession\"}";
-				}
-		 */
 		response.getWriter().write(jsonReturn);
 	}
 

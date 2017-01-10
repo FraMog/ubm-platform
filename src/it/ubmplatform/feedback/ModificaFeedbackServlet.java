@@ -29,53 +29,55 @@ public class ModificaFeedbackServlet extends HttpServlet {
 		//la risposta da inviare al client
 		String responseJson;
 		response.setContentType("application/json");
-		//if(request.getSession().getAttribute("email") != null){
-		//dalla sessione
-			String emailP = "francesco@unisa.it";
+
+		String emailP = (String) request.getSession().getAttribute("emailLoggato");
+		if(emailP != null){
+
 			String emailR = request.getParameter("emailR");
-			//se sto richiedendo il feedback da modificare
-			if(request.getParameter("tipo").equals("richiedi")){
-				
-				Feedback oldFeedback = ottieniFeedbackDaModificare(emailP, emailR);
+			if(emailR != null){
+				//se sto richiedendo il feedback da modificare
+				if(request.getParameter("tipo").equals("richiedi")){
 
-				if(oldFeedback != null){
-					//converto in json e invio
-					Gson gson = new Gson();
-					responseJson = gson.toJson(oldFeedback);
-				}else{
-					responseJson = "{\"state\":\"error\"}";
-				}
+					Feedback oldFeedback = ottieniFeedbackDaModificare(emailP, emailR);
 
-			//altrimenti voglio modificarlo
-			}else if(request.getParameter("tipo").equals("modifica")){
-				int valutazione;
-				try{
-					valutazione = Integer.parseInt(request.getParameter("valutazione"));
-					String descrizione = request.getParameter("descrizione");
+					if(oldFeedback != null){
+						//converto in json e invio
+						Gson gson = new Gson();
+						responseJson = gson.toJson(oldFeedback);
+					}else{
+						responseJson = "{\"state\":\"error\"}";
+					}
 
-					if(valutazione > 0 && valutazione < 6 && descrizione != null){
-						
-						Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+					//altrimenti voglio modificarlo
+				}else if(request.getParameter("tipo").equals("modifica")){
+					int valutazione;
+					try{
+						valutazione = Integer.parseInt(request.getParameter("valutazione"));
+						String descrizione = request.getParameter("descrizione");
 
-						if(modificaFeedback(newFeedback)){
-							responseJson = "{\"state\":\"ok\"}";
-						}else{
-							//sql exception .. 
-							responseJson = "{\"state\":\"feedbackerror\"}";
-						}
-					}else responseJson = "{\"state\":\"inputerror\"}";
+						if(valutazione > 0 && valutazione < 6 && descrizione != null){
 
-				}catch(NumberFormatException e){
-					responseJson = "{\"state\":\"valerror\"}";
-				}
-			}else responseJson = "{\"state\":\"requesterror\"}";
+							Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+
+							if(modificaFeedback(newFeedback)){
+								responseJson = "{\"state\":\"ok\"}";
+							}else{
+								//sql exception .. 
+								responseJson = "{\"state\":\"feedbackerror\"}";
+							}
+						}else responseJson = "{\"state\":\"inputerror\"}";
+
+					}catch(NumberFormatException e){
+						responseJson = "{\"state\":\"valerror\"}";
+					}
+				}else responseJson = "{\"state\":\"requesterror\"}";
+			}else responseJson = "{\"state\":\"emailerror\"}";
 
 
-		/*DA USARE-----------------------------
 		}else{
 			responseJson = "{\"state\":\"nosession\"}";
 		}
-		 */
+
 		response.getWriter().write(responseJson);
 	}
 
