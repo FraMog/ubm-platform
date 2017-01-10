@@ -225,7 +225,7 @@ public class ProfiloManager implements ProfiloInterface {
 		Statement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection();
-			String query="UPDATE account SET tipo='d' WHERE Email='"+email+"'";
+			String query="UPDATE account SET tipo='D' WHERE Email='"+email+"'";
 			s=conn.createStatement();
 			s.executeUpdate(query);
 			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga

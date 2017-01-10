@@ -30,17 +30,19 @@
 
 	<section class="col-sm-10" id="section">
 		<div class="row">
-			<img id="logo_ubm" class="img-responsive col-sm-2" src="img/logo.PNG"
-				alt="UBM Platform" />
 			<div class="col-sm-10">
 				<h1>Registrazione</h1>
 				<h3>Inserisci i tuoi dati personali</h3>
 			</div>
 		</div>
+		<div>	
+		<img id="logo_ubm" class="img-responsive col-sm-5 pull-right" style="margin-right:20%;" src="img/logo.PNG" alt="UBM Platform" />
+		</div>
 			<%if(request.getAttribute("esiste")!=null){ %>
 				<h1>Sei gia registrato alla piattaforma con questo indirizzo mail.</h1>
 			<%request.removeAttribute("esiste");} %>
-		<form action="${pageContext.request.contextPath}/RegistraUtenteServlet" onsubmit="return validateForm()" method="post">
+		
+		<form action="RegistraUtenteServlet" onsubmit="return validateForm()" method="post">
 			
 				E-mail <br>
 				<input type="text" name="email" id="email" placeholder="Inserisci la tua email" required="required" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)" title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it."/>
@@ -61,9 +63,6 @@
 			
 
 		</form>
-
-
-		</div>
 	</section>
 	<%@ include file="includes/footer.jsp"%>
 </body>

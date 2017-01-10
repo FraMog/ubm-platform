@@ -64,11 +64,11 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="nome">Nome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome" required="required" pattern="^[a-zA-Z]{1,20}$" title="Il nome deve contenere al più 20 lettere"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="nome" id="nome" required="required" pattern="^[a-zA-Z ]{1,20}$" title="Il nome deve contenere al più 20 lettere"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="cognome">Cognome: *</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required" pattern="^[a-zA-Z]{1,20}$" title="Il cognome deve contenere al più 20 lettere"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="cognome" id="cognome" required="required" pattern="^[a-zA-Z ]{1,20}$" title="Il cognome deve contenere al più 20 lettere"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="email">E-mail: </label>

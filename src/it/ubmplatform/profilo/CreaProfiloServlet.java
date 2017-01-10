@@ -39,7 +39,7 @@ public class CreaProfiloServlet extends HttpServlet {
 		}
 		//recupero tutti i parametri
 		String name=request.getParameter("nome");
-		Pattern p=Pattern.compile("^[a-zA-Z]{1,20}$");
+		Pattern p=Pattern.compile("^[a-zA-Z ]{1,20}$");
 		if(!p.matcher(name).find())
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo nome non è stato compilato correttamente");
 		String surname=request.getParameter("cognome");

@@ -125,7 +125,7 @@
 	    		<div id="soloLibro"> <!-- Solo libro -->
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="isbn">ISBN: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="{0}|[a-zA-Z0-9]{13}" title="Inserire una stringa alfanumerica di lunghezza 13 o lasciare il campo vuoto"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="isbn" id="isbn" <%if (annuncioDettagliato.getIsbn()!=null){%>value="<%=annuncioDettagliato.getIsbn()%>" <%}%>placeholder="Inserisci un ISBN" pattern="^$|^[a-zA-Z0-9]{13}$" title="Inserire una stringa alfanumerica di lunghezza 13 o lasciare il campo vuoto"/></div>
 	    			</div>
 
 	    			<div class="form-group">
@@ -169,7 +169,7 @@ $("document").ready(function(){
       </div>
       <%} else {%>
       <div class="col-sm-4">
-       <img id="logo_ubm" class="img-responsive" src="<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
+       <img id="logo_ubm" class="img-responsive" src="img/annunci/<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
       <h4>Pubblicato Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>    
        </div>
       <%} %>
