@@ -48,16 +48,16 @@
 			<div class="row"><h4 class="col-xs-4">Facoltà:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getFacolta()%></h4></div>
 			<div class="row"><h4 class="col-xs-4">Prezzo:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getPrezzo()%>€</h4></div>
 			
-			<%if (annuncioDettagliato.getCondizioni()!=null){ %>
+			<%if (annuncioDettagliato.getCondizioni()!=null && !annuncioDettagliato.getCondizioni().equals("")){ %>
 			<div class="row"><h4 class="col-xs-4">Condizioni prodotto:</h4><h4 class="col-xs-3"><%= annuncioDettagliato.getCondizioni()%></h4></div>
 			<% }%>
 			
 			<!--Solo libro -->
-			<%if (annuncioDettagliato.getIsbn()!=null){ %>
+			<%if (annuncioDettagliato.getIsbn()!=null && !annuncioDettagliato.getIsbn().equals("")){ %>
 			<div class="row"><h4 class="col-xs-4">ISBN:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getIsbn()%></h4></div>
 			<% }%>
 			
-			<%if (annuncioDettagliato.getAutoreLibro()!=null){ %>
+			<%if (annuncioDettagliato.getAutoreLibro()!=null && !annuncioDettagliato.getAutoreLibro().equals("")){ %>
 			<div class="row"><h4 class="col-xs-4">Autore:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getAutoreLibro()%></h4></div>
 			<% }%>
 			
@@ -66,7 +66,7 @@
 	<%}%>
 			
             <!--  solo appunti -->
-			<%if (annuncioDettagliato.getMateria()!=null){ %>
+			<%if (annuncioDettagliato.getMateria()!=null && !annuncioDettagliato.getMateria().equals("")){ %>
 			<div class="row"><h4 class="col-xs-4">Materia:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getMateria()%></h4></div>
 			<% }%>
 			
