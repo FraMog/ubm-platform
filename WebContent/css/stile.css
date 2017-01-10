@@ -252,9 +252,9 @@ img.modalImageClasse{
    }
 }   
     
-  @media screen and (min-width: 820px) {
+  @media screen and (min-width: 750px) {
   	#containerFooterVisualizzaAnnuncio{
-  	  padding-top:800px; 
+  	  padding-top:900px; 
   	}
   
    }  

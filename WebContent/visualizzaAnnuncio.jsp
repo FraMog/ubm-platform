@@ -80,11 +80,11 @@
        				<input type="hidden" name="annuncioID" value="<%= annuncioDettagliato.getId()%>"/>
        				<input type="hidden" name="emailAutoreAnnuncio" value="<%= annuncioDettagliato.getEmail()%>"/>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="titolo">Titolo: *</label>
+	    				<label class="control-label col-sm-2" for="titolo">Titolo:</label>
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Inserire una stringa alfanumerica di lunghezza 1-50"/></div>
 	    			</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2">Categoria: *</label>
+	    				<label class="control-label col-sm-2">Categoria:</label>
 		    			<div class="input-group col-sm-10" style="padding-left:25px">
 		    				<div class="radio">
 	                			<label><input type="radio" id="libroRadioButton" onclick="categoriaLibro()" name="categoria" value="libro" <%if(annuncioDettagliato.getCategoria().equalsIgnoreCase("libro")){ %>checked<%}%>>Libro</label>
@@ -95,7 +95,7 @@
 		    			</div>
 	    			</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2">Facoltà: *</label>
+	    				<label class="control-label col-sm-2">Facoltà:</label>
 		    			<div class="form-group col-sm-4" style="padding-left:30px">
               			 	<select class="form-control" name="facolta">
                			 		<option value="Informatica" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Informatica")){%> selected="selected"<%}%>>Informatica</option>
@@ -105,20 +105,20 @@
               			</div>
             		</div>
             		<div class="form-group">
-	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:*</label>  
+	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:</label>  
 	    				<div class="col-sm-10"><input class="form-control" type="text" step="0.1" pattern="^[0-9]{1,3}(\.[0-9])?$" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>" placeholder="Inserisci il prezzo nel formato xxx,y o nel formato xxx" title="Inserisci il prezzo nel formato xxx,y o nel formato xxx"/></div>
 	    			</div>
 	    			<div class="form-group">
-       					<label class="control-label col-sm-2" for="foto">Immagine prodotto *</label>
+       					<label class="control-label col-sm-2" for="foto">Immagine prodotto</label>
 	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto"/></div>
 	    			</div>
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="descrizione">Descrizione:* </label>
+	    				<label class="control-label col-sm-2" for="descrizione" style="white-space: nowrap;">Descrizione:</label>
 	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="annuncio" rows="3" cols="50" maxlength="100" placeholder="Inserisci una Descrizione" required="required"><%if(annuncioDettagliato.getDescrizione()!=null){%><%=annuncioDettagliato.getDescrizione()%><%}%></textarea></div>
 	    			</div>
 	    			
 	    			<div class="form-group">
-	    				<label class="control-label col-sm-2" for="condizioni">Condizioni: </label>
+	    				<label class="control-label col-sm-2" for="condizioni" style="white-space: nowrap;">Condizioni: </label>
 	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,19}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
 	    			</div>	   
 	    			
