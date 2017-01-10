@@ -19,7 +19,7 @@ public class RegistrazioneManager implements RegistrazioneInterface {
 		Statement s=null;
 		try {
 			conn=DBManager.getInstance().getConnection();
-			String query="INSERT INTO account VALUES ('"+toInsert.getEmail()+"','"+toInsert.getPassword()+"','R')";
+			String query="INSERT INTO account VALUES ('"+toInsert.getEmail()+"','"+toInsert.getPassword()+"','R',NULL)";
 			s=conn.createStatement();
 			s.executeUpdate(query);
 			if(s.getUpdateCount()==1) //verifico che l'update abbia avuto effetto su una riga

@@ -1,6 +1,5 @@
 function confrontoCodice(){
 	console.log("sono nelllo script");
-	alert("ssript");
 				//var codiceInserito=document.getElementById("codiceInserito").value;
 				//var codiceInviato=document.getElementById("codiceInviato").value;
 				var email=document.getElementById("email").value;
