@@ -16,14 +16,23 @@ public class Account {
 	 * @param tipo Il tipo di account
 	 * @param dataInvalidazione L'eventuale data di invalidazione da parte dell'amministratore.
 	 */
-
+  //costruttore Account con parametri email, password,tipo
 	public Account(String email, String password, String tipo) {
 		this.email = email;
 		this.password = password;
 		this.tipo = tipo;
 	}
+	 //costruttore Account con parametri email, password
 	public Account(String email, String password){
 		this.email = email;
+		this.password = password;
+		this.tipo="R";
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
