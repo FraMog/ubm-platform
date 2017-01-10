@@ -89,7 +89,9 @@
             </select>
           </div>
         </form>
+        <%if(session.getAttribute("user")!=null && ((String)session.getAttribute("user")).equalsIgnoreCase("utente")){%>
         <a href="inserisciAnnuncio.jsp" class="btn btn-info col-sm-4">Pubblica ora il tuo annuncio</a>
+        <%}%>
       </div>
       <div id="content" class="panel panel-default">
         <div class="panel-body risultato">
