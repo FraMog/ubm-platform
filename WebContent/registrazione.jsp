@@ -41,20 +41,24 @@
 				<h1>Sei gia registrato alla piattaforma con questo indirizzo mail.</h1>
 			<%request.removeAttribute("esiste");} %>
 		<form action="${pageContext.request.contextPath}/RegistraUtenteServlet" onsubmit="return validateForm()" method="post">
-			<p>
-				e-mail <input type="text" name="email" id="email" required="required" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)" title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it."/>
-			</p>
-			<p>
-				password <input type="password" name="pass" id="password" required="required" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}" title="La password deve essere lunga tra gli 8 e i 20 caratteri, contenere almeno 1 numero(i) e 1 lettera(e) minuscola(e) o maiuscola(e)."/>
-				
-			</p>
-
-			<p>
-				conferma password <input type="password" name="pass" id="passwordV" required="required"  />
-			</p>
-			<p>
+			
+				E-mail <br>
+				<input type="text" name="email" id="email" placeholder="Inserisci la tua email" required="required" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)" title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it."/>
+				<br>
+				<br>
+				Password <br>
+				<input type="password" name="pass" id="password" placeholder="Inserisci la tua password" required="required" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}" title="La password deve essere lunga tra gli 8 e i 20 caratteri, contenere almeno 1 numero(i) e 1 lettera(e) minuscola(e) o maiuscola(e)."/>
+				<br>
+				<br>
+			
+		
+				Conferma Password <br>
+				<input type="password" name="pass" id="passwordV" placeholder="Reinserisci la tua password" required="required"  />
+				<br>
+				<br>
+			
 				<input type="submit" name="submit" value="Registrati" />
-			</p>
+			
 
 		</form>
 
