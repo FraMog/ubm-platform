@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   FOREIGN KEY (EmailR) REFERENCES account (Email)
 );
 CREATE TABLE IF NOT EXISTS annuncio (
-  ID int(11) NOT NULL,
+  ID int(11) NOT NULL AUTO_INCREMENT,
   Email varchar(40) NOT NULL,
   Foto varchar(100) NOT NULL,
   Prezzo float unsigned NOT NULL,
