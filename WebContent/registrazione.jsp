@@ -63,6 +63,24 @@
 			
 
 		</form>
+		<div id="erroreModal" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+		<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">errore</h4>
+											</div>
+											<div class="modal-body">
+												<p>Le due password devono coincidere.</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-success"
+													data-dismiss="modal">0K</button>
+				
+											</div>
+										</div>
+										</div>
+										</div>
 	</section>
 	<%@ include file="includes/footer.jsp"%>
 </body>

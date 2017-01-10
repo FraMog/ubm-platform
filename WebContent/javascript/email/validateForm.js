@@ -5,7 +5,7 @@
 	  
 	  if(txt1.value!=txt2.value)
 		{
-			alert("Le password non coincidono!");
+			$('#erroreModal').modal('show'); //mostro il modal
 	         return false;
 
 		}
