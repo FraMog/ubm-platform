@@ -30,7 +30,7 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String responseJson;
     	
-    	//if(request.getSession().getAttribute("email") != null){
+    	if(request.getSession().getAttribute("emailLoggato") != null){
     	
     	String emailR = request.getParameter("emailR");
     	
@@ -51,12 +51,12 @@ public class VisualizzaFeedbackServlet extends HttpServlet {
     	}else{
     		responseJson = "{\"state\":\"emailerror\"}";
     	}
-    	
-    	/*DA USARE-----------------------------
+
+
 	}else{
-		jsonReturn = "{\"state\":\"nosession\"}";
+		responseJson = "{\"state\":\"nosession\"}";
 	}
-*/
+
     	response.getWriter().write(responseJson);
     }
 

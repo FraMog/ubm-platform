@@ -44,6 +44,10 @@ function recuperaFeedback(emailR){
 
 				$('#changeLogger').text("Devi essere loggato al sistema!");
 
+			}else if(text.state == "emailerror"){
+
+				$('#changeLogger').text("Problema con il recupero dell'email!");
+
 			}else{
 
 				$('#changingValutazione option[value=' + text.valutazione + ']').prop('selected', true);
