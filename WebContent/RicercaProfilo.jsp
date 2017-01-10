@@ -20,7 +20,7 @@
   
   	<%if(session.getAttribute("user")!=null) {%>
     	<%@ include file="includes/navbarLoggato.jsp" %>
-    <%} else if(session.getAttribute("admin")!=null){%>
+    <%} else if(session.getAttribute("user").equals("admin")){%>
     	<%@ include file="includes/navbarAdmin.jsp" %>
     <%} else {%>
     	<%@ include file="includes/navbarNonLoggato.jsp" %>
