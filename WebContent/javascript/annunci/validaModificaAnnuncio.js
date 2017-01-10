@@ -9,14 +9,15 @@ function validaFormModificaAnnuncio(){
 
 	var regExpTitolo=new RegExp("^([a-zA-Z]{1})([a-zA-Z0-9 ]{0,49})$");
 		if(!regExpTitolo.test($("#titolo").val())){
-			alert("Errore nella Modifica!\nErrore in titolo!\nInserire una stringa alfanumerica di lunghezza 1-50");
+			$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+			$('#campiNonCorrettiModificaAnnuncioTesto').html('Errore nella Modifica!<br />Errore in titolo!<br />Inserire una stringa alfanumerica di lunghezza 1-50');
 			event.preventDefault();
 			return;
 		}
 	  
-     var valorePrezzo=parseFloat($("#prezzo").val());
-     if(isNaN(valorePrezzo)|| valorePrezzo>=1000){
-			  alert("Errore nella Modifica!\nIl prezzo deve essere nel formato xxx o xxx.y\nPrezzo inserito:" + $("#prezzo").val());
+     if(isNaN($("#prezzo").val())|| parseFloat($("#prezzo").val())>=1000){
+    	 	$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+			$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />Il prezzo deve essere un valore numerico nel formato xxx o xxx.y<br />Prezzo inserito:" + $("#prezzo").val());
 			  event.preventDefault();
 			  return;
 	}
@@ -24,7 +25,8 @@ function validaFormModificaAnnuncio(){
     
 	var regexpCondizioni= new RegExp("^$|^([a-zA-Z0-9 ]{0,20})$"); 
 		if(!regexpCondizioni.test($("#condizioni").val())){
-			  alert("Errore nella Modifica!\nLe condizioni devono essere nel formato deve essere una stringa alfanumerica di lunghezza 0-20");
+			$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+			$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />Le condizioni devono essere nel formato deve essere una stringa alfanumerica di lunghezza 0-20");
 			  event.preventDefault();
 			  return;
 		} 	
@@ -32,16 +34,18 @@ function validaFormModificaAnnuncio(){
 	if(!$("#isbn").prop('disabled')){	
 	var regexpISBN = new RegExp("^$|^[a-zA-Z0-9]{13}$");
 	if(!regexpISBN.test($("#isbn").val())){
-		  alert("Errore nella Modifica!\nL'ISBN deve essere una stringa alfanumerica di lunghezza 0 o di lunghezza 13");
+		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'ISBN deve essere una stringa alfanumerica di lunghezza 0 o di lunghezza 13");
 		  event.preventDefault();
 		  return;
 	}
 	}
 	
 	if(!$("#autoreLibro").prop('disabled')){	
-	var regexpAutore = new RegExp("^$|^[a-zA-Z]{1}[a-zA-Z0-9 ]{0,19}$");
+	var regexpAutore = new RegExp("^$|^[a-zA-Z]{1}[a-zA-Z ]{0,19}$");
 	if(!regexpAutore.test($("#autoreLibro").val())){
-		  alert("Errore nella Modifica!\nL'autore deve essere una stringa alfanumerica di lunghezza 0-20");
+		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'autore deve essere una stringa alfabetica di lunghezza 0-20");
 		  event.preventDefault();
 		  return;
 	}
@@ -50,23 +54,35 @@ function validaFormModificaAnnuncio(){
 	if(!$("#materia").prop('disabled')){	
 	var regexpMateria = new RegExp("^$|^[a-zA-Z]{1}[a-zA-Z0-9 ]{0,39}$");
 	if(!regexpMateria.test($("#materia").val())){
-		  alert("Errore nella Modifica!\nLa materia deve essere una stringa alfanumerica di lunghezza 0-40");
+		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />La materia deve essere una stringa alfanumerica di lunghezza 0-4");
 		  event.preventDefault();
 		  return;
 	}
 	}
 	
 	
-	var regexpDescrizione = new RegExp("^$|^[a-zA-Z]{1}[a-zA-Z0-9 ]{0,99}$");
+	var regexpDescrizione = new RegExp("^[a-zA-Z]{1}[a-zA-Z0-9 ]{0,99}$");
 	if(!regexpDescrizione.test($("#descrizione").val())){
-		  alert("Errore nella Modifica!\nLa descrizione deve essere una stringa alfanumerica di lunghezza 0-100");
+		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />La descrizione deve essere una stringa alfanumerica di lunghezza 1-100");
 		  event.preventDefault();
 		  return;
 	} 	
+	
+	
+	if(isNaN($("#edizione").val())){
+ 	 		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+			$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'edizione deve esssere un valore numerico!");
+			  event.preventDefault();
+			  return;
+	}
+	
 	 
 	var ext = $('#foto').val().split('.').pop().toLowerCase();
 	if($.inArray(ext, ['gif','png','jpg','jpeg','']) == -1) {
-		alert("L'estensione dell'immagine non è riconosciuta");
+		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'estensione dell'immagine non è riconosciuta");
 		event.preventDefault();
 	    return;
 	}
@@ -75,7 +91,8 @@ function validaFormModificaAnnuncio(){
 	
 	if ( window.FileReader && window.File && window.FileList && window.Blob ){
 		if($("#foto")[0].files[0].size>10*1024*1024){
-			alert('Il file può pesare al massimo 10MB');
+			$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+			$('#campiNonCorrettiModificaAnnuncioTesto').html("Il file può pesare al massimo 10MB");
 			event.preventDefault();
 			return;
 		}

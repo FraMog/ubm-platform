@@ -106,7 +106,7 @@
             		</div>
             		<div class="form-group">
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:</label>  
-	    				<div class="col-sm-10"><input class="form-control" type="text" step="0.1" pattern="^[0-9]{1,3}(\.[0-9])?$" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>" placeholder="Inserisci il prezzo nel formato xxx,y o nel formato xxx" title="Inserisci il prezzo nel formato xxx,y o nel formato xxx"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" pattern="^[0-9]{1,3}(\.[0-9])?$" name="prezzo" id="prezzo" value="<%=annuncioDettagliato.getPrezzo()%>" placeholder="Inserisci il prezzo nel formato xxx,y o nel formato xxx" title="Inserisci il prezzo nel formato xxx,y o nel formato xxx"/></div>
 	    			</div>
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto</label>
@@ -130,7 +130,7 @@
 
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="autore">Autore: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,19}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="^$|^[a-zA-Z]{1}[a-zA-Z ]{0,19}$" title="Inserire una stringa alfabetica di lunghezza 0-20"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="edizione">Edizione: </label>
@@ -164,7 +164,7 @@ $("document").ready(function(){
       <% if (tipologiaUtenteConnesso!=null){ %>
       <div id="containerImmagineVisualizzaAnnuncio" class="col-sm-4">
 	      <img id="logo_ubm" class="img-responsive" src="img/annunci/<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
-	      <h3 class="">Pubblicato da: <a href="#" class="btn btn-info"><%=annuncioDettagliato.getEmail()%></a></h3>
+	      <h3 class="">Pubblicato da: <a href="VisualizzaProfiloServlet?emailToShow=<%=annuncioDettagliato.getEmail()%>" class="btn btn-info"><%=annuncioDettagliato.getEmail()%></a></h3>
 	      <h4>Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>
       </div>
       <%} else {%>
@@ -251,7 +251,23 @@ $("document").ready(function(){
 
    </script>
    
-   
+<!-- MODAL CAMPI NON CORRETTI DOPO CONTROLLO JAVASCRITP -->
+	<div id="campiNonCorrettiModificaAnnuncioModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Errore</h4>
+				</div>
+				<div class="modal-body">
+					<p id="campiNonCorrettiModificaAnnuncioTesto"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
    
   <%if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente")&& emailLoggato.equals(annuncioDettagliato.getEmail())){%>	
