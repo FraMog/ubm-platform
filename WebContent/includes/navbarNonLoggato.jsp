@@ -18,7 +18,7 @@
               <div class="dropdown-menu" style="padding:10px;">
                 <form class="form" action="LoginServlet" method="POST">
                   <div class="form-group">
-                    <input name="username" type="text" class="form-control" placeholder="e-mail" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)" title="L'e-mail deve essere del tipo nome@studenti.unisa.it, con 'nome' contenente tra 5 e 40 caratteri alfanumerici e non (sono consentiti i seguenti simboli: .,_,%,+,-)." autofocus required="required">
+                    <input name="username" type="text" class="form-control" placeholder="e-mail" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)|ubmplatform@gmail.com"  title="L'e-mail deve essere del tipo nome@studenti.unisa.it, con 'nome' contenente tra 5 e 40 caratteri alfanumerici e non (sono consentiti i seguenti simboli: .,_,%,+,-)." autofocus required="required">
                   </div>
                   <div class="form-group">
                     <input name="password" type="password" class="form-control" placeholder="password" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}" title="La password deve essere lunga tra gli 8 e i 20 caratteri, contenere almeno 1 numero(i) e 1 lettera(e) minuscola(e) o maiuscola(e)." required="required"><br>

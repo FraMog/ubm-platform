@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 
 		String email = request.getParameter("username");
 		String password = request.getParameter("password");
-		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)");
+		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)|ubmplatform@gmail.com");
 		Pattern q = Pattern.compile("((?=.*[0-9])(?=.*[a-zA-Z]).{8,20})");
 		
 		if(!p.matcher(email).find() || !q.matcher(password).find())
