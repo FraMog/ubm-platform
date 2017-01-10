@@ -276,7 +276,6 @@ public class ProfiloManager implements ProfiloInterface {
 			c = true;
 		if(email != null && !email.equals(""))
 			e = true;
-		
 		ArrayList<Profilo> resultN = null, resultC = null, resultE = null, resultD = new ArrayList<>();
 		String query1 = "SELECT nome, cognome, dataNascita, foto, residenza, email FROM profilo WHERE ";
 		String query2;
@@ -321,7 +320,7 @@ public class ProfiloManager implements ProfiloInterface {
 				rs = statement.executeQuery(query1+query2);
 				resultN = getParsedProfiles(rs);
 			} catch (Exception t){
-				
+				t.printStackTrace();
 				return null;
 			}
 
@@ -341,7 +340,7 @@ public class ProfiloManager implements ProfiloInterface {
 				rs = statement.executeQuery(query1+query2);
 				resultC = getParsedProfiles(rs);
 			} catch (Exception t){
-			
+				
 				return null;
 			}
 
@@ -371,7 +370,6 @@ public class ProfiloManager implements ProfiloInterface {
 					result.remove(p1);
 			}
 		}
-		
 		return result;
 				
 	}
@@ -483,7 +481,9 @@ public class ProfiloManager implements ProfiloInterface {
 		while(rs.next()){
 			String name = rs.getString(1);
 			String surname = rs.getString(2);
-			Date date = new Date(rs.getDate(3).getTime());	
+			Date date=null;
+			if(rs.getDate(3)!=null)
+				date = new Date(rs.getDate(3).getTime());	
 			String foto = rs.getString(4);
 			String residence = rs.getString(5);
 			String email = rs.getString(6);
