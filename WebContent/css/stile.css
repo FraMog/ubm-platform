@@ -1,3 +1,7 @@
+/*Istruzioni per tutte le textArea*/
+textarea {
+    resize: none;
+}
 /*Istruzioni per la presentazione della lista delle facoltà*/
 #lista li:hover{
   background-color: #aaa;
@@ -112,7 +116,17 @@ body {
 	color: #fff;
 }
 
+/*Istruzioni in annunciHome */
+#annunciHome{
+	 word-wrap: break-word;
+}
+/*Fine struzioni in annunciHome */
+
 /*Istruzioni in ricercaAnnuncio.jsp*/
+
+#dynamic_content{
+	 word-wrap: break-word;
+}
 
 .pagination{
 	margin:0px;
@@ -200,6 +214,16 @@ img.modalImageClasse{
 }
 
 /*Fine istruzioni ricerca annunci */
+
+/*Istruzioni visualizza annuncio*/
+#visualizzaDettagliAnnuncio{
+   word-wrap: break-word;
+}
+
+#containerImmagineVisualizzaAnnuncio{
+   word-wrap: break-word;
+}
+/*fine istruzioni visualizza annuncio*/
 
 /*Istruzioni per l'adattamento della pagina a schermi più piccoli*/
 @media screen and (max-width: 800px) {

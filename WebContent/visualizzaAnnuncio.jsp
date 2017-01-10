@@ -42,7 +42,7 @@
     <%if (tipologiaUtenteConnesso==null || !tipologiaUtenteConnesso.equals("utente") || !emailLoggato.equals(annuncioDettagliato.getEmail())){%> <%--Se l'utente che sta navigando non è loggato come l'utente che ha pubblicato l'annuncio può solo visualizzare e non modificare --%>
     <section class="row col-sm-10" id="section">
       <div class="col-sm-8 panel panel-default">
-      	<div class="panel-body">
+      	<div id="visualizzaDettagliAnnuncio" class="panel-body">
 			<h3 style="margin-bottom: 20px"><%=annuncioDettagliato.getTitolo()%></h3>
 			<div class="row"><h4 class="col-xs-4">Categoria:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getCategoria()%></h4></div>
 			<div class="row"><h4 class="col-xs-4">Facoltà:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getFacolta()%></h4></div>
@@ -75,7 +75,7 @@
 		<%} else if (tipologiaUtenteConnesso!=null && tipologiaUtenteConnesso.equals("utente") && emailLoggato.equals(annuncioDettagliato.getEmail())){%>	<%--Se l'utente che sta navigando è l'utente che ha pubblicato l'annuncio può modificare --%>
 		 <div class="col-sm-6">
        	<div class="panel panel-default">
-       		<div class="panel-body">
+       		<div class="panel-body" id="visualizzaDettagliAnnuncio">
        			<form id="annuncio" class="form-horizontal" action="ModificaAnnuncioServlet" method="post" enctype="multipart/form-data">
        				<input type="hidden" name="annuncioID" value="<%= annuncioDettagliato.getId()%>"/>
        				<input type="hidden" name="emailAutoreAnnuncio" value="<%= annuncioDettagliato.getEmail()%>"/>
@@ -162,13 +162,13 @@ $("document").ready(function(){
       <%} %>
       
       <% if (tipologiaUtenteConnesso!=null){ %>
-      <div class="col-sm-4">
+      <div id="containerImmagineVisualizzaAnnuncio" class="col-sm-4">
 	      <img id="logo_ubm" class="img-responsive" src="img/annunci/<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
 	      <h3 class="">Pubblicato da: <a href="#" class="btn btn-info"><%=annuncioDettagliato.getEmail()%></a></h3>
 	      <h4>Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>
       </div>
       <%} else {%>
-      <div class="col-sm-4">
+      <div id="containerImmagineVisualizzaAnnuncio" class="col-sm-4">
        <img id="logo_ubm" class="img-responsive" src="img/annunci/<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
       <h4>Pubblicato Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>    
        </div>

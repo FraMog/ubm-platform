@@ -146,7 +146,7 @@
           <div class="col-xs-12 col-sm-8">
           
             <h4><a href='<%="VisualizzaDettagliAnnuncio?annuncioID=" + annunciPertinenti.get(i).getId()%>'><%= annunciPertinenti.get(i).getTitolo()%></a></h4>
-            <p style="word-wrap: break-word;"><%= annunciPertinenti.get(i).getDescrizione()%></p>
+            <p><%= annunciPertinenti.get(i).getDescrizione()%></p>
           </div>
           <div class="col-xs-12 col-sm-2 pull-right">
             <h4>Prezzo: <%= annunciPertinenti.get(i).getPrezzo()%></h4>
