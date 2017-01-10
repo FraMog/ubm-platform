@@ -261,7 +261,8 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 			//Se cioè sto cercando usando il form di ricerca nel navbar
 			if (titolo!=null && categoria!=null && orderBy!=null){
-				query+= "WHERE Titolo LIKE '%" + titolo + "%' AND Facolta = '" + facolta + "' ";
+				query+= "WHERE Titolo LIKE '%" + titolo + "%' AND Facolta = '" + facolta + "' AND Email NOT IN " +
+						 "(SELECT Email FROM account WHERE account.Email=annuncio.Email AND account.Tipo='I') "; //controllo che chi abbia inserito l'annuncio non sia stato invalidato
 
 				//Verifico quale categoria di prodotto è stata scelta
 				switch (categoria){
@@ -291,7 +292,8 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 			//Se sto facendo ricerca Annunci per facoltà
 			else if (titolo==null && categoria==null && orderBy==null){
-				query+= "WHERE Facolta = '" + facolta + "' ";
+				query+= "WHERE Facolta = '" + facolta + "' AND Email NOT IN " +
+				 "(SELECT Email FROM account WHERE account.Email=annuncio.Email AND account.Tipo='I') "; //controllo che chi abbia inserito l'annuncio non sia stato invalidato
 				query+="ORDER BY " + "DataPubblicazione DESC";
 
 			}
