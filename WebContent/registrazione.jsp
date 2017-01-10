@@ -42,7 +42,7 @@
 				<h1>Sei gia registrato alla piattaforma con questo indirizzo mail.</h1>
 			<%request.removeAttribute("esiste");} %>
 		
-		<form action="${pageContext.request.contextPath}/RegistraUtenteServlet" onsubmit="return validateForm()" method="post">
+		<form action="RegistraUtenteServlet" onsubmit="return validateForm()" method="post">
 			
 				E-mail <br>
 				<input type="text" name="email" id="email" placeholder="Inserisci la tua email" required="required" pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)" title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it."/>
@@ -63,9 +63,6 @@
 			
 
 		</form>
-
-
-		</div>
 	</section>
 	<%@ include file="includes/footer.jsp"%>
 </body>
