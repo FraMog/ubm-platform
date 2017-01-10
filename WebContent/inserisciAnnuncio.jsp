@@ -76,7 +76,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: *</label>
-	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="annuncio" rows="3" cols="50" maxlength="200"></textarea></div>
+	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="annuncio" rows="3" cols="50" maxlength="100"></textarea></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo: *</label>
