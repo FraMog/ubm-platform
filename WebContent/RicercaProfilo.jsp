@@ -18,12 +18,12 @@
   </head>
   <body>
   
-  	<%if(session.getAttribute("user")!=null) {%>
-    	<%@ include file="includes/navbarLoggato.jsp" %>
+  	<%if(session.getAttribute("user")==null) {%>
+    	<%@ include file="includes/navbarNonLoggato.jsp" %>
     <%} else if(session.getAttribute("user").equals("admin")){%>
     	<%@ include file="includes/navbarAdmin.jsp" %>
     <%} else {%>
-    	<%@ include file="includes/navbarNonLoggato.jsp" %>
+    	<%@ include file="includes/navbarLoggato.jsp" %>
     <%} %>
     <%@ include file="includes/sideBar.jsp" %>
     <%
