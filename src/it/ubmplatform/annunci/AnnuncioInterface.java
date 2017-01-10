@@ -17,5 +17,6 @@ public interface AnnuncioInterface {
 	ArrayList<Annuncio> queryRicercaAnnuncio(Annuncio daCercare, String orderBy) throws BadResearchException;
 	Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio) throws BadAnnuncioIdException;
 	Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio) throws BadInputAnnuncioException;
+	ArrayList<Annuncio> queryAnnunciRecenti ();
 
 }
