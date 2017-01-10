@@ -80,7 +80,7 @@
      
       
         <div class="row">
-          <div class="col-xs-12 col-sm-2"><img src="<%= profiliPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
+          <div class="col-xs-12 col-sm-2"><img src="img/profilo/<%if(profiliPertinenti.get(i).getFoto()!=null) %><%= profiliPertinenti.get(i).getFoto() %><%else {%>default_profile.PNG<%} %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
           <div class="col-xs-12 col-sm-8">
           
             <h4>
@@ -90,8 +90,10 @@
             <p><%="di " + profiliPertinenti.get(i).getResidenza()%></p>
           </div>
           <div class="col-xs-12 col-sm-2 pull-right">
-            <% java.sql.Date data= new java.sql.Date(profiliPertinenti.get(i).getDataNascita().getTime()); %>
-            <p>Nato il: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0,10)%></p>
+            <% 	java.sql.Date data=null;
+            	if(profiliPertinenti.get(i).getDataNascita()!=null)
+            		data= new java.sql.Date(profiliPertinenti.get(i).getDataNascita().getTime()); %>
+            <p>Nato il: <%if (data!=null)%><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0,10)%><%else {%>-<%} %></p>
           </div>
         </div>
         </div>
