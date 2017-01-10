@@ -1,6 +1,9 @@
 package it.ubmplatform.annunci;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +22,13 @@ public class AnnunciRecenti extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AbstractFactory factory=new ManagerFactory();
 		AnnuncioInterface manager=factory.createAnnuncioManager();
-		ArrayList<Annuncio> lista = manager.queryAnnunciRecenti();
+		ArrayList <Annuncio> lista = manager.queryAnnunciRecenti();
+		if(lista==null || lista.size()==0){
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return;
+		}
+		request.setAttribute("lista", lista);
+		request.getRequestDispatcher("annunciRecenti.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

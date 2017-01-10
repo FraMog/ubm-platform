@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.management.InvalidAttributeValueException;
@@ -413,9 +412,10 @@ public class AnnuncioManager implements AnnuncioInterface {
 		try {
 			conn=DBManager.getInstance().getConnection();
 			s=conn.createStatement();
-			String query="SELECT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, Email FROM Annuncio join Account where tipo!='D' AND tipo!='I' ORDER BY DataPubblicazione Limit 5";
+			String query="SELECT DISTINCT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, annuncio.Email FROM Annuncio join Account where tipo!='D' AND tipo!='I' ORDER BY DataPubblicazione DESC";
 			ResultSet rs=s.executeQuery(query);
-			while(rs.next()){
+			int i=0;
+			while(rs.next() && i<5){
 				Annuncio annuncioPertinente = new Annuncio();
 				annuncioPertinente.setId(rs.getInt(1));
 				annuncioPertinente.setTitolo(rs.getString(2));
@@ -425,9 +425,11 @@ public class AnnuncioManager implements AnnuncioInterface {
 				annuncioPertinente.setDescrizione(rs.getString(6));
 				annuncioPertinente.setEmail(rs.getString(7));
 				lista.add(annuncioPertinente);
+				i++;
 			}
 			return lista;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
