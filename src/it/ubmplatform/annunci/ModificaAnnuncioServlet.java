@@ -92,7 +92,10 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 			   }
 			   modificaAnnuncio(toUpdate);
 			   if(!toUpdate.getFoto().equals(oldAnnuncio.getFoto())){
-				   removeOld(oldAnnuncio.getFoto()); //rimuovo la vecchia immagine
+				   if(!ciSonoAltriAnnunciCheUsanoQuestaImmagine(oldAnnuncio.getFoto())){
+					   removeOld(oldAnnuncio.getFoto());
+				   }
+				   //rimuovo la vecchia immagine
 				   saveFile(request); //carico la nuova
 			   }
 			   response.sendRedirect("VisualizzaDettagliAnnuncio?annuncioID="+id);
@@ -155,6 +158,12 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 				filecontent.close();
 			}
 		}
+	}
+	
+	private boolean ciSonoAltriAnnunciCheUsanoQuestaImmagine(String fotoVecchioAnnuncio){
+		AbstractFactory factory = new ManagerFactory();
+		AnnuncioInterface managerAnnuncio = factory.createAnnuncioManager();
+		return managerAnnuncio.queryCercaAltriAnnunciConQuestaImmagine(fotoVecchioAnnuncio);
 	}
 	
 	private void removeOld(String toRemove){ //funzione che rimuove l'immagine vecchia 

@@ -198,7 +198,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 							
 					//formo la stringa contenente la query da effettuare
 					String queryInserisci = "UPDATE ANNUNCIO "
-							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizione = ?, Descrizione = ?, Prezzo = ?, annuncio.DataPubblicazione = CURDATE()"
+							+ "SET Titolo = ?, Categoria = ?, Facolta = ?, Foto = ?, ISBN = ?, Autore = ?, Edizione = ?, Materia = ?, Condizione = ?, Descrizione = ?, Prezzo = ?"
 							+ "WHERE ID = ?";
 							
 					//preparo lo statement per formare la query
@@ -323,7 +323,8 @@ public class AnnuncioManager implements AnnuncioInterface {
 			return annunciPertinenti;
 
 
-		} catch (SQLException e) {
+		} catch (SQLException e) {		
+			e.printStackTrace();
 			return null;
 		}
 		finally {
@@ -432,6 +433,41 @@ public class AnnuncioManager implements AnnuncioInterface {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * Metodo che controlla se, dopo che un utente ha modificato un immagine di un annuncio, ci siano
+	 * altri annunci che usano la vecchia immagine dell'annuncio
+	 * Ciò accade se per esempio un utente usa la stessa immagine per 2 annunci diversi; se successivamente
+	 * modifica l'immagine per uno dei due annunci dopo che la vecchia immagine verrà cancellata l'altro
+	 * annuncio sarebbe senza immagine
+	 */
+	@Override
+	public boolean queryCercaAltriAnnunciConQuestaImmagine(String oldAnnuncioImmagine) {
+		Connection connection=null;
+		Statement statement=null;
+		try {
+			connection=DBManager.getInstance().getConnection();
+			String cercaAnnunciCheUsanoLaVecchiaImmagine= "SELECT ID FROM annuncio WHERE Foto='" + oldAnnuncioImmagine + "'";
+		    statement=connection.createStatement();
+		    ResultSet risultato= statement.executeQuery(cercaAnnunciCheUsanoLaVecchiaImmagine);
+		    if(risultato.next())
+		    	return true; //C'è un altro annuncio che usava la vecchia immagine
+		    return false;	
+		    
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return true; //ritorno true cosi che se ci sono eccezioni non rimuovo l'immagine
+		}
+		finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 	
 }

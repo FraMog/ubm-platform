@@ -251,7 +251,7 @@ $("document").ready(function(){
 
    </script>
    
-<!-- MODAL CAMPI NON CORRETTI DOPO CONTROLLO JAVASCRITP -->
+<!-- MODAL CAMPI NON CORRETTI DOPO CONTROLLO JAVASCRIPT -->
 	<div id="campiNonCorrettiModificaAnnuncioModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">

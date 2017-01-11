@@ -18,5 +18,6 @@ public interface AnnuncioInterface {
 	Annuncio queryVisualizzaDettagliAnnuncio(int idAnnuncio) throws BadAnnuncioIdException;
 	Annuncio queryOttieniAnnuncioDaModificare(int idAnnuncio) throws BadInputAnnuncioException;
 	ArrayList<Annuncio> queryAnnunciRecenti ();
+	boolean queryCercaAltriAnnunciConQuestaImmagine(String oldAnnuncioImmagine);
 
 }
