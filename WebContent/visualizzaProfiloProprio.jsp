@@ -157,7 +157,8 @@
 
 					<div class="col-sm-12">
 						<h5>
-							<a href="#">Visualizza tutti i tuoi Feedback</a>
+							<a href="modalVisualizzaFeedback.html" data-remote="false"
+								data-toggle="modal" data-target="#vediFeedbackModal">Visualizza i tuoi Feedback</a>
 						</h5>
 					</div>
 				</div>
@@ -302,5 +303,30 @@ window.onload(loadModal());
                  
 	</section>
 	<%@ include file="includes/footer.jsp"%>
+	
+	<!-- MODAL VISUALIZZA FEEDBACK-->
+	<div class="modal fade" id="vediFeedbackModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">I tuoi feedbacks:</h4>
+				</div>
+				
+				<!-- body caricato dinamicamente con jquery -->
+				<div class="modal-body" id="modalBody" style="overflow: scroll;">
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	<script src="javascript/feedback/caricaModal.js"></script>
 </body>
 </html>

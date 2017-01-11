@@ -36,26 +36,30 @@ function recuperaFeedback(emailR){
 		if(status == 'success'){
 			if(text.state == "error"){
 				$('#changeLogger').text("Impossibile recuperare il feedback da modificare!");
-
+				$('#changingFeedback').hide();
+				$('#buttonModifica').hide();
 			}else if(text.state == "requesterror"){
 				$('#changeLogger').text("Errore con la richiesta!");
-
+				$('#changingFeedback').hide();
+				$('#buttonModifica').hide();
 			}else if(text.state == "nosession"){
-
 				$('#changeLogger').text("Devi essere loggato al sistema!");
-
+				$('#changingFeedback').hide();
+				$('#buttonModifica').hide();
 			}else if(text.state == "emailerror"){
-
 				$('#changeLogger').text("Problema con il recupero dell'email!");
-
+				$('#changingFeedback').hide();
+				$('#buttonModifica').hide();
 			}else{
-
+				//tutto ok
 				$('#changingValutazione option[value=' + text.valutazione + ']').prop('selected', true);
 				$("#changingDescrizione").text(text.descrizione);
-				done = true;
+
 			}
 		}else{
 			$('#changeLogger').text("Problema con la richiesta!");
+			$('#changingFeedback').hide();
+			$('#buttonModifica').hide();
 		}
 	})
 }
