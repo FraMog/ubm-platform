@@ -80,24 +80,23 @@ function validaFormModificaAnnuncio(){
 	
 	 
 	var ext = $('#foto').val().split('.').pop().toLowerCase();
-	if($.inArray(ext, ['gif','png','jpg','jpeg','']) == -1) {
-		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
-		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'estensione dell'immagine non è riconosciuta");
-		event.preventDefault();
-	    return;
-	}
-	
-	
-	
-	if ( window.FileReader && window.File && window.FileList && window.Blob ){
-		if($("#foto")[0].files[0].size>10*1024*1024){
+	if (ext!=""){//se l'immagine dell'annuncio è stata modificata
+		if($.inArray(ext, ['gif','png','jpg','jpeg','']) == -1) {
 			$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
-			$('#campiNonCorrettiModificaAnnuncioTesto').html("Il file può pesare al massimo 10MB");
+			$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'estensione dell'immagine non è riconosciuta");
 			event.preventDefault();
 			return;
 		}
-	} else console.log( "Il tuo browser non supporta la validazione dell'immagine" );
-
+		if ( window.FileReader && window.File && window.FileList && window.Blob ){
+			if($("#foto")[0].files[0].size>10*1024*1024){
+				$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
+				$('#campiNonCorrettiModificaAnnuncioTesto').html("Il file può pesare al massimo 10MB");
+				event.preventDefault();
+				return;
+			}
+		} else console.log( "Il tuo browser non supporta la validazione dell'immagine" );
+	 }	
+	
  });
 }
 
