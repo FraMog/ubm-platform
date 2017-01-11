@@ -111,6 +111,20 @@
 	    			<div class="form-group">
        					<label class="control-label col-sm-2" for="foto">Immagine prodotto</label>
 	    				<div class="col-sm-6"><input class="form-control" type="file" name="foto" id="foto"/></div>
+	    				<script type="text/javascript">
+		    				function readURL(input) {
+		    				    if (input.files && input.files[0]) {
+		    				        var reader = new FileReader();	
+		    				        reader.onload = function (e) {
+		    				            $('#logo_ubm').attr('src', e.target.result);
+		    				        }	
+		    				        reader.readAsDataURL(input.files[0]);
+		    				    }
+		    				}	
+		    				$("#foto").change(function(){
+		    				    readURL(this);
+		    				});
+	    				</script>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="descrizione" style="white-space: nowrap;">Descrizione:</label>
