@@ -33,7 +33,7 @@
 	    				<label class="control-label col-sm-2">Categoria: *</label>
 		    			<div class="input-group col-sm-10" style="padding-left:15px">
 		    				<div class="radio">
-	                			<label><input type="radio" name="categoria" value="libro" checked="true">Libro</label>
+	                			<label><input type="radio" name="categoria" value="libro">Libro</label>
 	              			</div>
 	              			<div class="radio">
 	                			<label><input type="radio" name="categoria" value="appunti">Appunti</label>
@@ -76,7 +76,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="descrizione">Descrizione: *</label>
-	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="annuncio" rows="3" cols="50" maxlength="100"></textarea></div>
+	    				<div class="col-sm-10"><textarea class="form-control" name="descrizione" id="descrizione" form="annuncio" rows="3" cols="50" maxlength="100" required="required"></textarea></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo: *</label>
