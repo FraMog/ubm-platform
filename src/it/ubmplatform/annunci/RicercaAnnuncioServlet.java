@@ -27,42 +27,48 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		super();
 
 	}
-	
+
 	/**
 	 * Metodo che si riferisce alle requests provenienti dalla sideBar
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String facolta= request.getParameter("facolta");
-		
-		Annuncio daCercare= new Annuncio();
-		daCercare.setTitolo(null);
-		daCercare.setFacolta(facolta);
-		daCercare.setCategoria(null);
-		
-		try {
-			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, null);
-			if(annunciPertinenti==null){
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non è stato possibile completare la richiesta a causa di un errore interno nel server");
-			}else{
-			request.setAttribute("annunciPertinenti", annunciPertinenti);
-			request.setAttribute("facolta", facolta);
-			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
-			rd.forward(request, response);
-			}
-		} catch (BadResearchException e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è stato possibile completare la richiesta: " + e.getMessage());
+		String facolta= request.getParameter("facolta").trim();
+
+		if (facolta.equals("")) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "La facoltà non può essere vuota!");
+			return;
 		}
+	
+			Annuncio daCercare= new Annuncio();
+			daCercare.setTitolo(null);
+			daCercare.setFacolta(facolta);
+			daCercare.setCategoria(null);
+
+			try {
+				ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, null);
+				if(annunciPertinenti==null){
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non è stato possibile completare la richiesta a causa di un errore interno nel server");
+				}else{
+					request.setAttribute("annunciPertinenti", annunciPertinenti);
+					request.setAttribute("facolta", facolta);
+					RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
+					rd.forward(request, response);
+				}
+			} catch (BadResearchException e) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è stato possibile completare la richiesta: " + e.getMessage());
+			}
+		
 	}
 
-	
+
 	/**
 	 * Metodo che si riferisce alle requests provenienti dal navbar
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Logger logger= Logger.getLogger("Logger");
 		logger.setLevel(Level.INFO);
-		
+
 		String titolo= request.getParameter("titolo").trim();
 		logger.info("titolo=" + titolo);
 		String facolta= request.getParameter("facolta");
@@ -71,12 +77,12 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		logger.info("categoria=" + categoria);
 		String ordine= request.getParameter("ordine");
 		logger.info("ordine=" + ordine);
-		
+
 		Annuncio daCercare= new Annuncio();
 		daCercare.setTitolo(titolo);
 		daCercare.setFacolta(facolta);
 		daCercare.setCategoria(categoria);
-		
+
 		try {
 			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, ordine);
 			request.setAttribute("annunciPertinenti", annunciPertinenti);
@@ -103,11 +109,11 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 	 * @pre (nome != null OR facolta != null) AND orderBy != null
 	 */
 	private ArrayList<Annuncio> ricercaAnnunci(Annuncio daCercare, String orderBy) throws BadResearchException{
-		
+
 		AbstractFactory factory= new ManagerFactory();
 		AnnuncioInterface annuncioManager= factory.createAnnuncioManager();
 		ArrayList <Annuncio> annunciPertinenti= annuncioManager.queryRicercaAnnuncio(daCercare, orderBy);
 		return annunciPertinenti;
-		
+
 	}
 }
