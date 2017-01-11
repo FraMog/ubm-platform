@@ -35,6 +35,7 @@ public class CancellaAccountServlet extends HttpServlet {
 		System.out.println("trovata"+ request.getParameter("email"));
 		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
 		String email=request.getParameter("email");
+		System.out.println("l email è "+email);
 		String decisione=request.getParameter("eliminaFeedback");
 		boolean invio=sendMail(email);
 		if(invio){
