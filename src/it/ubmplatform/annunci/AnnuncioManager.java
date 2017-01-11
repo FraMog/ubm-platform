@@ -437,10 +437,9 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 	/**
 	 * Metodo che controlla se, dopo che un utente ha modificato un immagine di un annuncio, ci siano
-	 * altri annunci che usano la vecchia immagine dell'annuncio
-	 * Ciò accade se per esempio un utente usa la stessa immagine per 2 annunci diversi; se successivamente
-	 * modifica l'immagine per uno dei due annunci dopo che la vecchia immagine verrà cancellata l'altro
-	 * annuncio sarebbe senza immagine
+	 * altri annunci che usano la vecchia immagine dell'annuncio	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
+	 * @param oldAnnuncioImmagine Il nome dell'immagine da controllare
+	 * @return true se vi sono altri annunci che usano quell'immagine o vi sono eccezioni nell'esecuzione, false altrimenti
 	 */
 	@Override
 	public boolean queryCercaAltriAnnunciConQuestaImmagine(String oldAnnuncioImmagine) {
