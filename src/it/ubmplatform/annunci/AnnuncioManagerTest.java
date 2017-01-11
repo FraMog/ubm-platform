@@ -20,6 +20,7 @@ public class AnnuncioManagerTest {
 	private AnnuncioManager manager;
 	private Annuncio esistenteOk, nonEsistenteOk, emailErrata, fotoNull, titoloNull, descrizioneNull, facoltaNull, categoriaNull, ricercaPerFacoltaOk, ricercaTitoloNull, ricercaCategoriaErrata, ricercaOk;
 	private int idEsistente, idNonEsistente, idErrato;
+	private String fotoEsistente, fotoNonEsistente;
 
 	@Before
 	public void setUp() throws Exception {
@@ -49,6 +50,8 @@ public class AnnuncioManagerTest {
 		ricercaOk.setTitolo("appunti");
 		ricercaOk.setFacolta("Informatica");
 		ricercaOk.setCategoria("appunti");
+		fotoEsistente="fotoannuncio";
+		fotoNonEsistente="foto";
 	}
 
 	@After
@@ -216,6 +219,15 @@ public class AnnuncioManagerTest {
 		} catch (BadAnnuncioIdException e) {
 			fail("non dovrebbe lanciare eccezioni");
 		}
+	}
+	
+	@Test
+	public void testQueryCercaAltriAnnunciConQuestaImmagine() {
+		boolean status;
+		status=manager.queryCercaAltriAnnunciConQuestaImmagine(fotoEsistente);
+		assertTrue(status);
+		status=manager.queryCercaAltriAnnunciConQuestaImmagine(fotoNonEsistente);
+		assertFalse(status);
 	}
 
 }

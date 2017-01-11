@@ -432,6 +432,21 @@ public class AnnuncioManager implements AnnuncioInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 
