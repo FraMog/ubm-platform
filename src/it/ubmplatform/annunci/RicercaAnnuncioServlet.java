@@ -63,7 +63,7 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		Logger logger= Logger.getLogger("Logger");
 		logger.setLevel(Level.INFO);
 		
-		String titolo= request.getParameter("titolo");
+		String titolo= request.getParameter("titolo").trim();
 		logger.info("titolo=" + titolo);
 		String facolta= request.getParameter("facolta");
 		logger.info("facolta=" + facolta);

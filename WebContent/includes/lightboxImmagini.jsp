@@ -3,10 +3,12 @@
 <div id="ilMioModal" class="modal">
 
   <!-- The Close Button -->
-  <span class="close" onclick="document.getElementById('ilMioModal').style.display='none'">&times;</span>
+  <span class="close" id="closeImageModalButton">&times;</span>
 
   <!-- Modal Content (The Image) -->
   <img class="modal-content" id="immagineModalGrande">
   </div>
   
 </div>  
+
+<script type="text/javascript" src="javascript/annunci/loadlightboxImmagini.js"></script>
