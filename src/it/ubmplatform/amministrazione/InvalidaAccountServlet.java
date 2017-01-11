@@ -42,7 +42,8 @@ public class InvalidaAccountServlet extends HttpServlet {
 			}
 		   	if(valoreInvalida && valoreFeedback){
 	    		request.removeAttribute("email");
-	    		
+	    		response.setContentType("text/html;charset=UTF-8");
+	            response.getWriter().write("true");  
 			} 
 			else{
 				throw new OperationFailedException("L'invalidazione dell'account non ha avuto successo, riprova più tardi");
