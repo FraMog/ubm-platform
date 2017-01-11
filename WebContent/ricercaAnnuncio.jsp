@@ -12,7 +12,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
-  	<script type="text/javascript" src="javascript/annunci/loadlightboxImmagini.js"></script>
     <script src="javascript/amministrazione/rimuoviAnnuncio.js"></script>
     <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
     <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
@@ -81,7 +80,7 @@
         <%} else if (request.getAttribute("facolta")!=null){%> <%--Se sono giunto a questa pagina basandomi su mostra annunci facoltà, devo poter ricercare annunci in questa sottosezione --%>
            <form id="ricercaAnnunciInUnaFacolta" class="navbar-form col-xs-12" action="RicercaAnnuncio" method="post">
             <div  class="form-group">
-              <input id="titoloAnnuncioFacolta" name="titolo" type="text" class="form-control" placeholder="Search" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
+              <input id="titoloAnnuncioFacolta" name="titolo" type="text" class="form-control" placeholder="Search" pattern="^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,49}$" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
             </div>
            <script>validaFormRicerca("ricercaAnnunciInUnaFacolta");</script><%--funzione definita in javascript/annunci/validaRicercaAnnuncio.js --%>
            

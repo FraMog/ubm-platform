@@ -7,7 +7,7 @@ function validaFormModificaAnnuncio(){
  $("#annuncio").submit(function(event){
 
 
-	var regExpTitolo=new RegExp("^([a-zA-Z]{1})([a-zA-Z0-9 ]{0,49})$");
+	var regExpTitolo=new RegExp("^([a-zA-Z0-9]{1})([a-zA-Z0-9 ]{0,49})$");
 		if(!regExpTitolo.test($("#titolo").val())){
 			$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
 			$('#campiNonCorrettiModificaAnnuncioTesto').html('Errore nella Modifica!<br />Errore in titolo!<br />Inserire una stringa alfanumerica di lunghezza 1-50');
@@ -42,7 +42,7 @@ function validaFormModificaAnnuncio(){
 	}
 	
 	if(!$("#autoreLibro").prop('disabled')){	
-	var regexpAutore = new RegExp("^$|^[a-zA-Z]{1}[a-zA-Z ]{0,19}$");
+	var regexpAutore = new RegExp("^$|^[a-zA-Z0-9]{1}[a-zA-Z ]{0,19}$");
 	if(!regexpAutore.test($("#autoreLibro").val())){
 		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
 		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />L'autore deve essere una stringa alfabetica di lunghezza 0-20");
@@ -52,7 +52,7 @@ function validaFormModificaAnnuncio(){
 	}
 
 	if(!$("#materia").prop('disabled')){	
-	var regexpMateria = new RegExp("^$|^[a-zA-Z]{1}[a-zA-Z0-9 ]{0,39}$");
+	var regexpMateria = new RegExp("^$|^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,39}$");
 	if(!regexpMateria.test($("#materia").val())){
 		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
 		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />La materia deve essere una stringa alfanumerica di lunghezza 0-4");
@@ -62,7 +62,7 @@ function validaFormModificaAnnuncio(){
 	}
 	
 	
-	var regexpDescrizione = new RegExp("^[a-zA-Z]{1}[a-zA-Z0-9 ]{0,99}$");
+	var regexpDescrizione = new RegExp("^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,99}$");
 	if(!regexpDescrizione.test($("#descrizione").val())){
 		$('#campiNonCorrettiModificaAnnuncioModal').modal('show');
 		$('#campiNonCorrettiModificaAnnuncioTesto').html("Errore nella Modifica!<br />La descrizione deve essere una stringa alfanumerica di lunghezza 1-100");

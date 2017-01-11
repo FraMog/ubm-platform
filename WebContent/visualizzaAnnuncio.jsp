@@ -44,30 +44,30 @@
       <div class="col-sm-8 panel panel-default">
       	<div id="visualizzaDettagliAnnuncio" class="panel-body">
 			<h3 style="margin-bottom: 20px"><%=annuncioDettagliato.getTitolo()%></h3>
-			<div class="row"><h4 class="col-xs-4">Categoria:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getCategoria()%></h4></div>
-			<div class="row"><h4 class="col-xs-4">Facoltà:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getFacolta()%></h4></div>
-			<div class="row"><h4 class="col-xs-4">Prezzo:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getPrezzo()%>€</h4></div>
+			<div class="row"><h4 class="col-xs-6">Categoria:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getCategoria()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">Facoltà:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getFacolta()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">Prezzo:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getPrezzo()%>€</h4></div>
 			
 			<%if (annuncioDettagliato.getCondizioni()!=null && !annuncioDettagliato.getCondizioni().equals("")){ %>
-			<div class="row"><h4 class="col-xs-4">Condizioni prodotto:</h4><h4 class="col-xs-3"><%= annuncioDettagliato.getCondizioni()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">Condizioni prodotto:</h4><h4 class="col-xs-6"><%= annuncioDettagliato.getCondizioni()%></h4></div>
 			<% }%>
 			
 			<!--Solo libro -->
 			<%if (annuncioDettagliato.getIsbn()!=null && !annuncioDettagliato.getIsbn().equals("")){ %>
-			<div class="row"><h4 class="col-xs-4">ISBN:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getIsbn()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">ISBN:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getIsbn()%></h4></div>
 			<% }%>
 			
 			<%if (annuncioDettagliato.getAutoreLibro()!=null && !annuncioDettagliato.getAutoreLibro().equals("")){ %>
-			<div class="row"><h4 class="col-xs-4">Autore:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getAutoreLibro()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">Autore:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getAutoreLibro()%></h4></div>
 			<% }%>
 			
 			<%if (annuncioDettagliato.getEdizione()!=0){ %>
-			<div class="row"><h4 class="col-xs-4">Edizione:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getEdizione()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">Edizione:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getEdizione()%></h4></div>
 	<%}%>
 			
             <!--  solo appunti -->
 			<%if (annuncioDettagliato.getMateria()!=null && !annuncioDettagliato.getMateria().equals("")){ %>
-			<div class="row"><h4 class="col-xs-4">Materia:</h4><h4 class="col-xs-3"><%=annuncioDettagliato.getMateria()%></h4></div>
+			<div class="row"><h4 class="col-xs-6">Materia:</h4><h4 class="col-xs-6"><%=annuncioDettagliato.getMateria()%></h4></div>
 			<% }%>
 			
 		  </div>
@@ -81,7 +81,7 @@
        				<input type="hidden" name="emailAutoreAnnuncio" value="<%= annuncioDettagliato.getEmail()%>"/>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="titolo">Titolo:</label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo" pattern="[a-zA-Z]{1}[a-zA-Z0-9 ]{0,49}" title="Inserire una stringa alfanumerica di lunghezza 1-50"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="titolo" id="titolo" required="required" value="<%=annuncioDettagliato.getTitolo()%>" placeholder="Inserisci un titolo" pattern="^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,49}$" title="Inserire una stringa alfanumerica di lunghezza 1-50"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Categoria:</label>
@@ -133,7 +133,7 @@
 	    			
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="condizioni" style="white-space: nowrap;">Condizioni: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,19}" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="condizioni" id="condizioni" <%if (annuncioDettagliato.getCondizioni()!=null){%>value="<%=annuncioDettagliato.getCondizioni()%>"<%}%> placeholder="Inserisci le condizioni del prodotto" pattern="^$|^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,19}$" title="Inserire una stringa alfanumerica di lunghezza 0-20"/></div>
 	    			</div>	   
 	    			
 	    		<div id="soloLibro"> <!-- Solo libro -->
@@ -144,7 +144,7 @@
 
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="autore">Autore: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="^$|^[a-zA-Z]{1}[a-zA-Z ]{0,19}$" title="Inserire una stringa alfabetica di lunghezza 0-20"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="autoreLibro" id="autoreLibro" <%if (annuncioDettagliato.getAutoreLibro()!=null){%>value="<%=annuncioDettagliato.getAutoreLibro()%>"<%}%> placeholder="Inserisci un autore" pattern="^$|^[a-zA-Z0-9]{1}[a-zA-Z ]{0,19}$" title="Inserire una stringa alfabetica di lunghezza 0-20"/></div>
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="edizione">Edizione: </label>
@@ -154,7 +154,7 @@
 	    		 <div id="soloAppunti">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="materia">Materia: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia" <%if (annuncioDettagliato.getMateria()!=null){%>value="<%=annuncioDettagliato.getMateria()%>"<%}%> placeholder="Inserisci una Materia" pattern="{0}|[a-zA-Z]{1}[a-zA-Z0-9 ]{0,39}" title="Inserire una stringa alfanumerica di lunghezza 0-40"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="materia" id="materia" <%if (annuncioDettagliato.getMateria()!=null){%>value="<%=annuncioDettagliato.getMateria()%>"<%}%> placeholder="Inserisci una Materia" pattern="^$|^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,39}$" title="Inserire una stringa alfanumerica di lunghezza 0-40"/></div>
 	    			</div>
 	    		  </div>	
 	    			 			
