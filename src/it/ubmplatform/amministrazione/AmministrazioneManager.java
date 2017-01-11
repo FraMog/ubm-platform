@@ -16,8 +16,8 @@ import it.ubmplatform.account.Account;
  *
  */
 public class AmministrazioneManager implements AmministrazioneInterface {
-	
-		
+
+
 	Logger logger = Logger.getLogger("global");
 	/**
 	 * Si occupa dell'interrogazione al database per la cancellazione di un account dal sistema
@@ -54,7 +54,7 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 				}
 		}
 	}
-	
+
 	public boolean queryCancellaFeedback(String email){
 		Connection conn=null;
 		Statement s=null;
@@ -156,7 +156,7 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			
+
 		}
 	}
 
@@ -176,7 +176,7 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 					"FROM account "+
 					"WHERE account.Tipo='R' "+
 					"ORDER BY account.Email";
-			
+
 			s=conn.createStatement();
 			//leggo i dati della tabella ritornata dalla query salvata in ResultSet
 			ResultSet res=s.executeQuery(query);
@@ -192,13 +192,13 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 			logger.info("queryVisualizzaListaIscritti"+e);
 			throw(e);
 		} 
-			finally{
+		finally{
 			logger.info("sono nel finally");
 			if(s!=null)
-			try {
+				try {
 					s.close();
 				} catch (SQLException e) {
-				e.printStackTrace();				}
+					e.printStackTrace();				}
 			if(conn!=null)
 				try {
 					conn.close();
@@ -208,6 +208,39 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 			logger.info("return lista"+lista);
 			return lista;
 		}
-		
+
+	}
+
+	@Override
+	public boolean queryRimuoviAnnuncioAccountCancellato(String email) {
+		Connection conn=null;
+		Statement s=null;
+		try {
+			conn=DBManager.getInstance().getConnection();
+			String query="DELETE FROM annuncio WHERE annuncio.Email='"+email+"'";
+			s=conn.createStatement();
+			s.executeUpdate(query);
+			if(s.getUpdateCount()>0) //verifico che l'update abbia avuto effetto su una riga
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(s!=null)
+				try {
+					s.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+		}
 	}
 }

@@ -33,9 +33,11 @@ public class InvalidaAccountServlet extends HttpServlet {
 		System.out.println("trovata"+ request.getParameter("eliminaFeedback"));
 		String email=request.getParameter("email");
 		String decisione=request.getParameter("eliminaFeedback");
-		boolean invio=sendMail(email);
-		if(invio){
-			boolean valoreInvalida=invalidaAccount(email);
+		
+		boolean valoreInvalida=invalidaAccount(email);
+		if(valoreInvalida){
+			boolean invio=sendMail(email);
+
 			
 		   	if(decisione.equals("true")){
 				boolean valoreFeedback=cancellaFeedback(email);

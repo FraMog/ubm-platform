@@ -29,6 +29,7 @@ import it.ubmplatform.factory.ManagerFactory;
 public class CancellaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private boolean valoreFeedback=true;
+	private boolean valoreAnnuncio=true;
 	Logger logger= Logger.getLogger("global");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,11 +38,14 @@ public class CancellaAccountServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		System.out.println("l email è "+email);
 		String decisione=request.getParameter("eliminaFeedback");
-		boolean invio=sendMail(email);
-		if(invio){
-			boolean valoreCancella=cancellaAccount(email);
+		
+		boolean valoreCancella=cancellaAccount(email);
+		if(valoreCancella){
+			boolean invio=sendMail(email);
+			valoreAnnuncio=rimuoviAnnuncioAccountCancellato(email);
+			
 			if(decisione.equals("true")){
-				boolean valoreFeedback=cancellaFeedback(email);
+			valoreFeedback=cancellaFeedback(email);
 			}
 			if(valoreCancella && valoreFeedback){
 	    		request.removeAttribute("email");
@@ -85,6 +89,12 @@ public class CancellaAccountServlet extends HttpServlet {
 		AbstractFactory factory = new ManagerFactory();
 		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
 		return managerAmministrazione.queryCancellaFeedback(email);
+	}
+	
+	private boolean rimuoviAnnuncioAccountCancellato(String email){
+		AbstractFactory factory = new ManagerFactory();
+		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
+		return managerAmministrazione.queryRimuoviAnnuncioAccountCancellato(email);
 	}
 
 	private boolean sendMail(String email){
