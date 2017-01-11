@@ -437,7 +437,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 	/**
 	 * Metodo che controlla se, dopo che un utente ha modificato un immagine di un annuncio, ci siano
-	 * altri annunci che usano la vecchia immagine dell'annuncio	 * @param idAnnuncio L'id dell'annuncio di cui visualizzarne i dettagli
+	 * altri annunci che usano la vecchia immagine dell'annuncio
 	 * @param oldAnnuncioImmagine Il nome dell'immagine da controllare
 	 * @return true se vi sono altri annunci che usano quell'immagine o vi sono eccezioni nell'esecuzione, false altrimenti
 	 */
