@@ -255,11 +255,21 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				{
 					long giorniInMill= dataInvalidazione-dataAttuale;
 					int giorni = (int) Math.floor(giorniInMill / 86400000);		//1 giorno medio = 1000*60*60*24 ms = 86400000 ms
-					System.out.println(giorni);
 					return giorni;
 				}
 				else
+				{
+					connection=DBManager.getInstance().getConnection();
+					String queryModificaTipo = "UPDATE account SET Tipo = 'R' WHERE Email ='"+emailTrovata+"'";
+					statement=connection.createStatement();
+					statement.executeUpdate(queryModificaTipo);
+					
+					String queryEliminaData = "UPDATE account SET DataInvalidazione = null WHERE Email ='"+emailTrovata+"'";
+					statement=connection.createStatement();
+					statement.executeUpdate(queryEliminaData);
+					
 					return 0;
+				}
 			}
 
 		} catch (SQLException e)
