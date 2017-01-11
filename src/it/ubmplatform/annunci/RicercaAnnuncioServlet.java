@@ -41,12 +41,17 @@ public class RicercaAnnuncioServlet extends HttpServlet {
 		
 		try {
 			ArrayList <Annuncio> annunciPertinenti=ricercaAnnunci(daCercare, null);
+			if(annunciPertinenti==null){
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non è stato possibile completare la richiesta a causa di un errore interno nel server");
+			}else{
 			request.setAttribute("annunciPertinenti", annunciPertinenti);
 			request.setAttribute("facolta", facolta);
 			RequestDispatcher rd= request.getRequestDispatcher("ricercaAnnuncio.jsp");
 			rd.forward(request, response);
+			}
 		} catch (BadResearchException e) {
 			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è stato possibile completare la richiesta: " + e.getMessage());
 		}
 	}
 
