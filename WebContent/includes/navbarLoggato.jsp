@@ -42,7 +42,7 @@ function logout()
               </div>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benvenuto <%=session.getAttribute("name")%><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=session.getAttribute("name")%><span class="caret"></span></a>
               <div class="dropdown-menu" style="padding:10px;">
                  <div class="form-group" style="text-align:center;">
                    <a class="btn btn-primary" href="VisualizzaProfiloServlet?emailToShow=<%=session.getAttribute("emailLoggato")%>">Il mio profilo</a>

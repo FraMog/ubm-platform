@@ -47,7 +47,7 @@
 		}
 		String foto;
 		if(profileToShow.getFoto()!=null)
-			foto = profileToShow.getFoto();
+			foto = "img/profilo/"+profileToShow.getFoto();
 		else
 			foto = "img/profilo/default_profile.PNG";
 		
