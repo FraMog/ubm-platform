@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
-<%if (request.getAttribute("email")==null)
-	response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"impossibile accedere a questa pagina");%>
+<%if (request.getSession().getAttribute("email")==null){
+	response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"impossibile accedere a questa pagina");
+	return;
+}%>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -28,10 +30,10 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li><a href="#" style="font-size:110%">UBM Platform</a></li>
+            <li><a href="LogoutServlet" style="font-size:110%">UBM Platform</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
       </div>
@@ -91,7 +93,7 @@
 	    			</div>
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="residenza">Residenza: </label>
-	    				<div class="col-sm-10"><input class="form-control" type="text" name="residenza" id="residenza" pattern="{0-40}" title="Massimo 40 caratteri"/></div>
+	    				<div class="col-sm-10"><input class="form-control" type="text" name="residenza" id="residenza" pattern="^.{0,40}$" title="Massimo 40 caratteri"/></div>
 	    			</div>
 	    			<p id="errore" style="color: red"></p>
     				<input type="submit" class="btn btn-info center-block"/>
