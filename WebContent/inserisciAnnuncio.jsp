@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
+<%if(session.getAttribute("user")==null || !((String)session.getAttribute("user")).equalsIgnoreCase("utente") || session.getAttribute("emailLoggato")==null ){
+response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Devi essere un utente loggato per poter inserire un annuncio"); return;
+} %>
 <!DOCTYPE html>
 <html lang="it">
   <head>
