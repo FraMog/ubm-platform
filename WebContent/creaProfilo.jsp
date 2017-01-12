@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
+<%if (request.getAttribute("email")==null)
+	response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"impossibile accedere a questa pagina");%>
+
 <!DOCTYPE html>
 <html lang="it">
   <head>

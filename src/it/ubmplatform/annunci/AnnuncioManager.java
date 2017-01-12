@@ -413,7 +413,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		try {
 			conn=DBManager.getInstance().getConnection();
 			s=conn.createStatement();
-			String query="SELECT DISTINCT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, annuncio.Email FROM Annuncio join Account where tipo!='D' AND tipo!='I' ORDER BY DataPubblicazione DESC";
+			String query="SELECT DISTINCT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, annuncio.Email FROM annuncio join account where tipo!='D' AND tipo!='I' ORDER BY DataPubblicazione DESC";
 			ResultSet rs=s.executeQuery(query);
 			int i=0;
 			while(rs.next() && i<5){
