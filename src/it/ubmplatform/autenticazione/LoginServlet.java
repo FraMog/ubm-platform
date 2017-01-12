@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
 					{
 						session.removeAttribute("user");
 						session.setAttribute("password", password);
-						request.setAttribute("email", email);
+						session.setAttribute("email", email);
 						request.getRequestDispatcher("creaProfilo.jsp").forward(request,response);
 					}
 

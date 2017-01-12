@@ -46,6 +46,8 @@ public class CreaProfiloServlet extends HttpServlet {
 		if(!p.matcher(surname).find())
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo cognome non è stato compilato correttamente");
 		String email=request.getParameter("email");
+		if(!email.equals(request.getSession().getAttribute("email")))
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "L'email inserita non è valida");
 		String phone=request.getParameter("tel").trim();
 		if(!Pattern.compile("^[0-9]{0}$|^[0-9]{10}$").matcher(phone).find())
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo telefono non è stato compilato correttamente");
