@@ -36,7 +36,7 @@ response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Devi essere un utente lo
 	    				<label class="control-label col-sm-2">Categoria: *</label>
 		    			<div class="input-group col-sm-10" style="padding-left:15px">
 		    				<div class="radio">
-	                			<label><input type="radio" name="categoria" value="libro">Libro</label>
+	                			<label><input type="radio" name="categoria" value="libro" checked="checked">Libro</label>
 	              			</div>
 	              			<div class="radio">
 	                			<label><input type="radio" name="categoria" value="appunti">Appunti</label>
