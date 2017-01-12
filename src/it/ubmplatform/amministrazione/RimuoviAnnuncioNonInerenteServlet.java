@@ -21,7 +21,8 @@ public class RimuoviAnnuncioNonInerenteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id=-1;
 		response.setContentType("text/plain;charset=UTF-8");
-		if(!request.getSession().getAttribute("user").equals("admin")){
+		String user=(String) request.getSession().getAttribute("user");
+		if(user==null || !user.equals("admin")){
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.getWriter().write("Non sei autorizzato ad eseguire questa operazione");
 			return;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <%if (request.getSession().getAttribute("email")==null){
+	request.getSession().invalidate();
 	response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"impossibile accedere a questa pagina");
 	return;
 }%>

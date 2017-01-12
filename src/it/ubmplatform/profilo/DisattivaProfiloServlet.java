@@ -26,6 +26,7 @@ public class DisattivaProfiloServlet extends HttpServlet {
 	    	disattivaProfilo((String)session.getAttribute("emailLoggato")); //eseguo l'operazione
 			session.invalidate();
 			response.sendRedirect("index.jsp");
+			return;
     	}
     	catch(Exception e){
     		e.printStackTrace();

@@ -72,11 +72,12 @@ public class CreaProfiloServlet extends HttpServlet {
 			if(img!=null)
 				saveFile(request); //se il file è stato inserito lo carico
 			RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/LoginServlet?username="+email+"&password="+request.getSession().getAttribute("password"));
-			request.getSession().removeAttribute("password");
+			request.getSession().invalidate();
 			dispatcher.forward(request, response);
 			return;
 		}
 		catch(Exception e){
+			request.getSession().invalidate();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
 			return;
 		}
