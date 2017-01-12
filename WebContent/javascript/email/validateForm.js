@@ -2,7 +2,7 @@ function validateForm(){
 	var password=document.getElementById("password").value;
 	var passwordV=document.getElementById("passwordV").value;
 	var email= document.getElementById("email").value;
-	var patternEmail = /^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)/;
+	var patternEmail = /^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)|^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@unisa.it$)/;
 	var patternPassword= /(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}/;
 
 
