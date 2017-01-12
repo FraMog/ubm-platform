@@ -423,7 +423,7 @@
 					<h4 class="modal-title">Inserisci feedback</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
+					<div class="form-group" id="insertingFeedback">
 						<label for="valutazioneFeedback">Valutazione:</label> <select
 							class="form-control" id="valutazioneFeedback"
 							name="valutazioneFeedback">

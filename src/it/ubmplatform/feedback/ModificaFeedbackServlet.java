@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.sun.istack.internal.logging.Logger;
-
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
 
@@ -37,42 +35,48 @@ public class ModificaFeedbackServlet extends HttpServlet {
 
 			String emailR = request.getParameter("emailR");
 			if(emailR != null){
-				//se sto richiedendo il feedback da modificare
-				if(request.getParameter("tipo").equals("richiedi")){
+				String tipo = request.getParameter("tipo");
 
-					Feedback oldFeedback = ottieniFeedbackDaModificare(emailP, emailR);
+				if(tipo != null){
+					//se sto richiedendo il feedback da modificare
+					if(tipo.equals("richiedi")){
 
-					if(oldFeedback != null){
-						//converto in json e invio
-						Gson gson = new Gson();
-						responseJson = gson.toJson(oldFeedback);
-					}else{
-						responseJson = "{\"state\":\"error\"}";
-					}
+						Feedback oldFeedback = ottieniFeedbackDaModificare(emailP, emailR);
 
-					//altrimenti voglio modificarlo
-				}else if(request.getParameter("tipo").equals("modifica")){
-					int valutazione;
-					try{
-						valutazione = Integer.parseInt(request.getParameter("valutazione"));
-						String descrizione = request.getParameter("descrizione");
+						if(oldFeedback != null){
+							//converto in json e invio
+							Gson gson = new Gson();
+							responseJson = gson.toJson(oldFeedback);
+						}else{
+							responseJson = "{\"state\":\"error\"}";
+						}
 
-						if(valutazione > 0 && valutazione < 6 && descrizione != null){
+						//altrimenti voglio modificarlo
+					}else if(tipo.equals("modifica")){
+						int valutazione;
+						try{
+							valutazione = Integer.parseInt(request.getParameter("valutazione"));
+							String descrizione = request.getParameter("descrizione");
 
-							Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
+							if(valutazione > 0 && valutazione < 6 && descrizione != null){
 
-							if(modificaFeedback(newFeedback)){
-								responseJson = "{\"state\":\"ok\"}";
-							}else{
-								//sql exception .. 
-								responseJson = "{\"state\":\"feedbackerror\"}";
-							}
-						}else responseJson = "{\"state\":\"inputerror\"}";
+								Feedback newFeedback = new Feedback(valutazione, descrizione, emailP, emailR);
 
-					}catch(NumberFormatException e){
-						responseJson = "{\"state\":\"valerror\"}";
-					}
-				}else responseJson = "{\"state\":\"requesterror\"}";
+								if(modificaFeedback(newFeedback)){
+									responseJson = "{\"state\":\"ok\"}";
+								}else{
+									//sql exception .. 
+									responseJson = "{\"state\":\"feedbackerror\"}";
+								}
+							}else responseJson = "{\"state\":\"inputerror\"}";
+
+						}catch(NumberFormatException e){
+							responseJson = "{\"state\":\"valerror\"}";
+						}
+					}else responseJson = "{\"state\":\"requesterror\"}";
+				}else{
+					responseJson = "{\"state\":\"tipoerror\"}";
+				}
 			}else responseJson = "{\"state\":\"emailerror\"}";
 
 
