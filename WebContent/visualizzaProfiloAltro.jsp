@@ -37,18 +37,19 @@
 	src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
 <script type="text/javascript"
 	src="javascript/annunci/loadlightboxImmagini.js"></script>
+	<script type="text/JavaScript" src="javascript/admin/gestioneAdmin.js"></script>
 
 </head>
 <body>
 
 	<%
-		if (session.getAttribute("user") != null) {
-	%>
-	<%@ include file="includes/navbarLoggato.jsp"%>
-	<%
-		} else if (session.getAttribute("user").equals("admin")) {
+		if (session.getAttribute("user").equals("admin")) {
 	%>
 	<%@ include file="includes/navbarAdmin.jsp"%>
+	<%
+		} else if (session.getAttribute("user") != null) {
+	%>
+	<%@ include file="includes/navbarLoggato.jsp"%>
 	<%
 		} else {
 			response.sendRedirect("index.jsp");
@@ -185,7 +186,16 @@
 								un Feedback!</a>
 						</h5>
 					</div>
+					
 				</div>
+			<%--BOTTONI VISIBILI ALL'ADMIN PER CANCELLARE E INVALIDARE ACCOUNT --%>
+				<%
+				if (session.getAttribute("user").equals("admin")) {
+				%>
+				<br>
+				<button type="button" class="btn btn-warning" onclick="javascript:invalidaAccountA('<%=email%>')">Invalida</button> 
+				<button type="button" class="btn btn-danger" onclick="javascript:cancellaAccountA('<%=email%>')">Cancella</button>
+				<%} %>
 
 			</div>
 
@@ -509,7 +519,48 @@
 
 		</div>
 	</div>
+	
+				<%--Modal cancellaAccount --%>
+		<div id="cancellaAccountModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Sei sicuro di voler cancellare questo account?</h4>
+					</div>
+					<div class="modal-body">
+						<p>Cancellando questo account cancellerai anche i relativi annunci.</p>
+						<input type="checkbox" id="cancellaFeedback" name="cancellaFeedback" value="true")>Seleziona per eliminare i feedback dell'account.<br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id ="annulla" name="annulla" class="btn btn-success" data-dismiss="modal" >Annulla</button>
+						<button type="button" id ="prosegui" name="prosegui" class="btn btn-success" >Prosegui</button>
 
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<%--Modal invalidaAccount --%>
+		<div id="invalidaAccountModal" class="modal fade" role="dialog">
+			<div class="modal-dialog"> 
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Sei sicuro di voler cancellare questo account?</h4>
+					</div>
+					<div class="modal-body">
+						<p>Invalidando l'account selezionato, quest'ultimo non potra accedere alla piattaforma per 7 giorni.</p>
+						<input type="checkbox" id="cancellaFeedbackI" name="cancellaFeedbackI" value="true")>Seleziona per eliminare i feedback dell'account.<br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id ="annullaI" name="annullaI" class="btn btn-success" data-dismiss="modal" >Annulla</button>
+						<button type="button" id ="proseguiI" name="proseguiI" class="btn btn-success" >Prosegui</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	<script src="javascript/feedback/caricaModal.js"></script>
 	<script src="javascript/feedback/modificaFeedback.js"></script>
 	<script src="javascript/feedback/inserisciFeedback.js"></script>
