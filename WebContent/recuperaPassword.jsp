@@ -32,7 +32,13 @@
 </script>
 </head>
 <body>
-	<%@ include file="includes/navbarNonLoggato.jsp"%>
+  	<%if(session.getAttribute("user")==null) {%>
+    	<%@ include file="includes/navbarNonLoggato.jsp" %>
+    <%} else if (session.getAttribute("user").equals("admin")) {%>
+	<%@ include file="includes/navbarAdmin.jsp" %>
+	<%} else {%>
+    	<%@ include file="includes/navbarLoggato.jsp" %>
+    <%} %>
 	<%@ include file="includes/sideBar.jsp"%>
 	<section class="col-sm-10" id="section">
 		<div class="col-sm-10">
@@ -49,8 +55,8 @@
 						<div class="col-sm-8">
 							<input class="form-control" type="text" name="email" id="email"
 								required="required" style="margin-top: 18px;"
-								pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)"
-								title="L'e-mail deve essere del tipo nome@studenti.unisa.it, con 'nome' contenente tra 5 e 40 caratteri alfanumerici e non (sono consentiti i seguenti simboli: .,_,%,+,-)." />
+								pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)|^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@unisa.it)|ubmplatform@gmail.com"
+								title="L'e-mail deve essere del tipo nome@studenti.unisa.it o nome@unisa.it, con 'nome' contenente tra 5 e 40 caratteri alfanumerici e non (sono consentiti i seguenti simboli: .,_,%,+,-)." />
 						</div>
 					</div>
 					<input type="submit" class="btn btn-info center-block"

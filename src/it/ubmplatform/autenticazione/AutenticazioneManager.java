@@ -15,9 +15,9 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	/**
 	 * Si occupa dell'interrogazione al database per la ricerca dell'account
 	 * @param toSearch L'account da ricercare
-	 * @return 0 se l'utente loggato è l'admin, 1 se l'account è stato trovato ed è Regolare, 2 se l'account è stato trovato ed è Invalidato, 3 se l'account è stato trovato ed è Bannato, -1 in caso di errore
+	 * @return 0 se l'utente loggato è l'admin, 1 se l'account è stato trovato ed è Regolare, 2 se l'account è stato trovato ed è Invalidato, 3 se l'account è stato trovato ed è Bannato, -1 se l'account non è presente, -2 in caso di errore
 	 */
-	
+
 	public int queryLogin(String emailToSearch, String passwordToSearch)
 	{
 		Connection connection = null;
@@ -31,7 +31,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 			String queryLoginAdmin = "SELECT * FROM amministratore WHERE Email='"+emailToSearch+"' && Password='"+passwordToSearch+"'";
 			statement=connection.createStatement();
 			resultSet = statement.executeQuery(queryLoginAdmin);
-			
+
 			while (resultSet.next())
 			{
 				if(emailToSearch.equals(resultSet.getString(1)) && passwordToSearch.equals(resultSet.getString(2)))
@@ -47,7 +47,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				statement=connection.createStatement();
 				resultSet = statement.executeQuery(queryLoginAccount);
 				boolean isUtente=false; 
-		
+
 				while (resultSet.next())
 				{
 					if(emailToSearch.equals(resultSet.getString(1)) && passwordToSearch.equals(resultSet.getString(2)))
@@ -71,10 +71,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 							return 1;
 						}
 					}
-					else
-						return -1;
 				}
-				
 				if (isUtente==false)
 				{
 					return -1;
@@ -83,32 +80,32 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			return -1;
-		} finally
-		{
+			return -2;
+		} finally {
 			if(statement!=null)
 				try {
 					statement.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+					return -2;
 				}
 			if(connection!=null)
 				try {
 					connection.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}
-
+					return -2;
+				}			
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Si occupa dell'interrogazione al database per la ricerca della password dell'account associato all'email
 	 * @param email L'email dell'account a cui ricercare la password
 	 * @return La password dell'account in caso di successo, null altrimenti (account non trovato).
 	 */
-	
+
 	public String queryRecuperaPassword(String email)
 	{
 		Connection connection = null;
@@ -135,7 +132,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				isAdmin=true;
 				return passwordRecuperata;
 			}
-			
+
 			//altrimenti in quella dell'account
 			else
 			{
@@ -143,7 +140,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 				queryRecuperaPass = "SELECT Password FROM account WHERE Email='"+email+"'";
 				statement=connection.createStatement();
 				resultSet = statement.executeQuery(queryRecuperaPass);
-				
+
 				while (resultSet.next())
 				{
 					passwordRecuperata = resultSet.getString(1);
@@ -151,7 +148,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 
 				return passwordRecuperata;
 			}
-			
+
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -174,13 +171,13 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 
 	}
 
-	
+
 	/**
 	 * Si occupa dell'interrogazione al database per la ricerca dei dati dell'account associato all'email trovata
 	 * @param emailTrovata L'e-mail dell'utente di cui bisogna trovare il nome.
 	 * @return Una stringa che indica il nome in caso di successo, null altrimenti.
 	 */
-	
+
 	public String queryEstraiNome(String emailTrovata)
 	{
 		Connection connection = null;
@@ -199,7 +196,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 			{
 				nomeUtente = resultSet.getString(1);
 			}
-			
+
 			return nomeUtente;
 		} catch (SQLException e)
 		{
@@ -222,7 +219,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 		}
 
 	}
-	
+
 	/**
 	 * Il metodo che si occupa di controllare che un utente invalidato possa accedere al sistema.
 	 * @param dataAttuale La data attuale (in millisecondi) per verificare se la settimana di invalidazione è terminata.
@@ -230,7 +227,7 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 	 * @return 0 se l'utente può accedere al sistema, giorni Un intero che indica quanto tempo aspettare prima di poter effettuare l'accesso, -1 in caso di errore nel recupero della data.
 	 * @pre dataAttuale != null
 	 */
-	
+
 	public int queryControllaData(long dataAttuale, String emailTrovata)
 	{
 		Connection connection = null;
@@ -263,11 +260,11 @@ public class AutenticazioneManager implements AutenticazioneInterface {
 					String queryModificaTipo = "UPDATE account SET Tipo = 'R' WHERE Email ='"+emailTrovata+"'";
 					statement=connection.createStatement();
 					statement.executeUpdate(queryModificaTipo);
-					
+
 					String queryEliminaData = "UPDATE account SET DataInvalidazione = null WHERE Email ='"+emailTrovata+"'";
 					statement=connection.createStatement();
 					statement.executeUpdate(queryEliminaData);
-					
+
 					return 0;
 				}
 			}

@@ -39,7 +39,7 @@ public class RecuperaPasswordServlet extends HttpServlet {
 		session = request.getSession();
 
 		String email = request.getParameter("email");
-		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)");
+		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)|^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@unisa.it)|ubmplatform@gmail.com");
 		if(!p.matcher(email).find())
 		{
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo non è stato compilato correttamente.");

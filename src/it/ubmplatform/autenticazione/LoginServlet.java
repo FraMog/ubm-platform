@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 
 		String email = request.getParameter("username");
 		String password = request.getParameter("password");
-		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)|ubmplatform@gmail.com");
+		Pattern p = Pattern.compile("^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it)|^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@unisa.it)|ubmplatform@gmail.com");
 		Pattern q = Pattern.compile("((?=.*[0-9])(?=.*[a-zA-Z]).{8,20})");
 		
 		if(!p.matcher(email).find() || !q.matcher(password).find())
@@ -125,9 +125,15 @@ public class LoginServlet extends HttpServlet {
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
-				else
+				else if (login==-1)
 				{
 					request.setAttribute("accountNonTrovato", "true");
+					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+					rd.forward(request, response);
+				}
+				else
+				{
+					request.setAttribute("accountNonTrovato", "erroreConnessione");
 					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 					rd.forward(request, response);
 				}
@@ -142,7 +148,7 @@ public class LoginServlet extends HttpServlet {
 	 * Il metodo che si occupa di smistare la richiesta di ricerca all'{@link AutenticazioneManager}
 	 * @param emailToSearch L'email da cercare
 	 * @param passwordToSearch La password da cercare
-	 * @return 0 se l'utente loggato è l'admin, 1 se l'account è stato trovato ed è Regolare, 2 se l'account è stato trovato ed è Invalidato, 3 se l'account è stato trovato ed è Bannato, -1 in caso di errore 
+	 * @return 0 se l'utente loggato è l'admin, 1 se l'account è stato trovato ed è Regolare, 2 se l'account è stato trovato ed è Invalidato, 3 se l'account è stato trovato ed è Bannato, -1 se l'account non è presente, -2 in caso di errore 
 	 * @pre toSearch != null
 	 */
 	private int login(String emailToSearch, String passwordToSearch)

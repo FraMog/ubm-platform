@@ -35,6 +35,13 @@
 			request.removeAttribute("accountNonTrovato");
 			return false;
 		}
+		
+		if (request_account_obj == "erroreConnessione")
+		{
+			$('#erroreConnessioneModal').modal('show'); //mostro il modal
+			request.removeAttribute("accountNonTrovato");
+			return false;
+		}
 
 		if (request_invalidato_obj == "true")
 		{
@@ -104,6 +111,24 @@
 				</div>
 				<div class="modal-body">
 					<p>Account non trovato. E-mail e/o password errate.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+   	<!-- MODAL ERRORE CONNESSIONE -->
+	<div id="erroreConnessioneModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Errore</h4>
+				</div>
+				<div class="modal-body">
+					<p>Si è verificato un errore nel recupero dei dati. Riprova ad effettuare l'operazione tra alcuni minuti.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
