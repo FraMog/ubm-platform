@@ -174,7 +174,7 @@ public class AmministrazioneManager implements AmministrazioneInterface {
 			conn=DBManager.getInstance().getConnection(); 
 			String query="SELECT account.* "+  						//prendo solo gli account validi
 					"FROM account "+
-					"WHERE account.Tipo='R' "+
+					"WHERE account.Tipo='R' AND account.Tipo='D' "+
 					"ORDER BY account.Email";
 
 			s=conn.createStatement();

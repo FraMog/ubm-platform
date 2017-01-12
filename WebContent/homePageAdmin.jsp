@@ -22,24 +22,7 @@
           <h1>Benvenuto UBM-Admin!</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <hr>
-          <h2>Ultimi annunci inseriti:</h2>
-        </div>
-      </div>
       <div id="content" class="panel panel-default">
-        <div class="panel-body risultato">
-          <img src="img/annunci/libro.jpg" alt="libro" class="img-responsive col-sm-2">
-          <div class="col-sm-8">
-            <h4><a href="#">Object oriented software engineering</a> &emsp; <small> &emsp; <a href="#">Rimuovi Annuncio</a></small> </h4> 
-            <p>Libro utilizzato per il corso di ingegneria del software tenuto dalla professoresa Ferrucci. Tenuto in ottimo stato e non sottolineato</p>
-          </div>
-          <div class="col-sm-2 pull-right">
-            <h4>Prezzo: 15€</h4>
-            <p>Data pubblicazione: 02/12/2016</p>
-          </div>
-        </div>
       </div>
     </section>
    <%@ include file="includes/footer.jsp" %>
