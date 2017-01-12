@@ -74,6 +74,7 @@ public class LoginServlet extends HttpServlet {
 						session.setAttribute("password", password);
 						session.setAttribute("email", email);
 						request.getRequestDispatcher("creaProfilo.jsp").forward(request,response);
+						return;
 					}
 
 					session.setAttribute("emailLoggato", email);
