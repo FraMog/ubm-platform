@@ -65,9 +65,8 @@ public class ModificaAnnuncioServlet extends HttpServlet {
 		String condizioni = request.getParameter("condizioni");
 		String descrizione = request.getParameter("descrizione");
 		double prezzo = Double.parseDouble(request.getParameter("prezzo"));
-		Date dataPubblicazione = new Date(0);
 		
-		Annuncio toUpdate = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
+		Annuncio toUpdate = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, new java.sql.Timestamp(new java.sql.Date(0).getTime()));
 		try {
 			Annuncio oldAnnuncio = OttieniAnnuncioDaModificare(toUpdate.getId());
 			if(oldAnnuncio==null)

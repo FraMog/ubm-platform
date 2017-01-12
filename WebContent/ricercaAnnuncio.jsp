@@ -149,8 +149,8 @@
           </div>
           <div class="col-xs-12 col-sm-2 pull-right">
             <h4>Prezzo: <%= annunciPertinenti.get(i).getPrezzo()%></h4>
-            <% java.sql.Date data= annunciPertinenti.get(i).getDataPubblicazione(); %>
-            <p>Data pubblicazione: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0,10)%></p>
+            <% java.sql.Timestamp data= annunciPertinenti.get(i).getDataPubblicazione(); System.out.println(data);%>
+            <p>Data pubblicazione: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(data)%> alle <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data).substring(10,19)%></p>
           </div>
         </div>
         </div>

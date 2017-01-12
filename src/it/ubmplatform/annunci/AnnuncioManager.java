@@ -72,7 +72,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		try {
 			conn=DBManager.getInstance().getConnection(); //recupero una connessione
 			//creo la query
-			String query="INSERT INTO annuncio (Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,CURDATE())";
+			String query="INSERT INTO annuncio (Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
 			s=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, toInsert.getTitolo());
 			s.setString(2, toInsert.getCategoria());
@@ -156,7 +156,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				String descrizione = rs.getString(11);
 				double prezzo = rs.getDouble(12);
 				String email = rs.getString(13);
-				java.sql.Date dataPubblicazione = rs.getDate(14);
+				java.sql.Timestamp dataPubblicazione = rs.getTimestamp(14);
 				
 				Annuncio oldAnnuncio = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
 				
@@ -312,7 +312,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				annuncioPertinente.setId(resultSet.getInt(1));
 				annuncioPertinente.setTitolo(resultSet.getString(2));
 				annuncioPertinente.setFoto(resultSet.getString(3));
-				annuncioPertinente.setDataPubblicazione(resultSet.getDate(4));
+				annuncioPertinente.setDataPubblicazione(resultSet.getTimestamp(4));
 				annuncioPertinente.setPrezzo(resultSet.getDouble(5));
 				annuncioPertinente.setDescrizione(resultSet.getString(6));
 				annuncioPertinente.setEmail(resultSet.getString(7));
@@ -383,7 +383,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 			   annuncioDettagliato.setDescrizione(resultSet.getString(11));
 			   annuncioDettagliato.setPrezzo(resultSet.getDouble(12));
 			   annuncioDettagliato.setEmail(resultSet.getString(13));
-			   annuncioDettagliato.setDataPubblicazione(resultSet.getDate(14));
+			   annuncioDettagliato.setDataPubblicazione(resultSet.getTimestamp(14));
 			   return annuncioDettagliato;
 			}
 		} catch (SQLException e) {
@@ -421,7 +421,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 				annuncioPertinente.setId(rs.getInt(1));
 				annuncioPertinente.setTitolo(rs.getString(2));
 				annuncioPertinente.setFoto(rs.getString(3));
-				annuncioPertinente.setDataPubblicazione(rs.getDate(4));
+				annuncioPertinente.setDataPubblicazione(rs.getTimestamp(4));
 				annuncioPertinente.setPrezzo(rs.getDouble(5));
 				annuncioPertinente.setDescrizione(rs.getString(6));
 				annuncioPertinente.setEmail(rs.getString(7));

@@ -17,28 +17,28 @@ public class AnnuncioTest {
 		//testo i costruttori
 		try{
 			//dovrebbe lanciare l'eccezione per edizione negativa
-			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", -2, "Ingegneria software", "Buone", "Libro usato", 15.00, "alfonso@studenti.unisa.it", new Date(0));
+			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", -2, "Ingegneria software", "Buone", "Libro usato", 15.00, "alfonso@studenti.unisa.it", new java.sql.Timestamp(new java.sql.Date(0).getTime()));
 			fail("Dovrebbe lanciare l'eccezione per edizione negativa!");
 		}catch(BadInputAnnuncioException e){
 			assertEquals(null, annuncio);				
 		}
 		try{
 			//dovrebbe lanciare l'eccezione per prezzo negativo
-			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", 2, "Ingegneria software", "Buone", "Libro usato", -15.00, "alfonso@studenti.unisa.it", new Date(0));
+			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", 2, "Ingegneria software", "Buone", "Libro usato", -15.00, "alfonso@studenti.unisa.it", new java.sql.Timestamp(new java.sql.Date(0).getTime()));
 			fail("Dovrebbe lanciare l'eccezione per prezzo negativo!");
 		}catch(BadInputAnnuncioException e){
 			assertEquals(null, annuncio);				
 		}
 		try{
 			//dovrebbe lanciare l'eccezione per email errata
-			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", 2, "Ingegneria software", "Buone", "Libro usato", 15.00, "alfonso@yahoo.it", new Date(0));
+			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", 2, "Ingegneria software", "Buone", "Libro usato", 15.00, "alfonso@yahoo.it", new java.sql.Timestamp(new java.sql.Date(0).getTime()));
 			fail("Dovrebbe lanciare l'eccezione per email errata!");
 		}catch(BadInputAnnuncioException e){
 			assertEquals(null, annuncio);				
 		}
 		try{
 			//non dovrebbe dare eccezioni
-			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", 2, "Ingegneria software", "Buone", "Libro usato", 15.00, "alfonso@studenti.unisa.it", new Date(0));
+			annuncio = new Annuncio (1, "Vendo Libro IS", "Libro", "Informatica", "img.jpg", "1234", "Pearson", 2, "Ingegneria software", "Buone", "Libro usato", 15.00, "alfonso@studenti.unisa.it", new java.sql.Timestamp(new java.sql.Date(0).getTime()));
 		}catch(BadInputAnnuncioException e){
 			fail("Non dovrebbe lanciare l'eccezione");			
 		}
@@ -96,7 +96,7 @@ public class AnnuncioTest {
 	}
 	@Test
 	public void testGetDataPubblicazione() {
-		Date dataPubblicazione = annuncio.getDataPubblicazione();
+		java.sql.Timestamp dataPubblicazione = annuncio.getDataPubblicazione();
 		assertEquals(new Date(0), dataPubblicazione);
 	}
 	@Test
@@ -193,7 +193,7 @@ public class AnnuncioTest {
 	}
 	@Test
 	public void testSetDataPubblicazione() {
-		Date dataPubblicazione = new Date(0);
+		java.sql.Timestamp dataPubblicazione = new java.sql.Timestamp(new java.sql.Date(0).getTime());
 		annuncio.setDataPubblicazione(dataPubblicazione);
 		assertEquals(new Date(0), annuncio.getDataPubblicazione());
 	}

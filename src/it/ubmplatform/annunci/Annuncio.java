@@ -1,6 +1,6 @@
 package it.ubmplatform.annunci;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import it.ubmplatform.eccezioni.BadInputAnnuncioException;
 
@@ -27,7 +27,7 @@ public class Annuncio {
 	 * @param prezzo Il prezzo del prodotto a cui è riferito l'annuncio
 	 * @param dataPubblicazione La data di pubblicazione dell'annuncio
 	 */
-	public Annuncio(int id, String titolo, String categoria, String facolta, String foto, String isbn, String autoreLibro, int edizione, String materia, String condizioni, String descrizione, double prezzo, String email, Date dataPubblicazione) throws BadInputAnnuncioException {
+	public Annuncio(int id, String titolo, String categoria, String facolta, String foto, String isbn, String autoreLibro, int edizione, String materia, String condizioni, String descrizione, double prezzo, String email, Timestamp dataPubblicazione) throws BadInputAnnuncioException {
 		if (edizione < 0 || prezzo < 0 || email.indexOf("unisa.it") == - 1) {
 			throw new BadInputAnnuncioException();
 		}
@@ -82,7 +82,7 @@ public class Annuncio {
 	public String getAutoreLibro() {
 		return autoreLibro;
 	}
-	public Date getDataPubblicazione() {
+	public Timestamp getDataPubblicazione() {
 		return dataPubblicazione;
 	}
 	public String getIsbn() {
@@ -136,7 +136,7 @@ public class Annuncio {
 	public void setId(int id){
 		this.id=id;
 	}
-	public void setDataPubblicazione(Date dataPubblicazione) {
+	public void setDataPubblicazione(Timestamp dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 	public void setEmail(String email) {
@@ -147,5 +147,5 @@ public class Annuncio {
 	private int id, edizione;
 	private String email, titolo, descrizione, condizioni, facolta, categoria, autoreLibro, isbn, materia;
 	private double prezzo;
-	private Date dataPubblicazione;
+	private Timestamp dataPubblicazione;
 }

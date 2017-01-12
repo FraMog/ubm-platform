@@ -62,9 +62,9 @@ public class InserisciAnnuncioServlet extends HttpServlet {
 		String condizioni = request.getParameter("condizioni");
 		String descrizione = request.getParameter("descrizione");
 		double prezzo = Double.parseDouble(request.getParameter("prezzo"));
-		Date dataPubblicazione = new Date(0);
+
 		try {
-			Annuncio a = new Annuncio(0, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
+			Annuncio a = new Annuncio(0, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, new java.sql.Timestamp(new java.sql.Date(0).getTime()));
 			if(inserisciAnnuncio(a)){ //controllo se l'operazione è riuscita
 				if(foto != null)
 					saveFile(request); //se il file è stato inserito lo carico

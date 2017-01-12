@@ -179,12 +179,12 @@ $("document").ready(function(){
       <div id="containerImmagineVisualizzaAnnuncio" class="col-sm-4">
 	      <img id="logo_ubm" class="img-responsive" src="img/annunci/<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
 	      <h3 class="">Pubblicato da: <a href="VisualizzaProfiloServlet?emailToShow=<%=annuncioDettagliato.getEmail()%>" class="btn btn-info"><%=annuncioDettagliato.getEmail()%></a></h3>
-	      <h4>Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>
+	       <h4>Il: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione())%> alle <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(annuncioDettagliato.getDataPubblicazione()).substring(10,19)%></h4>
       </div>
       <%} else {%>
       <div id="containerImmagineVisualizzaAnnuncio" class="col-sm-4">
        <img id="logo_ubm" class="img-responsive" src="img/annunci/<%=annuncioDettagliato.getFoto()%>" alt="<%=annuncioDettagliato.getTitolo()%>" style="max-width:300px"/>
-      <h4>Pubblicato Il: <b><%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione()).substring(0,10)%></b></h4>    
+       <h4>Pubblicato Il: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(annuncioDettagliato.getDataPubblicazione())%> alle <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(annuncioDettagliato.getDataPubblicazione()).substring(10,19)%></h4>
        </div>
       <%} %>
         <%if (tipologiaUtenteConnesso!=null && (tipologiaUtenteConnesso.equals("admin")||(tipologiaUtenteConnesso.equals("utente")&& emailLoggato.equals(annuncioDettagliato.getEmail())))){%><%-- Un admin ed il creatore dell'annuncio possono scegliere di rimuoverlo --%>

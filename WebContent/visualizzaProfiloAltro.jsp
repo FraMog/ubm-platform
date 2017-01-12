@@ -281,11 +281,11 @@
 								Prezzo:
 								<%=annunciPertinenti.get(i).getPrezzo()%></h4>
 							<%
-								java.sql.Date data = annunciPertinenti.get(i).getDataPubblicazione();
+								java.sql.Timestamp data = annunciPertinenti.get(i).getDataPubblicazione();
 							%>
 							<p>
 								Data pubblicazione:
-								<%=new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0, 10)%></p>
+								<%=new java.text.SimpleDateFormat("dd-MM-yyyy").format(data).substring(0, 10)%> alle <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data).substring(10,19)%></p>
 						</div>
 					</div>
 				</div>

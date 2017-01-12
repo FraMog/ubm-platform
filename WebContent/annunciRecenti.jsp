@@ -12,7 +12,7 @@
   	</div>
   	<div class="col-sm-2 pull-right">
     	<h4>Prezzo: <%=a.getPrezzo() %></h4>
-    	<p>Data pubblicazione: <%= a.getDataPubblicazione()%></p>
+    	<p>Data pubblicazione: <%= new java.text.SimpleDateFormat("dd-MM-yyyy").format(a.getDataPubblicazione())%> alle <%= new java.text.SimpleDateFormat("HH:mm:ss").format(a.getDataPubblicazione()).substring(0,8)%></p>
   	</div>
 </div>
 <%}%>

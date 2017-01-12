@@ -453,7 +453,7 @@ public class ProfiloManager implements ProfiloInterface {
 				annuncioPertinente.setId(resultSet.getInt(1));
 				annuncioPertinente.setTitolo(resultSet.getString(2));
 				annuncioPertinente.setFoto(resultSet.getString(3));
-				annuncioPertinente.setDataPubblicazione(resultSet.getDate(4));
+				annuncioPertinente.setDataPubblicazione(resultSet.getTimestamp(4));
 				annuncioPertinente.setPrezzo(resultSet.getDouble(5));
 				annuncioPertinente.setDescrizione(resultSet.getString(6));
 				annuncioPertinente.setEmail(resultSet.getString(7));
