@@ -32,23 +32,27 @@ public class VisualizzaDettagliAnnuncioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Logger logger= Logger.getLogger("Logger");
 
-		int idAnnuncio= Integer.parseInt(request.getParameter("annuncioID"));
-		logger.info("annuncioID =" + idAnnuncio);
-
-
-		Annuncio annuncioDettagliato;
 		try {
-			annuncioDettagliato = visualizzaDettagliAnnuncio(idAnnuncio);
-			if(annuncioDettagliato==null){
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non è stato possibile completare la richiesta a causa di un errore interno nel server");
-			}else{
-			request.setAttribute("annuncioDettagliato", annuncioDettagliato);
-			RequestDispatcher rd= request.getRequestDispatcher("visualizzaAnnuncio.jsp");
-			rd.forward(request, response);
+			int idAnnuncio= Integer.parseInt(request.getParameter("annuncioID"));
+			logger.info("annuncioID =" + idAnnuncio);
+
+			Annuncio annuncioDettagliato;
+			try {
+				annuncioDettagliato = visualizzaDettagliAnnuncio(idAnnuncio);
+				if(annuncioDettagliato==null){
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non è stato possibile completare la richiesta a causa di un errore interno nel server"); return;
+				}else{
+					request.setAttribute("annuncioDettagliato", annuncioDettagliato);
+					RequestDispatcher rd= request.getRequestDispatcher("visualizzaAnnuncio.jsp");
+					rd.forward(request, response);
+				}
+			} catch (BadAnnuncioIdException e) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è stato possibile completare la richiesta: " + e.getMessage()); return;
 			}
-		} catch (BadAnnuncioIdException e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è stato possibile completare la richiesta: " + e.getMessage());
+		} catch (NumberFormatException n){
+			n.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è possibile cercare un annuncio con id=" + request.getParameter("annuncioID") + ". Sono possibili solo valori interi"); return;
 		}
 		
 
