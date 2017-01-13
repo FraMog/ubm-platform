@@ -160,21 +160,28 @@ public class AnnuncioManager implements AnnuncioInterface {
 				
 				Annuncio oldAnnuncio = new Annuncio(id, titolo, categoria, facolta, foto, isbn, autoreLibro, edizione, materia, condizioni, descrizione, prezzo, email, dataPubblicazione);
 				
-				conn.close();
-				ps.close();
-				rs.close();
 				
 				return oldAnnuncio;
 			}else{
-				conn.close();
-				ps.close();
-				rs.close();
-				
 				return null;
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
 			return null;
+		}
+		finally{
+			if(ps!=null)
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 		}
 	}
 
@@ -226,12 +233,22 @@ public class AnnuncioManager implements AnnuncioInterface {
 						
 				}catch(SQLException e){
 					e.printStackTrace();
-					conn.close();
-					ps.close();
 							
 					return false;
 				}
 				finally{
+					if(ps!=null)
+						try {
+							ps.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					if(conn!=null)
+						try {
+							conn.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 					conn.close();
 					ps.close();
 				}
@@ -254,6 +271,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 		ArrayList<Annuncio> annunciPertinenti = new ArrayList<Annuncio>();
 		Logger logger= Logger.getLogger("Logger");
 		Connection connection=null;
+		Statement statement=null;
 		try {
 			connection = DBManager.getInstance().getConnection();
 			String query= "SELECT ID, Titolo, Foto, DataPubblicazione, Prezzo, Descrizione, Email FROM annuncio ";
@@ -304,7 +322,7 @@ public class AnnuncioManager implements AnnuncioInterface {
 
 
 			logger.info(query);
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			ResultSet resultSet= statement.executeQuery(query);
 
 			while(resultSet.next()){
@@ -328,11 +346,18 @@ public class AnnuncioManager implements AnnuncioInterface {
 			return null;
 		}
 		finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if(statement!=null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(connection!=null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 
 		}
 
@@ -350,11 +375,12 @@ public class AnnuncioManager implements AnnuncioInterface {
 		
 		Logger logger= Logger.getLogger("Logger");
 		Connection connection=null;
+		Statement statement=null;
 		try {
 			connection = DBManager.getInstance().getConnection();
 			String query= "SELECT ID, Titolo, Categoria, Facolta, Foto, ISBN, Autore, Edizione, Materia, Condizione, Descrizione, Prezzo, Email, DataPubblicazione FROM annuncio WHERE ID="+idAnnuncio;
 			logger.info(query);
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			if (!resultSet.next() ) {
 			    throw new BadAnnuncioIdException("Non è stato trovato un annuncio con id = " + idAnnuncio + "!");
@@ -391,11 +417,18 @@ public class AnnuncioManager implements AnnuncioInterface {
 			return null;
 		}
 		finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if(statement!=null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(connection!=null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 		}
 		
 		
@@ -474,11 +507,18 @@ public class AnnuncioManager implements AnnuncioInterface {
 			return true; //ritorno true cosi che se ci sono eccezioni non rimuovo l'immagine
 		}
 		finally{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if(statement!=null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if(connection!=null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 		}
 		
 		
