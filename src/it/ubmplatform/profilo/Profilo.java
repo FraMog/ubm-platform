@@ -2,6 +2,8 @@ package it.ubmplatform.profilo;
 
 import java.util.Date;
 
+import it.ubmplatform.eccezioni.BadCreaProfiloException;
+
 /**
  * Bean Profilo che rappresenta il profilo all'interno del sistema
  * Esso contiene tutte le informazioni relative al profilo
@@ -19,8 +21,16 @@ public class Profilo {
 	 * @param interest I vari interessi dell'utente a cui � associato il profilo
 	 * @param photo La foto dell'utente a cui � associato il profilo
 	 * @param dataNascita La data di nascita dell'utente
+	 * @throws BadCreaProfiloException 
 	 */
-	public Profilo(String newEmail, String name, String surname, String residence, String phone, String interest, String photo, Date dataNascita){
+	public Profilo(String newEmail, String name, String surname, String residence, String phone, String interest, String photo, Date dataNascita) throws BadCreaProfiloException{
+		
+		if(name == null || name.length() < 1 || surname == null || surname.length() < 1
+				|| name.matches(".*\\d+.*") || surname.matches(".*\\d+.*") || 
+				newEmail.indexOf("unisa.it") == - 1 || (phone != null && phone.length()!= 0 && phone.length()!= 10)){
+			throw new BadCreaProfiloException();
+		}
+		
 		email = newEmail;
 		nome = name;
 		cognome = surname;

@@ -1,19 +1,19 @@
 package it.ubmplatform.profilo;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,6 @@ import javax.servlet.http.Part;
 import it.ubmplatform.eccezioni.BadModificaException;
 import it.ubmplatform.eccezioni.BadOldPasswordException;
 import it.ubmplatform.eccezioni.FileUploadException;
-import it.ubmplatform.eccezioni.ModificaProfiloException;
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
 import it.ubmplatform.profilo.Profilo;
@@ -32,7 +31,9 @@ import it.ubmplatform.profilo.ProfiloInterface;
 /**
  * Servlet che si occupa di gestire la modifica di un profilo
  */
+
 @WebServlet("/ModificaProfiloServlet")
+@MultipartConfig
 public class ModificaProfiloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
@@ -46,23 +47,48 @@ public class ModificaProfiloServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String img=null;
 		try{
-			img=verificaFile(request);
+			img=verificaFile(request); //controlli sull'immagine
 		} catch(FileUploadException e){
-			img = "img/default_profile.PNG";
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+			return;
 		}
+		
+		String foto;
+		if(img == null)
+			foto = request.getParameter("vecchiaFoto");
+		else
+			foto = img;
+		
+		String email = (String) request.getSession().getAttribute("emailLoggato");
 		String name=request.getParameter("nome");
+		Pattern p=Pattern.compile("^[a-zA-Z ]{1,20}$");
+		if(!p.matcher(name).find()){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo nome non � stato compilato correttamente");
+			return;
+		}
 		String surname=request.getParameter("cognome");
-		String email=request.getParameter("emailToShow");
-		String phone=request.getParameter("telefono");
-		java.util.Date date;
-		try {
-			date=new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data")); //recupero e cast data
-		} catch (ParseException e) {
-			date=null;
+		if(!p.matcher(surname).find()){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo cognome non � stato compilato correttamente");
+			return;
+		}
+		
+		String phone=request.getParameter("telefono").trim();
+		if(!Pattern.compile("^[0-9]{0}$|^[0-9]{10}$").matcher(phone).find()){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo telefono non � stato compilato correttamente");
 		}
 		String interest=request.getParameter("interessi");
 		String residence=request.getParameter("residenza");
-		System.out.println("campi: " + name + " " + surname + " " + phone +  " " + interest );
+		java.util.Date date;
+		try {
+			String date1 = request.getParameter("data");
+			if(date1.equals("gg/mm/aaaa"))
+				date = null;
+			else
+				date=new SimpleDateFormat("dd/MM/yyyy").parse(date1); //recupero e cast data
+		} catch (Exception e) {
+			date=null;
+		}
+	
 		
 		String oldP = request.getParameter("oldPassword");
 		String newP = request.getParameter("newPassword");
@@ -70,16 +96,31 @@ public class ModificaProfiloServlet extends HttpServlet {
 		
 		boolean updatePassword = false;
 		
-		if(oldP != null && oldP != "" && newP != null && newP != "" && checkP != null && checkP.equals(newP))
+		if(oldP != null && oldP.length() > 1 && newP != null && newP.length() > 1  && checkP != null && checkP.equals(newP))
 			updatePassword = true;
+		
+		if(updatePassword){
+			if(!Pattern.compile("((?=.*[0-9])(?=.*[a-zA-Z]).{8,20})").matcher(oldP).find()){
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo vecchia password non � stato compilato correttamente");
+				return;
+			}
+			if(!Pattern.compile("((?=.*[0-9])(?=.*[a-zA-Z]).{8,20})").matcher(newP).find()){
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il campo nuova password non � stato compilato correttamente");
+				return;
+			}
+			
+		}
 		
 		
 		try{
-			Profilo toUpdate = new Profilo(email, name, surname, residence, phone, interest, img, date); //eseguo il salvataggio
+			
+			Profilo toUpdate = new Profilo(email, name, surname, residence, phone, interest, foto, date); 
+			
 			if(updatePassword){
 				try{
 					modificaProfiloPassword(toUpdate, oldP, newP);
 				} catch(Throwable e){
+					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "impossibile completare la modifica");
 					return;
 				}
@@ -89,6 +130,7 @@ public class ModificaProfiloServlet extends HttpServlet {
 				try{
 					modificaProfilo(toUpdate);
 				}catch (Throwable e){
+					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "impossibile completare la modifica");
 					return;
 				}
@@ -109,13 +151,7 @@ public class ModificaProfiloServlet extends HttpServlet {
 	}
 	
 	private String verificaFile(HttpServletRequest request) throws IOException, ServletException{
-		
-		 Part filePart;
-		try {
-			filePart = request.getPart("img");
-		} catch (Exception e){
-			filePart = null;
-		}
+		final Part filePart = request.getPart("img");
 		if(filePart==null || "".equals(filePart.getSubmittedFileName().trim())) //verifica se l'immagine � stata inserita
 			return null; //se non � stata inserita restituisco null
 		String ext=filePart.getContentType();
@@ -124,7 +160,7 @@ public class ModificaProfiloServlet extends HttpServlet {
 		if(filePart.getSize()>10*1024*1024) //verifica dimensione
 			throw new FileUploadException("Le dimensioni del file superano i 10MB");
 		path = this.getServletContext().getRealPath("")+"img"+File.separator+"profilo"; //path in cui salvare l'immagine
-		fileName = request.getParameter("email")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
+		fileName = request.getParameter("emailToShow")+"_"+filePart.getSubmittedFileName(); //nome file da salvare
 		return fileName; //restituisco il nome del file
 	}
 

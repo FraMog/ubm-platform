@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@page import="it.ubmplatform.profilo.Profilo"%>
 <%@page import="it.ubmplatform.annunci.Annuncio"%>
+<%@page import="it.ubmplatform.feedback.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Date"%>
 <%@page import= "javax.servlet.RequestDispatcher" %>
@@ -51,7 +52,33 @@
 		else
 			foto = "img/profilo/default_profile.PNG";
 		
+
+		ArrayList<Feedback> listaFeedback;
+		try{
+			listaFeedback = (ArrayList<Feedback>) request.getAttribute("listaFeedback");
+		} catch (Exception e){
+			listaFeedback = new ArrayList<Feedback>();
+		}
 		
+		int mediaFeedback = this.getFeedbackAverage(listaFeedback);
+		Feedback fe;
+		
+	%>
+	
+	<%!
+	public int getFeedbackAverage(ArrayList<Feedback> lista){
+		if(lista == null)
+			return 0;
+		if(lista.size() == 0)
+			return 0;
+		
+		int sum = 0;
+
+		for(Feedback f : lista)
+			sum += f.getValutazione();
+		
+		return (sum / lista.size());
+	}
 		
 	%>
 
@@ -85,7 +112,7 @@
 					String dataNascita = " -";
 
 					if (profileToShow.getDataNascita() != null) {
-						SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+						SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 						dataNascita = f.format(profileToShow.getDataNascita());
 					}
 					
@@ -117,50 +144,58 @@
 					Interessi:
 					<%=interessi%></h3>
 			</div>
-
 			<div class="col-sm-3">
+			
 				<div>
 					<h2>Feedback</h2>
 					<img id="feedback-stars" class="img-responsive col-sm-10"
 						style="padding-left: 0px; padding-bottom: 0px"
-						src="img/feedback-stars.png" alt="valutazione feedback"
-						title="feedback average" />
+						src="img/feedback/feedback<%=mediaFeedback%>.png" alt="media valutazioni"
+						title="media valutazioni" />
 				</div>
 
 
 				<div class="col-sm-12" style="padding-left: 0px; padding-top: 0px">
-					<h4>Hai ricevuto 7 valutazioni:</h4>
+					<h4>Hai ricevuto <%= listaFeedback.size() %> valutazioni:</h4>
 				</div>
 				<div class="row">
+				<%if(listaFeedback.size() > 0) { %>
+				<% fe = listaFeedback.get(0);%>
 					<div class="col-sm-12">
 						<h4>
-							<a href="#" style="color: black"
+							<a href="VisualizzaProfiloServlet?emailToShow=<%=fe.getEmailP() %>" style="color:black;"
 								title="Vai al profilo di questo utente"
-								style="padding-left:0px; padding-bottom: 0px">Marco: <small>Giudizio:5/5</small></a>
+								style="padding-left:0px; padding-bottom: 0px">
+								<%=fe.getEmailP() %>: <small>Giudizio:<%=fe.getValutazione()%>/5</small></a>
 						</h4>
 					</div>
 
 					<div class="col-sm-12">
-						<p>Utente serio e preciso.</p>
+						<p><%=fe.getDescrizione() %></p>
 					</div>
+					<%} if(listaFeedback.size() > 1){%>
+					<% fe = listaFeedback.get(1);%>
+					
 					<div class="col-sm-12">
 						<h4>
-							<a href="#" style="color: black"
+							<a href="VisualizzaProfiloServlet?emailToShow=<%=fe.getEmailP() %>" style="color: black"
 								title="Vai al profilo di questo utente"
-								style="padding-left:0px; padding-bottom: 0px">Antonio: <small>Giudizio:4/5</small></a>
+								style="padding-left:0px; padding-bottom: 0px"><%=fe.getEmailP() %>: <small>Giudizio:<%=fe.getValutazione()%>/5</small></a>
 						</h4>
 					</div>
 
 					<div class="col-sm-12">
-						<p>Libro perfetto.</p>
+						<p><%fe.getDescrizione(); %></p>
 					</div>
-
+					<%} %>
+					<%if(listaFeedback.size() > 0) { %>
 					<div class="col-sm-12">
 						<h5>
 							<a href="modalVisualizzaFeedback.html" data-remote="false"
 								data-toggle="modal" data-target="#vediFeedbackModal">Visualizza i tuoi Feedback</a>
 						</h5>
 					</div>
+					<%} %>
 				</div>
 
 			</div>
@@ -214,7 +249,7 @@
         </div>
        
         <div class="row">
-          <div class="col-xs-12 col-sm-2"><img src="<%=annunciPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
+          <div class="col-xs-12 col-sm-2"><img src="img/profilo/<%=annunciPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
           <div class="col-xs-12 col-sm-8">
           
             <h4><a href='<%="VisualizzaDettagliAnnuncio?annuncioID=" + annunciPertinenti.get(i).getId()%>'><%= annunciPertinenti.get(i).getTitolo()%></a></h4>

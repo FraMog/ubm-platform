@@ -15,6 +15,8 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import it.ubmplatform.factory.AbstractFactory;
 import it.ubmplatform.factory.ManagerFactory;
+import it.ubmplatform.feedback.Feedback;
+import it.ubmplatform.feedback.FeedbackInterface;
 import it.ubmplatform.annunci.Annuncio;
 import it.ubmplatform.eccezioni.BadVisualizzaProfiloException;
 
@@ -51,7 +53,6 @@ public class VisualizzaProfiloServlet extends HttpServlet {
 		
 		
 		try{ 
-			//da chiarire
 			emailToShow =  request.getParameter("emailToShow");
 			System.out.println(emailToShow);
 			if(!isAdmin)
@@ -70,6 +71,11 @@ public class VisualizzaProfiloServlet extends HttpServlet {
 			profileToShow = visualizzaProfilo(emailToShow);
 			thisSession.setAttribute("profileToShow", profileToShow);
 			request.setAttribute("listaAnnunci", lista);
+			
+			// ottengo i feedback
+			
+			ArrayList<Feedback> feedback = this.getListaFeedback(emailToShow);
+			request.setAttribute("listaFeedback", feedback);
 
 			
 		}
@@ -123,6 +129,17 @@ public class VisualizzaProfiloServlet extends HttpServlet {
 		AbstractFactory f = new ManagerFactory();
 		ProfiloInterface manager = f.createProfiloManager();
 		return manager.queryGetElencoAnnunci(email);
+	}
+	/**
+	 * ************
+	 * @param email L'email del profilo da visualizzare *****************************************
+	 * @return Il profilo selezionato, null se non esiste (errore)********************************
+	 * @pre email != null
+	 */
+	private ArrayList<Feedback> getListaFeedback(String email){
+		AbstractFactory f = new ManagerFactory();
+		FeedbackInterface manager = f.createFeedbackManager();
+		return manager.queryVisualizzaFeedbacks(email);
 	}
 }
 

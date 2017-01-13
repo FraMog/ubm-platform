@@ -10,7 +10,7 @@ import it.ubmplatform.eccezioni.BadVisualizzaProfiloException;
 
 public interface ProfiloInterface {
 	
-	void queryCreaProfilo(Profilo toInsert) throws SQLException;
+	boolean queryCreaProfilo(Profilo toInsert) throws SQLException;
 	boolean queryModificaProfilo(Profilo changed) throws SQLException, BadModificaException;
 	boolean queryDisattivaProfilo(String email) throws SQLException;
 	ArrayList<Profilo> queryRicercaProfilo(String nome, String cognome, String email);

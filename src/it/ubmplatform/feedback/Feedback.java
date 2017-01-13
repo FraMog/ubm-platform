@@ -16,7 +16,7 @@ public class Feedback{
 	 * @param desc La descrizione assegnata
 	 * @param emailPublisher L'email di chi ha pubblicato il feedback
 	 * @param emailReceiver L'email di chi ha ricevuto il feedback
-	 * @throws BadInputFeedbackException Se l'input non è valido
+	 * @throws BadInputFeedbackException Se l'input non ï¿½ valido
 	 * @pre 0 &lt; val &lt; 6
 	 */
 
@@ -38,7 +38,7 @@ public class Feedback{
 	 * @param val La valutazione assegnata
 	 * @param desc La descrizione assegnata
 	 * @param emailPublisher L'email di chi ha pubblicato il feedback
-	 * @throws BadInputFeedbackException Se l'input non è valido
+	 * @throws BadInputFeedbackException Se l'input non ï¿½ valido
 	 * @pre 0 &lt; val &lt; 6
 	 */
 
@@ -53,25 +53,25 @@ public class Feedback{
 		}
 	}
 
-	int getValutazione() {
+	public int getValutazione() {
 		return valutazione;
 	}
 
 
-	String getDescrizione() {
+	public String getDescrizione() {
 		return descrizione;
 	}
 
 
-	String getEmailP() {
+	public String getEmailP() {
 		return emailP;
 	}
 
-	String getEmailR() {
+	public String getEmailR() {
 		return emailR;
 	}
 
-	Date getData() {
+	public Date getData() {
 		return data;
 	}
 
@@ -82,7 +82,7 @@ public class Feedback{
 	/**
 	 * Setto la valutazione. Se non compresa tra 1 e 5, lancia BadInputFeedbackException
 	 * @param valutazione
-	 * @throws BadInputFeedbackException Se la valutazione non è compresa tra 1 e 5
+	 * @throws BadInputFeedbackException Se la valutazione non ï¿½ compresa tra 1 e 5
 	 */
 	void setValutazione(int valutazione) throws BadInputFeedbackException {
 		if(valutazione < 0 || valutazione > 5) throw new BadInputFeedbackException();

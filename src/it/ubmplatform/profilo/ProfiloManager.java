@@ -3,8 +3,10 @@ package it.ubmplatform.profilo;
 import java.sql.*;
 import java.util.ArrayList;
 
+import it.ubmplatform.account.Account;
 import it.ubmplatform.annunci.Annuncio;
 import it.ubmplatform.database.DBManager;
+import it.ubmplatform.eccezioni.BadCreaProfiloException;
 import it.ubmplatform.eccezioni.BadEmailException;
 import it.ubmplatform.eccezioni.BadModificaException;
 import it.ubmplatform.eccezioni.BadOldPasswordException;
@@ -22,7 +24,7 @@ public class ProfiloManager implements ProfiloInterface {
 	 * @param toInsert Il profilo da inserire
 	 * @throws SQLException 
 	 */
-	public void queryCreaProfilo(Profilo toInsert) throws SQLException{
+	public boolean queryCreaProfilo(Profilo toInsert) throws SQLException{
 		Connection conn=null;
 		PreparedStatement s=null;
 		try {
@@ -42,7 +44,11 @@ public class ProfiloManager implements ProfiloInterface {
 				date=new java.sql.Date(toInsert.getDataNascita().getTime());
 			s.setDate(8, date);
 			s.execute(); //eseguo la query e resituisco true se non lancia eccezioni
-		} finally{
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}finally{
 			if(s!=null)
 				try {
 					s.close();
@@ -57,6 +63,7 @@ public class ProfiloManager implements ProfiloInterface {
 					e.printStackTrace();
 				}
 		}
+		
 	}
 	
 	/**
@@ -76,6 +83,12 @@ public class ProfiloManager implements ProfiloInterface {
 			String queryModifica = "UPDATE PROFILO "
 					+ "SET Nome = ?, Cognome = ?, Foto = ?, Residenza = ?, Interessi = ?, DataNascita = ?, Telefono = ? "
 					+ "WHERE Email = ? ";
+			
+			String queryTest = "SELECT * FROM account WHERE email = '" + toUpdate.getEmail() + "' and tipo = 'R'";
+			statement = connection.prepareStatement(queryTest);
+			ResultSet r = statement.executeQuery();
+			if(!r.next())
+				throw new BadModificaException();
 			
 			java.sql.Date date = null;
 			if(toUpdate.getDataNascita() != null)
@@ -145,11 +158,19 @@ public class ProfiloManager implements ProfiloInterface {
 			String nome = (String) toUpdate.getNome();
 			String cognome = (String) toUpdate.getCognome();
 			
-			if(date == null || nome == null || cognome == null)
+			connection = DBManager.getInstance().getConnection();
+
+			
+			String queryTest = "SELECT * FROM account WHERE email = '" + toUpdate.getEmail() + "' and tipo = 'R'";
+			statement = connection.prepareStatement(queryTest);
+			ResultSet r = statement.executeQuery();
+			if(!r.next())
+				throw new BadModificaException();
+			
+			if(nome == null || cognome == null)
 				throw new BadModificaException();
 
 			
-			connection = DBManager.getInstance().getConnection();
 			
 			String queryRicerca = "SELECT password FROM account WHERE email = '" + toUpdate.getEmail() + "'";
 			
@@ -276,7 +297,8 @@ public class ProfiloManager implements ProfiloInterface {
 			c = true;
 		if(email != null && !email.equals(""))
 			e = true;
-		ArrayList<Profilo> resultN = null, resultC = null, resultE = null, resultD = new ArrayList<>();
+		ArrayList<Profilo> resultN = null, resultC = null, resultE = null;
+		ArrayList<Account> resultD = new ArrayList<>();
 		String query1 = "SELECT nome, cognome, dataNascita, foto, residenza, email FROM profilo WHERE ";
 		String query2;
 		String query3 = "SELECT email FROM account WHERE tipo = 'D'";
@@ -287,8 +309,8 @@ public class ProfiloManager implements ProfiloInterface {
 		try{
 			rsD = statement.executeQuery(query3);
 			while(rsD.next()){
-				Profilo p = new Profilo(rsD.getString(1), "", "", null, null, null, null, null);
-				resultD.add(p);
+				Account a = new Account(rsD.getString(1), "");
+				resultD.add(a);
 			}
 		} catch (Exception t) {
 			
@@ -306,8 +328,8 @@ public class ProfiloManager implements ProfiloInterface {
 
 			if(resultE.size() > 0 && resultD.size() > 0){
 				for (Profilo p1 : resultE) {
-					for(Profilo p2 : resultD){
-						if(cfrProfilo(p1, p2))
+					for(Account p2 : resultD){
+						if(cfrProfiloAccount(p1, p2))
 							resultE.remove(p1);
 					}
 				}
@@ -326,8 +348,8 @@ public class ProfiloManager implements ProfiloInterface {
 
 			if(!c){
 				for (Profilo p1 : resultN) {
-					for(Profilo p2 : resultD){
-						if(cfrProfilo(p1, p2))
+					for(Account p2 : resultD){
+						if(cfrProfiloAccount(p1, p2))
 							resultN.remove(p1);
 					}
 				}
@@ -346,8 +368,8 @@ public class ProfiloManager implements ProfiloInterface {
 
 			if(!n){
 				for (Profilo p1 : resultC) {
-					for(Profilo p2 : resultD){
-						if(cfrProfilo(p1, p2))
+					for(Account p2 : resultD){
+						if(cfrProfiloAccount(p1, p2))
 							resultC.remove(p1);
 					}
 				}
@@ -365,8 +387,8 @@ public class ProfiloManager implements ProfiloInterface {
 		
 
 		for (Profilo p1 : result) {
-			for(Profilo p2 : resultD){
-				if(cfrProfilo(p1, p2))
+			for(Account p2 : resultD){
+				if(cfrProfiloAccount(p1, p2))
 					result.remove(p1);
 			}
 		}
@@ -412,7 +434,13 @@ public class ProfiloManager implements ProfiloInterface {
 				java.util.Date dataNascita=null;
 				if(dataNascita1!=null)
 					dataNascita = new Date(dataNascita1.getTime());
-				return new Profilo(email, nome, cognome, residenza, telefono, interessi, foto, dataNascita);
+				Profilo p;
+				try{
+					p=new Profilo(email, nome, cognome, residenza, telefono, interessi, foto, dataNascita);
+				} catch (Exception b){
+					p=null;
+				}
+				return p;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -487,13 +515,24 @@ public class ProfiloManager implements ProfiloInterface {
 			String foto = rs.getString(4);
 			String residence = rs.getString(5);
 			String email = rs.getString(6);
-			Profilo p = new Profilo(email, name, surname, residence, "", "", foto, date);
+			Profilo p;
+			try{
+				p = new Profilo(email, name, surname, residence, "", "", foto, date);
+			} catch (Exception b){
+				p = null;
+			} 
 			result.add(p);
 		}
 		return result;
 	}
 	
 	private boolean cfrProfilo(Profilo p1, Profilo p2){
+		if( p1.getEmail().equals(p2.getEmail()) )
+				return true;
+		return false;
+	}
+	
+	private boolean cfrProfiloAccount(Profilo p1, Account p2){
 		if( p1.getEmail().equals(p2.getEmail()) )
 				return true;
 		return false;

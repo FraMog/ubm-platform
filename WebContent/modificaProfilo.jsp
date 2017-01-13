@@ -29,7 +29,7 @@
 	
 	String fotoPath = "img/profilo/default_profile.PNG";
 	if(profileToUpdate.getFoto()!=null)
-		fotoPath = profileToUpdate.getFoto();
+		fotoPath = "img/profilo/"+profileToUpdate.getFoto();
 	
 %>
   <body>
@@ -47,7 +47,7 @@
       <div class="col-sm-12">
        	<div class="panel panel-default">
        		<div class="panel-body">
-       			<form id="formProfilo" class="form-horizontal" action="ModificaProfiloServlet" method="post" onclick="">
+       			<form id="formProfilo" class="form-horizontal" enctype="multipart/form-data" action="ModificaProfiloServlet" method="post" onclick="">
        				<div class="form-group col-sm-2">
        					<img id="foto" class="img-responsive" src="<%=fotoPath %>" style="width:150px"/>
 	    				<label class="btn btn-info btn-file" style="margin-top:5px;margin-left:20px">Foto profilo<input class="btn btn-primary" type="file" name="img" id="img" accept=".jpg,.png,.jpg,.jpeg" style="display:none"/></label>
@@ -67,6 +67,7 @@
 	    				</script>
 	    			</div>
 	    			<div class="col-sm-10">
+	    			<input type="hidden" name="vecchiaFoto" value="<%=profileToUpdate.getFoto()%>">
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2" for="nome">Nome: *</label>
 	    				<div class="col-sm-8"><input class="form-control" type="text" name="nome" value="<%=profileToUpdate.getNome() %>" id="nome" required="required" pattern="[A-Z a-z] {1-20}" title="Il nome deve contenere al più 20 lettere"/></div>
@@ -102,10 +103,10 @@
 	    				<div class="col-sm-8"><input class="form-control" type="text" name="telefono" value="<%=profileToUpdate.getTelefono() %>" id="telefono" pattern="[0-9]{10}" title="Questo campo deve contenere 10 numeri"/></div>
 	    			</div>
 	    			<% 
-	    			String dataNascita = " -";
+	    			String dataNascita = "gg/mm/aaaa";
 
 					if (profileToUpdate.getDataNascita() != null) {
-						SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+						SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 						dataNascita = f.format(profileToUpdate.getDataNascita());
 					}
 					%>

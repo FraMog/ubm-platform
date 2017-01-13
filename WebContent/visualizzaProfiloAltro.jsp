@@ -5,6 +5,8 @@
 <%@page import="it.ubmplatform.annunci.Annuncio"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="it.ubmplatform.feedback.*"%>
+
 
 
 <!DOCTYPE html>
@@ -42,23 +44,13 @@
 </head>
 <body>
 
+	<% if(session.getAttribute("user").equals("admin")){%>
+    	<%@ include file="includes/navbarAdmin.jsp" %>
+    <%} else {%>
+    	<%@ include file="includes/navbarLoggato.jsp" %>
+    <%} %>
+    <%@ include file="includes/sideBar.jsp" %>
 	<%
-		if (session.getAttribute("user").equals("admin")) {
-	%>
-	<%@ include file="includes/navbarAdmin.jsp"%>
-	<%
-		} else if (session.getAttribute("user") != null) {
-	%>
-	<%@ include file="includes/navbarLoggato.jsp"%>
-	<%
-		} else {
-			response.sendRedirect("index.jsp");
-		}
-	%>
-	<%@ include file="includes/sideBar.jsp"%>
-	<%
-		//request.setAttribute("ProfileToShow", prof);
-		//Profilo profileToShow = (Profilo) request.getAttribute("ProfileToShow");
 		Profilo profileToShow = null;
 		try {
 			profileToShow = (Profilo) request.getSession().getAttribute("profileToShow");
@@ -71,9 +63,36 @@
 		}
 		String foto;
 		if (profileToShow.getFoto() != null)
-			foto = profileToShow.getFoto();
+			foto = "img/profilo/"+profileToShow.getFoto();
 		else
 			foto = "img/profilo/default_profile.PNG";
+		ArrayList<Feedback> listaFeedback;
+		try{
+			listaFeedback = (ArrayList<Feedback>) request.getAttribute("listaFeedback");
+		} catch (Exception e){
+			listaFeedback = new ArrayList<Feedback>();
+		}
+		
+		int mediaFeedback = this.getFeedbackAverage(listaFeedback);
+		Feedback fe;
+		%>
+		
+			<%!
+		public int getFeedbackAverage(ArrayList<Feedback> lista){
+			if(lista == null)
+				return 0;
+			
+			if(lista.size() == 0)
+				return 0;
+			
+			int sum = 0;
+	
+			for(Feedback f : lista)
+				sum += f.getValutazione();
+			
+			return (sum / lista.size());
+		}
+		
 	%>
 
 	<section class="col-sm-10" id="section">
@@ -98,7 +117,7 @@
 
 					if (profileToShow.getDataNascita() != null) {
 						try {
-							SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+							SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 							dataNascita = f.format(profileToShow.getDataNascita());
 						} catch (Exception e) {
 							dataNascita = " -";
@@ -136,54 +155,60 @@
 					<h2>Feedback</h2>
 					<img id="feedback-stars" class="img-responsive col-sm-10"
 						style="padding-left: 0px; padding-bottom: 0px"
-						src="img/feedback-stars.png" alt="valutazione feedback"
+						src="img/feedback/feedback<%=mediaFeedback%>.png" alt="valutazione feedback"
 						title="feedback average" />
 				</div>
 				<div class="col-sm-12" style="padding-left: 0px; padding-top: 0px">
-					<h4><%=profileToShow.getNome()%>
-						ha 7 valutazioni:
-					</h4>
+					<h4><%=profileToShow.getNome() %> ha ricevuto <%= listaFeedback.size() %> valutazioni:</h4>
 				</div>
 				<div class="row">
+				<%if(listaFeedback.size() > 0) { %>
+				<% fe = listaFeedback.get(0);%>
 					<div class="col-sm-12">
 						<h4>
-							<a href="#" style="color: black"
+							<a href="VisualizzaProfiloServlet?emailToShow=<%=fe.getEmailP() %>" style="color: black"
 								title="Vai al profilo di questo utente"
-								style="padding-left:0px; padding-bottom: 0px">Marco: <small>Giudizio:5/5</small></a>
+								style="padding-left:0px; padding-bottom: 0px">
+								<%=fe.getEmailP() %>: <small>Giudizio:<%=fe.getValutazione()%>/5</small></a>
 						</h4>
 					</div>
 
 					<div class="col-sm-12">
-						<p>Utente serio e preciso.</p>
+						<p><%=fe.getDescrizione() %></p>
 					</div>
+					<%} if(listaFeedback.size() > 1){%>
+					<% fe = listaFeedback.get(1);%>
 					<div class="col-sm-12">
 						<h4>
-							<a href="#" style="color: black"
+							<a href="VisualizzaProfiloServlet?emailToShow=<%=fe.getEmailP() %>" style="color: black"
 								title="Vai al profilo di questo utente"
-								style="padding-left:0px; padding-bottom: 0px">Antonio: <small>Giudizio:4/5</small></a>
+								style="padding-left:0px; padding-bottom: 0px"><%=fe.getEmailP() %>: <small>Giudizio:<%=fe.getValutazione()%>/5</small></a>
 						</h4>
 					</div>
 
 					<div class="col-sm-12">
-						<p>Libro perfetto.</p>
+						<p><%fe.getDescrizione(); %></p>
 					</div>
-
+					<%} %>
+					<%if(listaFeedback.size() > 0) { %>
 					<div class="col-sm-12">
 						<!-- data-remote = false non mi fa caricare direttamente il modal al click (deprecato) -->
 						<h5>
 							<a href="modalVisualizzaFeedback.html" data-remote="false"
 								data-toggle="modal" data-target="#vediFeedbackModal">Visualizza
-								tutti i Feedback</a>
+								tutti i Feedback di <%=profileToShow.getNome() %></a>
 						</h5>
 					</div>
+					<%} %>
 					<div class="col-sm-12">
 						<h5>
-							Hai fatto affari con Giovanni? <a data-toggle="modal"
-								data-target="#modificaFeedbackModal">Modifica un Feedback!</a>
-						</h5>
-						<h5>
-							<a data-toggle="modal" data-target="#inserisciFeedbackModal">Inserisci
+							Hai fatto affari con <%=profileToShow.getNome() %>? <a data-toggle="modal" data-target="#inserisciFeedbackModal">Inserisci
 								un Feedback!</a>
+						</h5>
+						
+						<h5>
+							<a data-toggle="modal"
+								data-target="#modificaFeedbackModal">Modifica un Feedback!</a>
 						</h5>
 					</div>
 					
@@ -275,7 +300,7 @@
 					%>
 					<div class="row">
 						<div class="col-xs-12 col-sm-2">
-							<img src="<%=annunciPertinenti.get(i).getFoto()%>" alt="Foto"
+							<img src="img/annunci/<%=annunciPertinenti.get(i).getFoto()%>" alt="Foto"
 								class="img-responsive center-block modalImageClasse">
 						</div>
 						<div class="col-xs-12 col-sm-8">
