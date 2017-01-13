@@ -245,7 +245,7 @@
         </div>
        
         <div class="row">
-          <div class="col-xs-12 col-sm-2"><img src="img/profilo/<%=annunciPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
+          <div class="col-xs-12 col-sm-2"><img src="img/annunci/<%=annunciPertinenti.get(i).getFoto() %>" alt="Foto" class="img-responsive center-block modalImageClasse"></div>
           <div class="col-xs-12 col-sm-8">
           
             <h4><a href='<%="VisualizzaDettagliAnnuncio?annuncioID=" + annunciPertinenti.get(i).getId()%>'><%= annunciPertinenti.get(i).getTitolo()%></a></h4>
