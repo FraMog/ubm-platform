@@ -1,7 +1,5 @@
 //all'attivamento del modal inserisci feedback
 $('#inserisciFeedbackModal').on('show.bs.modal', function(){
-	//svuoto il div del logger
-	$('#insertLogger').text("");
 	
 	var emailR = $("#emailR").text();
 	
@@ -53,15 +51,37 @@ function checkNotExistsFeedback(emailR){
 		if(status == 'success'){
 			//tutto ok, non ho trovato il feedback
 			if(text.state != "error"){
+				//allargo la colonna da col-sm-6 a 9 per il logger 
+				//perchè non ho il pulsante inserisci (nascosto)
+				//diminuisco invece quello per i pulsanti
+				
+				$('#buttonsInserisci').attr('class', 'col-sm-3');
+				$('#insertLogger').attr('class', 'col-sm-9');
+				
 				//qualche problema
 				$('#insertLogger').text("E' stato riscontrato un problema! Hai già inserito un feedback a questo utente?");
 				$('#insertingFeedback').hide();
 				$('#buttonInserisci').hide();
 			}
 		}else{
+			//allargo la colonna da col-sm-6 a 9 per il logger 
+			//perchè non ho il pulsante inserisci (nascosto)
+			//diminuisco invece quello per i pulsanti
+			
+			$('#buttonsInserisci').attr('class', 'col-sm-3');
+			$('#insertLogger').attr('class', 'col-sm-9');
+			
 			$('#insertLogger').text("Problema con la richiesta!");
 			$('#insertingFeedback').hide();
 			$('#buttonInserisci').hide();
 		}
 	})
 }
+
+
+//l'evento per la pulizia alla chiusura del modal
+$('#insertFeedbackModal').on('hidden.bs.modal', function(){
+	//svuoto il div del logger
+	$('#insertLogger').text("");
+	
+})

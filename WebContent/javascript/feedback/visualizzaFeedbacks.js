@@ -4,8 +4,9 @@
 //si occupa di ottenere tutti i feedback data un'email
 //la risposta (text) verrà data in json, convertita, e verra chiamata una funzione
 //che si occupa di stilare i feedback nel modal
-$(document).ready(function(){
+$('#vediFeedbackModal').on('show.bs.modal',function(){
 
+	
 	var emailR = $("#emailR").text();
 	if(emailR != null && emailR != undefined){
 		$.get("VisualizzaFeedbackServlet?emailR=" + emailR, function(text, status){
@@ -14,16 +15,16 @@ $(document).ready(function(){
 				var feedbacks = JSON.parse(text);
 
 				if(feedbacks.state == 'feedbackerror'){
-					$('#modalBody').text("Problema con l'inserimento nel database!");
+					$('#viewFeedbackLogger').text("Problema con l'inserimento nel database!");
 				}else if(feedbacks.state == 'emailerror'){
-					$('#modalBody').text("Problema con il recupero dell'email!");
+					$('#viewFeedbackLogger').text("Problema con il recupero dell'email!");
 				}else if(feedbacks.state == 'nosession'){
-					$('#modalBody').text("Devi essere loggato al sistema!");
+					$('#viewFeedbackLogger').text("Devi essere loggato al sistema!");
 				}else{
 					//nessun feedback presente
 
 					if(feedbacks.length == 0){
-						$('#modalBody').text("Non sono presenti feedback! Se hai fatto già acquisti con l'utente, sii il primo ad inserirne uno!");
+						$('#viewFeedbackLogger').text("Non sono presenti feedback! Se hai fatto già acquisti con l'utente, sii il primo ad inserirne uno!");
 					}else{
 						mostraFeedbacks(feedbacks);
 					}
@@ -32,7 +33,7 @@ $(document).ready(function(){
 
 			}
 		})
-	}else $('#modalBody').text("Problema con il recupero dell'email!");
+	}else $('#viewFeedbackLogger').text("Problema con il recupero dell'email!");
 })
 
 function mostraFeedbacks(feedbacks){
@@ -130,3 +131,8 @@ function mostraFeedbacks(feedbacks){
 	 	</li>
 	 */
 }
+
+//l'evento per la pulizia alla chiusura del modal
+$('#vediFeedbackModal').on('hidden.bs.modal', function(){
+	$('#listFeedback').text("");
+})

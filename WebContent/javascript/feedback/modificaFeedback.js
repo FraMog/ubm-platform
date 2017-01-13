@@ -1,7 +1,5 @@
 $("#modificaFeedbackModal").on('show.bs.modal', function(){
-	//svuoto il div del logger
-	$('#changeLogger').text("");
-
+	
 	//assegno l'evento che toglie il "non modificabile" se l'utente cambia testo
 	$('#changingDescrizione').on('click', function(){
 		$(this).attr("readonly", false);
@@ -35,18 +33,46 @@ function recuperaFeedback(emailR){
 
 		if(status == 'success'){
 			if(text.state == "error"){
+				//allargo la colonna da col-sm-6 a 9 per il logger 
+				//perchè non ho il pulsante modifica (nascosto)
+				//diminuisco invece quello per i pulsanti
+				
+				$('#buttonsChange').attr('class', 'col-sm-3');
+				$('#changeLogger').attr('class', 'col-sm-9');
+				
 				$('#changeLogger').text("Impossibile recuperare il feedback da modificare!");
 				$('#changingFeedback').hide();
 				$('#buttonModifica').hide();
 			}else if(text.state == "requesterror"){
+				//allargo la colonna da col-sm-6 a 9 per il logger 
+				//perchè non ho il pulsante modifica (nascosto)
+				//diminuisco invece quello per i pulsanti
+				
+				$('#buttonsChange').attr('class', 'col-sm-3');
+				$('#changeLogger').attr('class', 'col-sm-9');
+				
 				$('#changeLogger').text("Errore con la richiesta!");
 				$('#changingFeedback').hide();
 				$('#buttonModifica').hide();
 			}else if(text.state == "nosession"){
+				//allargo la colonna da col-sm-6 a 9 per il logger 
+				//perchè non ho il pulsante modifica (nascosto)
+				//diminuisco invece quello per i pulsanti
+				
+				$('#buttonsChange').attr('class', 'col-sm-3');
+				$('#changeLogger').attr('class', 'col-sm-9');
+				
 				$('#changeLogger').text("Devi essere loggato al sistema!");
 				$('#changingFeedback').hide();
 				$('#buttonModifica').hide();
 			}else if(text.state == "emailerror"){
+				//allargo la colonna da col-sm-6 a 9 per il logger 
+				//perchè non ho il pulsante modifica (nascosto)
+				//diminuisco invece quello per i pulsanti
+				
+				$('#buttonsChange').attr('class', 'col-sm-3');
+				$('#changeLogger').attr('class', 'col-sm-9');
+				
 				$('#changeLogger').text("Problema con il recupero dell'email!");
 				$('#changingFeedback').hide();
 				$('#buttonModifica').hide();
@@ -57,6 +83,13 @@ function recuperaFeedback(emailR){
 
 			}
 		}else{
+			//allargo la colonna da col-sm-6 a 9 per il logger 
+			//perchè non ho il pulsante modifica (nascosto)
+			//diminuisco invece quello per i pulsanti
+			
+			$('#buttonsChange').attr('class', 'col-sm-3');
+			$('#changeLogger').attr('class', 'col-sm-9');
+			
 			$('#changeLogger').text("Problema con la richiesta!");
 			$('#changingFeedback').hide();
 			$('#buttonModifica').hide();
@@ -93,3 +126,11 @@ function modificaFeedback(valutazione, descrizione, emailR){
 		}else $('#changeLogger').text("Problema di connessione al server!");
 	})
 }
+
+
+//l'evento per la pulizia alla chiusura del modal
+$('#modificaFeedbackModal').on('hidden.bs.modal', function(){
+	//svuoto il div del logger
+	$('#changeLogger').text("");
+	
+})
