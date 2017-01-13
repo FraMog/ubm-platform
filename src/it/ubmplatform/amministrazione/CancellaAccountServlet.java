@@ -103,8 +103,8 @@ public class CancellaAccountServlet extends HttpServlet {
 		String from = "ubmplatform@gmail.com";
 		String host = "smtp.gmail.com";
 		String subject ="Sei stato Bannato da UBM-Platform";
-		String messageText ="Sei stato bannato definitivamente dalla piattaforma UBM-Platform in seguito al tuo comportamento inadatto riguardo le tue publicazioni sulla piattaforma. "+
-				"Non ti è più possibile accedere alla suddetta piattaforma.";
+		String messageText ="Sei stato bannato definitivamente dalla piattaforma UBM-Platform in seguito al tuo comportamento inadatto riguardo le tue pubblicazioni. "+
+				"Non ti è più possibile accedere alla suddetta.";
 		final String username="ubmplatform@gmail.com";
 		final String password="UbmPlatform2016";
 

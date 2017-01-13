@@ -87,7 +87,7 @@ public class InvalidaAccountServlet extends HttpServlet {
 		String from = "ubmplatform@gmail.com";
 		String host = "smtp.gmail.com";
 		String subject ="Sei stato Invalidato da UBM-Platform";
-		String messageText ="Sei stato invalidato dalla piattaforma UBM-Platform in seguito al tuo comportamento inadatto riguardo le tue publicazioni sulla piattaforma. "+
+		String messageText ="Sei stato invalidato dalla piattaforma UBM-Platform in seguito al tuo comportamento inadatto riguardo le tue pubblicazioni. "+
 		"Potrai riaccedere ad essa soltanto tra 7 giorni.";
 		final String username="ubmplatform@gmail.com";
 		final String password="UbmPlatform2016";
