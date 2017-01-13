@@ -31,10 +31,10 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li><a href="LogoutServlet" style="font-size:110%">UBM Platform</a></li>
+            <li><a href="index.jsp" style="font-size:110%">UBM Platform</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="LogoutServlet"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="index.jsp"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
       </div>

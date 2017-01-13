@@ -1,6 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@page import="java.sql.Date"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
 <%@page import="it.ubmplatform.profilo.Profilo"%>
 <%@page import="it.ubmplatform.annunci.Annuncio"%>
 <%@page import="java.util.ArrayList"%>
@@ -18,28 +17,16 @@
 <meta name="viewport"
 	content="width=device-width, shrink-to-fit=no, initial-scale=1" />
 <link rel="stylesheet" href="css/stile.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="javascript/amministrazione/rimuoviAnnuncio.js"></script>
 <script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
-<script src="javascript/annunci/rimuoviAnnuncioUtente.js"></script>
-<script
-	src="javascript/annunci/settaIdAnnuncioDaRimuovereAmministratore.js"></script>
+<script	src="javascript/annunci/settaIdAnnuncioDaRimuovereAmministratore.js"></script>
 <script src="javascript/annunci/settaIdAnnuncioDaRimuovereUtente.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
-<script type="text/javascript"
-	src="javascript/annunci/loadlightboxImmagini.js"></script>
-	<script type="text/JavaScript" src="javascript/admin/gestioneAdmin.js"></script>
+<script type="text/javascript"	src="http://botmonster.com/jquery-bootpag/jquery.bootpag.js"></script>
+<script type="text/javascript"	src="javascript/annunci/loadlightboxImmagini.js"></script>
+<script type="text/JavaScript" src="javascript/admin/gestioneAdmin.js"></script>
 
 </head>
 <body>
