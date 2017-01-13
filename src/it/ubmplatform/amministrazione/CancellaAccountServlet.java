@@ -38,30 +38,30 @@ public class CancellaAccountServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		System.out.println("l email è "+email);
 		String decisione=request.getParameter("eliminaFeedback");
-		
-		boolean valoreCancella=cancellaAccount(email);
-		if(valoreCancella){
+
 			boolean invio=sendMail(email);
-			valoreAnnuncio=rimuoviAnnuncioAccountCancellato(email);
-			
-			if(decisione.equals("true")){
-			valoreFeedback=cancellaFeedback(email);
+			if(invio){
+				valoreAnnuncio=rimuoviAnnuncioAccountCancellato(email);
+				boolean valoreCancella=cancellaAccount(email);
+
+				if(decisione.equals("true")){
+					valoreFeedback=cancellaFeedback(email);
+				}
+				if(valoreCancella && valoreFeedback){
+					request.removeAttribute("email");
+					response.setContentType("text/html;charset=UTF-8");
+					response.getWriter().write("true");  
+				} 
+				else{
+					throw new OperationFailedException("La cancellazione dell'account non ha avuto successo, riprova più tardi");
+				}
 			}
-			if(valoreCancella && valoreFeedback){
-	    		request.removeAttribute("email");
-	    		response.setContentType("text/html;charset=UTF-8");
-	            response.getWriter().write("true");  
-			} 
-			else{
-				throw new OperationFailedException("La cancellazione dell'account non ha avuto successo, riprova più tardi");
-			}
-		}
 		else{
-    		response.setContentType("text/html;charset=UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().write("false");
 		}
-		
-	   	
+
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,19 +78,19 @@ public class CancellaAccountServlet extends HttpServlet {
 		try {
 			AbstractFactory factory = new ManagerFactory();
 			AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
-		return managerAmministrazione.queryCancellaAccount(email);
+			return managerAmministrazione.queryCancellaAccount(email);
 		} catch (Exception e) {
 			logger.info(" service error " + e);
 			return true;
 		}
 	}
-	
+
 	private boolean cancellaFeedback(String email){
 		AbstractFactory factory = new ManagerFactory();
 		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
 		return managerAmministrazione.queryCancellaFeedback(email);
 	}
-	
+
 	private boolean rimuoviAnnuncioAccountCancellato(String email){
 		AbstractFactory factory = new ManagerFactory();
 		AmministrazioneInterface managerAmministrazione = factory.createAmministrazioneManager();
@@ -104,37 +104,37 @@ public class CancellaAccountServlet extends HttpServlet {
 		String host = "smtp.gmail.com";
 		String subject ="Sei stato Bannato da UBM-Platform";
 		String messageText ="Sei stato bannato definitivamente dalla piattaforma UBM-Platform in seguito al tuo comportamento inadatto riguardo le tue publicazioni sulla piattaforma. "+
-		"Non ti è più possibile accedere alla suddetta piattaforma.";
+				"Non ti è più possibile accedere alla suddetta piattaforma.";
 		final String username="ubmplatform@gmail.com";
 		final String password="UbmPlatform2016";
-		
+
 		Properties props = new Properties();
-		
+
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
-		
+
 		Session sessionMail = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
 			}
-		  });
-		
+		});
+
 		try {
 			Message message = new MimeMessage(sessionMail);
 			sessionMail.setDebug(true);
 
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(to));
+					InternetAddress.parse(to));
 			message.setSubject(subject);
 			message.setText(messageText);
- 
+
 			Transport.send(message);
 			return true;
- 
- 
+
+
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
