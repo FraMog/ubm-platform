@@ -15,10 +15,12 @@ function cancellaAccount(email){
 				location.reload(true);
 			}
 			else{
-				alert("Non è possibile eliminare l'account selezionato si è verificato un errore.")
+				$('#cancellaAccountModal').modal("hide");
+				$('#operazioneFallitaModal').modal("show");
 			}
 		}).fail(function() {
-			alert("Non è possibile eliminare l'account selezionato si è verificato un errore.");
+			$('#cancellaAccountModal').modal("hide");
+			$('#operazioneFallitaModal').modal("show");
 		});
 	});
 }	
@@ -41,10 +43,12 @@ function invalidaAccount(email){
 				location.reload(true);
 			}
 			else{
-				alert("Non è possibile invalidare l'account selezionato si è verificato un errore.")
+				$('#invalidaAccountModal').modal("hide");
+				$('#operazioneFallitaModal').modal("show");
 			}
 		}).fail(function() {
-			alert("Non è possibile invalidare l'account selezionato si è verificato un errore.");
+			$('#invalidaAccountModal').modal("hide");
+			$('#operazioneFallitaModal').modal("show");
 		});
 	});
 }
@@ -72,10 +76,12 @@ function cancellaAccountA(email){
 				location.replace("homePageAdmin.jsp");
 			}
 			else{
-				alert("Non è possibile eliminare l'account selezionato si è verificato un errore.")
+				$('#cancellaAccountModal').modal("hide");
+				$('#operazioneFallitaModal').modal("show");
 			}
 		}).fail(function() {
-			alert("Non è possibile eliminare l'account selezionato si è verificato un errore.");
+			$('#cancellaAccountModal').modal("hide");
+			$('#operazioneFallitaModal').modal("show");
 		});
 	});
 }	
@@ -97,10 +103,12 @@ function invalidaAccountA(email){
 				location.replace("homePageAdmin.jsp");
 			}
 			else{
-				alert("Non è possibile invalidare l'account selezionato si è verificato un errore.")
+				$('#invalidaAccountModal').modal("hide");
+				$('#operazioneFallitaModal').modal("show");
 			}
 		}).fail(function() {
-			alert("Non è possibile invalidare l'account selezionato si è verificato un errore.");
+			$('#invalidaAccountModal').modal("hide");
+			$('#operazioneFallitaModal').modal("show");
 		});
 	});
 }
