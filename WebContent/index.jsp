@@ -113,8 +113,8 @@
    	<!-- MODAL NON TROVATO -->
 	<div id="nonTrovatoModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-danger">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Errore</h4>
 				</div>
@@ -122,7 +122,7 @@
 					<p>Account non trovato. E-mail e/o password errate.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>
@@ -131,8 +131,8 @@
    	<!-- MODAL ERRORE CONNESSIONE -->
 	<div id="erroreConnessioneModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-danger">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Errore</h4>
 				</div>
@@ -140,7 +140,7 @@
 					<p>Si è verificato un errore nel recupero dei dati. Riprova ad effettuare l'operazione tra alcuni minuti.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>
@@ -149,16 +149,16 @@
 	<!-- MODAL INVALIDATO -->
 	<div id="invalidatoModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-warning">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Errore</h4>
+					<h4 class="modal-title">Attenzione</h4>
 				</div>
 				<div class="modal-body">
 					<p>Il tuo account è stato invalidato per una settimana. Riprova ad accedere tra <%=request_giorni%> giorno/i.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-warning" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>
@@ -167,8 +167,8 @@
 	<!-- MODAL BANNATO -->
 	<div id="bannatoModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-danger">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Errore</h4>
 				</div>
@@ -176,7 +176,7 @@
 					<p>Il tuo account è stato bannato dall'ammministratore: non puoi accedere alla piattaforma.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>
@@ -185,8 +185,8 @@
 	<!-- MODAL DATA INVALIDAZIONE NON TROVATA -->
 	<div id="dataInvalidazioneNonTrovata" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-danger">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Errore</h4>
 				</div>
@@ -194,7 +194,7 @@
 					<p>Il tuo account è stato invalidato dall'ammministratore, ma c'è un problema nel recupero della data. Riprova ad accedere alla piattaforma.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>
@@ -203,8 +203,8 @@
 	<!-- MODAL EMAIL INVIATA -->
 	<div id="emailInviata" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-info">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Avviso</h4>
 				</div>
@@ -212,7 +212,7 @@
 					<p>Ti abbiamo inviato una e-mail contenente la password per effettuare l'accesso alla piattaforma. Riprova ad autenticarti.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-info" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>

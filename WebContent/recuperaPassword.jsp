@@ -69,8 +69,8 @@
 	<!-- MODAL EMAILNONINVIATA -->
 	<div id="emailNonInviata" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content panel-danger">
+				<div class="modal-header panel-heading">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Errore</h4>
 				</div>
@@ -79,7 +79,7 @@
 						inserire l'e-mail correttamente.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">0K</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">0K</button>
 				</div>
 			</div>
 		</div>
