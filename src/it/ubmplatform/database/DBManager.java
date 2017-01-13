@@ -8,7 +8,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class DBManager {
 
 	private static DBManager manager=new DBManager();
-	private static BasicDataSource datasource;
+	private BasicDataSource datasource;
 	
 	private DBManager(){
 		datasource=new BasicDataSource();
