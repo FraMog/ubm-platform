@@ -301,7 +301,7 @@ public class ProfiloManager implements ProfiloInterface {
 		ArrayList<Account> resultD = new ArrayList<>();
 		String query1 = "SELECT nome, cognome, dataNascita, foto, residenza, email FROM profilo WHERE ";
 		String query2;
-		String query3 = "SELECT email FROM account WHERE tipo = 'D'";
+		String query3 = "SELECT email FROM account WHERE tipo = 'D' OR tipo = 'B' ";
 		ResultSet rsD;
 		ResultSet rs;
 		
