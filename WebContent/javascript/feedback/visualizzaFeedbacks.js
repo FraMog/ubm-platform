@@ -53,7 +53,7 @@ function mostraFeedbacks(feedbacks){
 		var spanEmail = document.createElement('span');
 		spanEmail.className = "col-sm-8";
 		spanEmail.innerHTML = "Pubblicato da:<p>" + feedbacks[i].emailP + "</p>";
-		spanEmail.style.border = "medium outset black";
+		//spanEmail.style.border = "thin outset black";
 			
 		var spanData = document.createElement('span');
 		spanData.className = "col-sm-4";
