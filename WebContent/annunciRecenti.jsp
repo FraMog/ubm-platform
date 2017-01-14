@@ -5,7 +5,7 @@
 
 <%for(Annuncio a: lista){ %>
 <div class="panel-body risultato" id="annunciHome">
-	<img src="img/annunci/<%=a.getFoto()%>" alt="libro" class="img-responsive col-sm-2">
+	<img src="img/annunci/<%=a.getFoto()%>" alt="libro" class="img-responsive col-sm-2 modalImageClasse">
 	<div class="col-sm-8">
     	<h4><a href="VisualizzaDettagliAnnuncio?annuncioID=<%= a.getId()%>"><%= a.getTitolo() %></a></h4>
     	<p><%= a.getDescrizione()%></p>

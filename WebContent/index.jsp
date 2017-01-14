@@ -76,6 +76,7 @@
     		url: "AnnunciRecenti",
     		success: function(risposta){ //se la richiesta ha successo
     			$('#content').html(risposta);
+    			loadModal();
     		},
     		error: function (response) { //se la richiesta fallisce
     			$('#content').html("Non ci sono annunci da visualizzare");
@@ -218,5 +219,6 @@
 		</div>
 	</div>
 	<% request.removeAttribute("giorniAttesa"); %>
+	<%@include file="includes/lightboxImmagini.jsp" %>
   </body>
 </html>
