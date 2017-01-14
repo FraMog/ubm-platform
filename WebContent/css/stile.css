@@ -158,7 +158,7 @@ img.modalImageClasse{
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 
-#imagpxodalDiv .modal{
+#imagpxodalDiv .modal, #imageModalDiv .modal{
 	  overflow: auto; /* Enable scroll if needed */
 }
 
@@ -193,7 +193,7 @@ img.modalImageClasse{
 }
 
 /* The Close Button */
-#imagpxodalDiv .close {
+#imagpxodalDiv .close, #imageModalDiv .close  {
     position: absolute;
     top: 15px;
     right: 35px;
@@ -203,8 +203,8 @@ img.modalImageClasse{
     transition: 0.3s;
 }
 
-#imagpxodalDiv .close:hover,
-#imagpxodalDiv .close:focus {
+#imagpxodalDiv .close:hover, #imageModalDiv .close:hover,
+#imagpxodalDiv .close:focus, #imageModalDiv .close:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
