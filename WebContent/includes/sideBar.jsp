@@ -9,13 +9,14 @@
           $(window).on('resize', function(){
             var win = $(this);
             if (win.width() < 768) {
-              $('#lista').removeClass('in');
               $('#collapse_link').attr("href", "#lista");
+              $('#collapse_link').click();
             }
             else
             {
-              $('#lista').addClass('in');
-              $('#collapse_link').attr("href", "#");
+                if(!$('#lista').hasClass('in'))
+                	$('#collapse_link').click();
+              	$('#collapse_link').attr("href", "#");
             }
           });
 
