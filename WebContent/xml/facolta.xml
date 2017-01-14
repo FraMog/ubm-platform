@@ -1,0 +1,27 @@
+<!-- Elenco preso da:
+https://esse3web.unisa.it/unisa/ListaFacolta.do
+Se notate che ne ho mancata qualcuna, aggiungetela per favore -->
+<universita>
+<facolta>Informatica</facolta>
+<facolta>Biologia</facolta>
+<facolta>Chimica</facolta>
+<facolta>Farmacia</facolta>
+<facolta>Fisica</facolta>
+<facolta>Ingegneria Civile</facolta>
+<facolta>Ingegneria Informatica</facolta>
+<facolta>Ingegneria Industriale</facolta>
+<facolta>Ingegneria Elettronica</facolta>
+<facolta>Ingegneria Edile-Architettura</facolta>
+<facolta>Matematica</facolta>
+<facolta>Medicina e Chilurgia</facolta>
+<facolta>Economia</facolta>
+<facolta>Beni Culturali</facolta>
+<facolta>Giurisprudenza</facolta>
+<facolta>Scienza Politiche</facolta>
+<facolta>Scienze della comunicazione</facolta>
+<facolta>Scienze della formazione</facolta>
+<facolta>Scienze dell'educazione</facolta>
+<facolta>Lettere</facolta>
+<facolta>Lingue</facolta>
+<facolta>Filosofia</facolta>
+</universita>

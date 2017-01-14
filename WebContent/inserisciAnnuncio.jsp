@@ -46,10 +46,7 @@ response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Devi essere un utente lo
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Facoltà: *</label>
 		    			<div class="form-group col-sm-3" style="padding-left:30px">
-              			 	<select class="form-control" name="facolta">
-               			 		<option value="informatica">Informatica</option>
-               					<option value="biologia">Biologia</option>
-               			 		<option value="matematica">Matematica</option>
+              			 	<select id="elencoFacoltaInserisciAnnuncio" class="form-control" name="facolta">
               				</select>
               			</div>
             		</div>

@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS annuncio (
   Titolo varchar(50) NOT NULL,
   DataPubblicazione datetime NOT NULL DEFAULT NOW(),
   Descrizione varchar(100) NOT NULL,
-  Facolta varchar(20) NOT NULL,
+  Facolta varchar(50) NOT NULL,
   Categoria char(1) NOT NULL,
   Materia varchar(40) DEFAULT NULL,
   Edizione int(11) DEFAULT NULL,

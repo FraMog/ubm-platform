@@ -10,3 +10,12 @@
 	  </div>
 	</div>
 </footer>
+
+
+<script src="javascript/facolta/caricaFacolta.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	caricaFacolta();
+});
+    
+</script>

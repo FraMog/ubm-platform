@@ -97,12 +97,14 @@
 	    			<div class="form-group">
 	    				<label class="control-label col-sm-2">Facoltà:</label>
 		    			<div class="form-group col-sm-4" style="padding-left:30px">
-              			 	<select class="form-control" name="facolta">
-               			 		<option value="Informatica" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Informatica")){%> selected="selected"<%}%>>Informatica</option>
-               					<option value="Biologia" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Biologia")){%> selected="selected"<%}%>>Biologia</option>
-               			 		<option value="Matematica" <%if (annuncioDettagliato.getFacolta().equalsIgnoreCase("Matematica")){%> selected="selected"<%}%>>Matematica</option>
+              			 	<select id="elencoFacoltaModificaAnnuncio" class="form-control" name="facolta">
               				</select>
               			</div>
+              			<script>
+              			var facoltaAnnuncio="<%=annuncioDettagliato.getFacolta()%>";
+              			$(document).ready(function(){
+              			});
+               			 </script>
             		</div>
             		<div class="form-group">
 	    				<label class="control-label col-sm-2" for="prezzo">Prezzo:</label>  
