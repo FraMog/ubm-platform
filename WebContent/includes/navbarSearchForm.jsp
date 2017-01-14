@@ -3,7 +3,7 @@
               <input id="titoloAnnuncioRicerca" name="titolo" type="text" class="form-control" placeholder="Search" pattern="^[a-zA-Z0-9]{1}[a-zA-Z0-9 ]{0,49}$" title="Il titolo deve contenere tra 1 e 50 caratteri alfanumerici" required="required">
             </div>
             <div class="form-group">
-              <select id="elencoFacoltaNavbarSearchForm" class="form-control" name="facolta">
+              <select id="elencoFacoltaNavbarSearchForm" class="form-control" name="facolta" style="max-width: 12em">
               </select>            
             </div>
             <div class="form-group">
