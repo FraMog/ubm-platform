@@ -53,7 +53,8 @@ function mostraFeedbacks(feedbacks){
 		var spanEmail = document.createElement('span');
 		spanEmail.className = "col-sm-8";
 		spanEmail.innerHTML = "Pubblicato da:<p>" + feedbacks[i].emailP + "</p>";
-
+		spanEmail.style.border = "medium outset black";
+			
 		var spanData = document.createElement('span');
 		spanData.className = "col-sm-4";
 		spanData.innerHTML = feedbacks[i].data;
@@ -65,48 +66,89 @@ function mostraFeedbacks(feedbacks){
 
 		//creo il div che contiene valutazione e descrizione
 		var divText = document.createElement('div');
-		divText.className = "list-group-item-texting";
+		
+		//tabella per la valutazione
+		var tableVal = document.createElement('table');
+		tableVal.className = "table";
+		
+		var head = document.createElement('thead');
+		var tr = document.createElement('tr');
+		var th = document.createElement('th');
+		
+		th.innerHTML = "Valutazione";
+		
+		tr.appendChild(th);
+		head.appendChild(tr);
+		tableVal.appendChild(head);
+		
+		var body = document.createElement('tbody');
+		tr = document.createElement('tr');
+		var td = document.createElement('td');
 
-		//la label che si collega con l'attributo for alla valutazione
-		var labelVal = document.createElement('label');
-		labelVal.htmlFor = "val";
-		labelVal.innerHTML = "Valutazione:";
+		//LA VALUTAZIONE -- CREO L'IMMAGINE APPOSITA
+		var imgVal = document.createElement('img');
+		imgVal.id = "feedback-stars";
+		imgVal.className = "img-responsive col-sm-5";
+		imgVal.style = "padding-left: 0px; padding-bottom: 0px;";
+		imgVal.src="img/feedback/feedback" + feedbacks[i].valutazione + ".png";
+		imgVal.alt = "Valutazione feedback";
+		imgVal.title = "Feedback average";
+		
+		td.appendChild(imgVal);
+		tr.appendChild(td);
+		
+		tr.style.background = "white";
+		
+		body.appendChild(tr);
+		tableVal.appendChild(body);
+		
+		divText.appendChild(tableVal);
+		
+		
+		//ORA CREO LA TABELLA PER LA DESCRIZIONE -------
+		var tableDesc = document.createElement('table');
+		tableDesc.className = "table";
+		
+		head = document.createElement('thead');
+		tr = document.createElement('tr');
+		th = document.createElement('th');
+		
+		th.innerHTML = "Descrizione:";
+		
+		tr.appendChild(th);
+		head.appendChild(tr);
+		tableDesc.appendChild(head);
+		
+		body = document.createElement('tbody');
+		tr = document.createElement('tr');
+		td = document.createElement('td');
 
-		//LA VALUTAZIONE
-		var pVal = document.createElement('p');
-		pVal.id = "val";
-		pVal.innerHTML = feedbacks[i].valutazione;
-
-		//LA LABEL CHE SI COLLEGA ALLA DESCRIZIONE
-		var labelDesc = document.createElement('label');
-		labelDesc.htmlFor = "desc";
-		labelDesc.innerHTML = "Descrizione:";
-
-		//LA DESCRIZIONE
 		var pDesc = document.createElement('p');
-		pDesc.id = "desc";
 		pDesc.innerHTML = feedbacks[i].descrizione;
-
-		//METTO IN APPEND TUTTI GLI ATTRIBUTI CON ORDINE
-		//LABEL VALUTAZIONE - VALUTAZIONE - LABEL DESCRIZIONE - DESCRIZIONE
-		//valutazione e descrizione li metto in due tag p differenti
-		var p1 = document.createElement('p');
-		p1.appendChild(labelVal);
-		p1.appendChild(pVal);
-
-		var p2 = document.createElement('p');
-		p2.appendChild(labelDesc);
-		p2.appendChild(pDesc);
-
-		//aggiungo i due p al div
-		divText.appendChild(p1);
-		divText.appendChild(p2);
-
+		
+		td.appendChild(pDesc);
+		tr.appendChild(td);
+		
+		tr.style.background = "white";
+		
+		body.appendChild(tr);
+		
+		tableDesc.appendChild(body);
+		
+		divText.appendChild(tableDesc);
+		divText.className = "list-group-item-texting";
+		
+		
 		//aggiungo header e text alla riga 
 		li.appendChild(divHead);
 		li.appendChild(divText);
-
-		//aggiungo una riga al div listFeedback
+		li.style.marginBottom = "5%";
+		
+		//aggiungo il bordo
+		li.style.border = ("medium groove #FFFFFF");
+		li.style.background = "#ECE9F9";
+		li.style.borderRadius = "8%";
+		//aggiungo la riga al div listFeedback
 		document.getElementById("listFeedback").appendChild(li);
 	}
 

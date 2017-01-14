@@ -151,7 +151,7 @@
 				<div>
 					<h2>Feedback</h2>
 					<img id="feedback-stars" class="img-responsive col-sm-10"
-						style="padding-left: 0px; padding-bottom: 0px"
+						style="padding-left: 0px; padding-bottom: 0px; float: right;"
 						src="img/feedback/feedback<%=mediaFeedback%>.png"
 						alt="valutazione feedback" title="feedback average" />
 				</div>
@@ -467,7 +467,7 @@
 				</div>
 
 				<!-- body caricato dinamicamente con jquery -->
-				<div class="modal-body"	style="padding-left: 0px; padding-top: 0px;">
+				<div class="modal-body">
 					<ul id="listFeedback" class="list-group">
 						<li class="list-group-item"></li>
 					</ul>
