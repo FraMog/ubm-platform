@@ -13,7 +13,7 @@ import it.ubmplatform.autenticazione.AutenticazioneManager;
 import it.ubmplatform.profilo.Profilo;
 
 public class AutenticazioneManagerTest {
-	private Account existingAccountR, existingAccountIOk, existingAccountINonOk, existingAccountB, existingAccountA, notExistingAccount;
+	private Account existingAccountR, existingAccountINonOk, existingAccountB, existingAccountA, notExistingAccount;
 	private Profilo profiloCompleto, profiloNonCompleto;
 	private AutenticazioneManager manager;
 
@@ -21,12 +21,10 @@ public class AutenticazioneManagerTest {
 	public void setUp() throws Exception {
 		manager = new AutenticazioneManager();
 		existingAccountR = new Account("sara5@studenti.unisa.it", "Password1", "R");
-		existingAccountIOk = new Account("francesca@studenti.unisa.it", "Password2", "I");
-		existingAccountIOk.setDataInvalidazione(new Date (2016, 12, 20));
 		existingAccountINonOk = new Account("paolo@studenti.unisa.it", "Password4", "I");
-		existingAccountINonOk.setDataInvalidazione(new Date (2017, 01, 05));
+		existingAccountINonOk.setDataInvalidazione(new Date (2017, 01, 15));
 		existingAccountB = new Account("maria@studenti.unisa.it", "Password3", "B");
-		existingAccountA = new Account("admin@studenti.unisa.it", "Passadmin1", null);
+		existingAccountA = new Account("ubmplatform@gmail.com", "UbmPlatform2016", null);
 		notExistingAccount = new Account("nonesisto@studenti.unisa.it", "nonesiste", null);
 		profiloNonCompleto = new Profilo("maddalena@studenti.unisa.it", "null", "null", null, null, null, null, new java.util.Date(1995, 6, 06));
 		profiloCompleto = new Profilo("sara15@studenti.unisa.it", "Sara", "Unisa", "Avellino", "9876543210", "Musica", null, new java.util.Date(1995, 5, 15));
@@ -36,7 +34,12 @@ public class AutenticazioneManagerTest {
 	public void tearDown() throws Exception {
 		manager = null;
 		existingAccountR = null;
+		existingAccountINonOk = null;
+		existingAccountB = null;
+		existingAccountA = null;
 		notExistingAccount = null;
+		profiloNonCompleto = null;
+		profiloCompleto = null;	
 	}
 
 	@Test
@@ -57,7 +60,7 @@ public class AutenticazioneManagerTest {
 		assertEquals(1, test);
 		
 		//test su un account esistente di un utente Invalidato
-		test = manager.queryLogin(existingAccountIOk.getEmail(), existingAccountIOk.getPassword());
+		test = manager.queryLogin(existingAccountINonOk.getEmail(), existingAccountINonOk.getPassword());
 		assertEquals(2, test);
 		
 		//test su un account esistente di un utente Bannato
@@ -103,11 +106,8 @@ public class AutenticazioneManagerTest {
 		
 		//test su un account che non può ancora effettuare l'accesso
 		test = manager.queryControllaData(dataMill, existingAccountINonOk.getEmail());
-		assertEquals(4, test);
-		
-		//test su un account che può effettuare l'accesso
-		test = manager.queryControllaData(dataMill, existingAccountIOk.getEmail());
-		assertEquals(0, test);
+		assertEquals(7, test);
+
 	}
 
 }
