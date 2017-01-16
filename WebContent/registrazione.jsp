@@ -56,7 +56,7 @@
 			<br>E-mail <br> <input type="text" name="email" id="email"
 				placeholder="Inserisci la tua email" style="width:200px" required="required"
 				pattern="^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@studenti.unisa.it$)|^(?=.{5,40}$)(([A-Z0-9a-z._%+-])+@unisa.it$)"
-				title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it." />
+				title="L'email deve essere del tipo es: a.nappo25@studenti.unisa.it. o a.nappo25@unisa.it" />
 			<br> <br> Password <br> <input type="password"
 				name="pass" style="width:200px" id="password" placeholder="Inserisci la tua password"
 				required="required" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}"
