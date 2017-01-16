@@ -30,7 +30,8 @@
     
       ArrayList <Profilo> profiliPertinenti = null;
 	  try{
-	  	profiliPertinenti = (ArrayList<Profilo>) request.getSession().getAttribute("listaProfili"); 
+	  	profiliPertinenti = (ArrayList<Profilo>) request.getSession().getAttribute("listaProfili");
+	  	request.getSession().removeAttribute("listaProfili");
 	  } catch (Exception e ){
 		  profiliPertinenti = null;
 	  }
