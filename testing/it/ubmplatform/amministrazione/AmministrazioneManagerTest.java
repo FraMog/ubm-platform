@@ -1,7 +1,7 @@
-
+package it.ubmplatform.amministrazione;
 import static org.junit.Assert.*;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class AmministrazioneManagerTest {
 		existingAccountC = new Account("sara@studenti.unisa.it", "unisasara4", "R");
 		notExistingAccount = new Account("nonesisto@studenti.unisa.it", "nonesiste", null);
 		lista = new ArrayList<Account>();
-		Date data = new Date(System.currentTimeMillis());
+		Timestamp data = new java.sql.Timestamp(System.currentTimeMillis());
 		existingAnnuncio= new Annuncio(1, "ingegneria", "libro", "informatica", "123dd", "93483824", "autore", 2, "materia", "condizioni", "descrizione", 12, "m.memoli39@studenti.unisa.it",data);
 		notExistingAnnuncio= new Annuncio(2, "ingegneria", "libro", "informatica", "123dd", "93483824", "autore", 2, "materia", "condizioni", "descrizione", 12, "m.memoli39@studenti.unisa.it",data);
 		existingAnnuncio2= new Annuncio(3, "ingegneria", "libro", "informatica", "123dd", "93483824", "autore", 2, "materia", "condizioni", "descrizione", 12, "mario@studenti.unisa.it",data);
