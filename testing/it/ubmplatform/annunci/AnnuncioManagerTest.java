@@ -20,6 +20,7 @@ public class AnnuncioManagerTest {
 	private AnnuncioManager manager;
 	private Annuncio esistenteOk, nonEsistenteOk, emailErrata, fotoNull, titoloNull, descrizioneNull, facoltaNull, categoriaNull, ricercaPerFacoltaOk, ricercaTitoloNull, ricercaCategoriaErrata, ricercaOk;
 	private int idEsistente, idNonEsistente, idErrato;
+	private String fotoEsistente, fotoNonEsistente;
 
 	@Before
 	public void setUp() throws Exception {
@@ -27,14 +28,14 @@ public class AnnuncioManagerTest {
 		idEsistente=1;
 		idNonEsistente=200;
 		idErrato=-1;
-		esistenteOk=new Annuncio(2,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
-		nonEsistenteOk=new Annuncio(20,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
-		emailErrata=new Annuncio(21,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "nonEsistente@unisa.it", new java.sql.Date(2017,1,4));
-		fotoNull=new Annuncio(22,"Lezioni di C","L","Matematica", null , "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
-		titoloNull=new Annuncio(24, null ,"L","Matematica", "fotoannuncio" , "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
-		descrizioneNull=new Annuncio(26,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato", null, 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
-		facoltaNull=new Annuncio(27,"Lezioni di C","L", null , "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
-		categoriaNull=new Annuncio(28,"Lezioni di C", null ,"Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Date(2017,1,4));
+		esistenteOk=new Annuncio(2,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		nonEsistenteOk=new Annuncio(20,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		emailErrata=new Annuncio(21,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "nonEsistente@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		fotoNull=new Annuncio(22,"Lezioni di C","L","Matematica", null , "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		titoloNull=new Annuncio(24, null ,"L","Matematica", "fotoannuncio" , "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		descrizioneNull=new Annuncio(26,"Lezioni di C","L","Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato", null, 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		facoltaNull=new Annuncio(27,"Lezioni di C","L", null , "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
+		categoriaNull=new Annuncio(28,"Lezioni di C", null ,"Matematica", "fotoannuncio", "22444-53", "Prova Tartaglione", 1, "Informatica","Sottolineato","Lezioni di base di C", 23.2, "prova@unisa.it", new java.sql.Timestamp(new java.sql.Date(2017,1,4).getTime()));
 		ricercaPerFacoltaOk=new Annuncio();
 		ricercaPerFacoltaOk.setFacolta("Informatica");
 		ricercaTitoloNull=new Annuncio();
@@ -49,6 +50,8 @@ public class AnnuncioManagerTest {
 		ricercaOk.setTitolo("appunti");
 		ricercaOk.setFacolta("Informatica");
 		ricercaOk.setCategoria("appunti");
+		fotoEsistente="fotoannuncio";
+		fotoNonEsistente="foto";
 	}
 
 	@After
@@ -216,6 +219,15 @@ public class AnnuncioManagerTest {
 		} catch (BadAnnuncioIdException e) {
 			fail("non dovrebbe lanciare eccezioni");
 		}
+	}
+	
+	@Test
+	public void testQueryCercaAltriAnnunciConQuestaImmagine() {
+		boolean status;
+		status=manager.queryCercaAltriAnnunciConQuestaImmagine(fotoEsistente);
+		assertTrue(status);
+		status=manager.queryCercaAltriAnnunciConQuestaImmagine(fotoNonEsistente);
+		assertFalse(status);
 	}
 
 }
