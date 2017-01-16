@@ -325,7 +325,7 @@ public class ProfiloManager implements ProfiloInterface {
 				return null;
 			}
 
-			if(resultE.size() > 0 && resultD.size() > 0){
+			if(resultE.size() > 0){
 				for (Profilo p1 : resultE) {
 					for(Account p2 : resultD){
 						if(cfrProfiloAccount(p1, p2))
