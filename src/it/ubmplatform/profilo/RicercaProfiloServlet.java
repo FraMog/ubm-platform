@@ -47,7 +47,7 @@ public class RicercaProfiloServlet extends HttpServlet {
 		}
 		
 		
-		response.sendRedirect("RicercaProfilo.jsp");
+		response.sendRedirect("ricercaProfilo.jsp");
 		
 	}
 	
