@@ -21,7 +21,7 @@ public class Profilo {
 	 * @param interest I vari interessi dell'utente a cui � associato il profilo
 	 * @param photo La foto dell'utente a cui � associato il profilo
 	 * @param dataNascita La data di nascita dell'utente
-	 * @throws BadCreaProfiloException 
+	 * @throws BadCreaProfiloException nel caso in cui alcuni campi siano compilati in modo scorretto
 	 */
 	public Profilo(String newEmail, String name, String surname, String residence, String phone, String interest, String photo, Date dataNascita) throws BadCreaProfiloException{
 		

@@ -69,10 +69,9 @@ public class ProfiloManager implements ProfiloInterface {
 	/**
 	 * Si occupa dell'interrogazione al database per la modifica di un profilo
 	 * 
-	 * @param changed
-	 *            Il nuovo profilo modificato da inserire
+	 * @param changed Il nuovo profilo modificato da inserire
 	 * @return Un booleano che indica se l'operazione � andata a buon fine
-	 * @throws BadModificaException 
+	 * @throws BadModificaException nel caso di campi non corretti oppure problemi con il database
 	 */
 	public boolean queryModificaProfilo(Profilo toUpdate) throws SQLException, BadModificaException {
 		Connection connection = null;
@@ -140,8 +139,8 @@ public class ProfiloManager implements ProfiloInterface {
 	 * @param newPassword la nuova password
 	 * @return Un booleano che indica se l'operazione � andata a buon fine, in particolare ritorna false se la 
 	 * vecchia password non corrisponde a quella presente nel database.
-	 * @throws BadOldPasswordException 
-	 * @throws BadModificaException 
+	 * @throws BadOldPasswordException nel caso in cui la vecchia password inserita sia sbagliata
+	 * @throws BadModificaException nel caso di errore nella compilazione di altri campi
 	 */
 	public boolean queryModificaProfiloPassword(Profilo toUpdate, String oldPassword, String newPassword) throws BadOldPasswordException, SQLException, BadModificaException {
 
@@ -396,6 +395,12 @@ public class ProfiloManager implements ProfiloInterface {
 				
 	}
 	
+	/**
+	 * Si occupa dell'interrogazione al database per la visualizzazione di un profilo
+	 * @param email la mail associata al profilo da visualizzare
+	 * @return Il profilo con la mail corrispondente, SE ATTIVO. 
+	 * @throws BadVisualizzaProfiloException nel caso in cui ci sono problemi di connessione al DB o il profilo non è valido
+	 */
 	public Profilo queryVisualizzaProfilo(String email) throws BadVisualizzaProfiloException  {
 
 		Connection connection = null;

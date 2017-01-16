@@ -168,13 +168,16 @@
 					%>
 					<%
 						fe = listaFeedback.get(0);
+						String mail1 = fe.getEmailP();
+						String[] parts = mail1.split("@");
+						String mailOk = parts[0];
 					%>
 					<div class="col-sm-12">
 						<h4>
 							<a
 								href="VisualizzaProfiloServlet?emailToShow=<%=fe.getEmailP()%>"
 								style="color: black" title="Vai al profilo di questo utente"
-								style="padding-left:0px; padding-bottom: 0px"> <%=fe.getEmailP()%>:
+								style="padding-left:0px; padding-bottom: 0px"> <%=mailOk%>:
 								<small>Giudizio:<%=fe.getValutazione()%>/5
 							</small></a>
 						</h4>
@@ -189,13 +192,16 @@
 					%>
 					<%
 						fe = listaFeedback.get(1);
+						String mail2 = fe.getEmailP();
+						String[] parts1 = mail2.split("@");
+						String mailOk1 = parts1[0];
 					%>
 					<div class="col-sm-12">
 						<h4>
 							<a
 								href="VisualizzaProfiloServlet?emailToShow=<%=fe.getEmailP()%>"
 								style="color: black" title="Vai al profilo di questo utente"
-								style="padding-left:0px; padding-bottom: 0px"><%=fe.getEmailP()%>:
+								style="padding-left:0px; padding-bottom: 0px"><%=mailOk1%>:
 								<small>Giudizio:<%=fe.getValutazione()%>/5
 							</small></a>
 						</h4>
@@ -203,8 +209,8 @@
 
 					<div class="col-sm-12">
 						<p>
-							<%
-								fe.getDescrizione();
+							<%=
+								fe.getDescrizione()
 							%>
 						</p>
 					</div>

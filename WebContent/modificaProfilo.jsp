@@ -142,7 +142,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="modal-title">Giovanni, sei sicuro di voler
+												<h4 class="modal-title"><%=profileToUpdate.getNome() %>, sei sicuro di voler
 													disattivare il tuo profilo?</h4>
 											</div>
 											<div class="modal-body">

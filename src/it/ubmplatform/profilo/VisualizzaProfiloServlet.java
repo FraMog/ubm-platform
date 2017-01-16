@@ -54,7 +54,6 @@ public class VisualizzaProfiloServlet extends HttpServlet {
 		
 		try{ 
 			emailToShow =  request.getParameter("emailToShow");
-			System.out.println(emailToShow);
 			if(!isAdmin)
 				loggedEmail = (String) thisSession.getAttribute("emailLoggato");
 
